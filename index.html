@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+<meta name="viewport" content="width=1920,height=1080,initial-scale=1.0">
 
 <style>
 * {
@@ -18,11 +18,16 @@ body {
   background: transparent;
 }
 
-/* فقط محدوده افکت‌های بالایی */
+/* =========================================================
+   EFFECT AREA
+   فقط فضای بالایی
+========================================================= */
+
 #celebration {
   position: absolute;
   left: 40px;
   top: 0;
+
   width: 430px;
   height: 691px;
 
@@ -35,18 +40,16 @@ body {
   box-shadow: none;
 }
 
-/* Canvas */
 #fx {
   position: absolute;
-  left: 0;
-  top: 0;
+  inset: 0;
 
   width: 430px;
   height: 691px;
 
-  display: block;
   pointer-events: none;
 }
+
 
 /* =========================================================
    GIFT
@@ -58,8 +61,8 @@ body {
   left: 50%;
   top: 487px;
 
-  width: 58px;
-  height: 51px;
+  width: 54px;
+  height: 48px;
 
   opacity: 0;
 
@@ -73,14 +76,14 @@ body {
   z-index: 20;
 
   filter:
-    drop-shadow(0 4px 8px rgba(0,0,0,.25))
-    drop-shadow(0 0 10px rgba(255,190,40,.25));
+    drop-shadow(0 5px 7px rgba(0,0,0,.30))
+    drop-shadow(0 0 7px rgba(255,190,55,.18));
 }
 
-/* این کلاس باعث می‌شود جعبه هنگام Shake غیب نشود */
 #gift.visible {
   opacity: 1;
 }
+
 
 /* =========================================================
    GIFT BODY
@@ -89,31 +92,34 @@ body {
 .gift-body {
   position: absolute;
 
-  left: 4px;
-  right: 4px;
+  left: 3px;
+  right: 3px;
   bottom: 0;
 
-  height: 37px;
+  height: 35px;
 
-  border-radius: 4px;
+  border-radius: 3px;
 
   background:
     linear-gradient(
-      90deg,
-      #a90018 0%,
-      #ed1738 38%,
-      #c90020 65%,
-      #8f0015 100%
+      105deg,
+      #6f0813 0%,
+      #a50d1d 24%,
+      #c51a2b 48%,
+      #920b19 73%,
+      #5c0710 100%
     );
 
-  border: 2px solid #8d0014;
+  border: 1px solid rgba(45,0,5,.85);
 
   box-shadow:
-    inset 0 3px 0 rgba(255,255,255,.18),
-    inset 0 -5px 8px rgba(0,0,0,.18);
+    inset 1px 1px 2px rgba(255,255,255,.14),
+    inset -2px -4px 7px rgba(0,0,0,.24);
 }
 
-/* روبان عمودی */
+
+/* vertical ribbon */
+
 .gift-body::after {
   content: "";
 
@@ -122,7 +128,7 @@ body {
   left: 50%;
   top: 0;
 
-  width: 9px;
+  width: 7px;
   height: 100%;
 
   transform: translateX(-50%);
@@ -130,85 +136,94 @@ body {
   background:
     linear-gradient(
       90deg,
-      #d99b16,
-      #ffe06a,
-      #c9850c
+      #a66c09 0%,
+      #e4b52c 32%,
+      #ffe178 50%,
+      #c58c13 72%,
+      #855706 100%
     );
 
   box-shadow:
-    0 0 2px rgba(255,220,80,.7);
+    0 0 2px rgba(255,205,65,.25);
 }
 
+
 /* =========================================================
-   GIFT LID
+   LID
 ========================================================= */
 
 .gift-lid {
   position: absolute;
 
-  left: 0;
-  top: 5px;
+  left: -1px;
+  top: 4px;
 
-  width: 58px;
-  height: 13px;
+  width: 56px;
+  height: 12px;
 
-  border-radius: 4px;
+  border-radius: 3px;
 
   background:
     linear-gradient(
-      90deg,
-      #9d0018 0%,
-      #f0193b 38%,
-      #cf0825 70%,
-      #8e0014 100%
+      105deg,
+      #680811,
+      #a60d1c 30%,
+      #c91a2a 50%,
+      #920a18 78%,
+      #5b0610
     );
 
-  border: 2px solid #870013;
+  border: 1px solid rgba(48,0,5,.8);
 
   transform-origin: 50% 100%;
 
   z-index: 5;
 
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.18),
-    0 2px 4px rgba(0,0,0,.18);
+    inset 0 1px 2px rgba(255,255,255,.15),
+    0 2px 3px rgba(0,0,0,.22);
 }
 
-/* روبان روی در */
+
+/* ribbon on lid */
+
 .gift-lid::after {
   content: "";
 
   position: absolute;
 
   left: 50%;
-  top: -2px;
+  top: -1px;
 
-  width: 9px;
-  height: 13px;
+  width: 7px;
+  height: 12px;
 
   transform: translateX(-50%);
 
   background:
     linear-gradient(
       90deg,
-      #d99b16,
-      #ffe06a,
-      #c9850c
+      #986307,
+      #e4b42c,
+      #ffe07a,
+      #bd8610,
+      #825205
     );
 }
 
+
 /* =========================================================
-   BOW
+   SUBTLE BOW
 ========================================================= */
 
 .bow {
   position: absolute;
 
   left: 50%;
-  top: 0;
+  top: -2px;
 
-  width: 28px;
-  height: 20px;
+  width: 25px;
+  height: 17px;
 
   transform: translateX(-50%);
 
@@ -223,47 +238,48 @@ body {
   background:
     linear-gradient(
       135deg,
-      #c9850c,
-      #ffe06a,
-      #d99b16
+      #9b670b,
+      #d8a921 35%,
+      #f5d568 52%,
+      #a9700a
     );
 
-  border: 1px solid #b27608;
+  border: 1px solid rgba(105,67,0,.65);
 
   box-shadow:
-    0 1px 2px rgba(0,0,0,.2);
+    0 1px 2px rgba(0,0,0,.22);
 }
 
 .bow .left {
   left: 0;
-  top: 1px;
+  top: 2px;
 
-  width: 15px;
-  height: 11px;
+  width: 13px;
+  height: 9px;
 
-  border-radius: 10px 3px 8px 5px;
+  border-radius: 9px 3px 7px 4px;
 
-  transform: rotate(18deg);
+  transform: rotate(17deg);
 }
 
 .bow .right {
   right: 0;
-  top: 1px;
+  top: 2px;
 
-  width: 15px;
-  height: 11px;
+  width: 13px;
+  height: 9px;
 
-  border-radius: 3px 10px 5px 8px;
+  border-radius: 3px 9px 4px 7px;
 
-  transform: rotate(-18deg);
+  transform: rotate(-17deg);
 }
 
 .bow .center {
   left: 50%;
   top: 5px;
 
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 
   transform: translateX(-50%);
 
@@ -272,21 +288,22 @@ body {
   background:
     radial-gradient(
       circle at 35% 30%,
-      #fff3a0,
-      #e0a21c 55%,
-      #a76a05
+      #fff0a0,
+      #d7a21c 55%,
+      #8a5905
     );
 }
 
+
 /* =========================================================
-   GIFT APPEAR
+   APPEAR
 ========================================================= */
 
 #gift.show {
   animation:
     giftShow
-    0.65s
-    cubic-bezier(.22,.8,.3,1)
+    .65s
+    cubic-bezier(.22,.75,.3,1)
     forwards;
 }
 
@@ -297,17 +314,17 @@ body {
 
     transform:
       translateX(-50%)
-      translateY(12px)
-      scale(.65);
+      translateY(10px)
+      scale(.72);
   }
 
-  65% {
+  70% {
     opacity: 1;
 
     transform:
       translateX(-50%)
-      translateY(-3px)
-      scale(1.06);
+      translateY(-1px)
+      scale(1.025);
   }
 
   100% {
@@ -320,15 +337,16 @@ body {
   }
 }
 
+
 /* =========================================================
-   GIFT SHAKE
+   REALISTIC SHAKE
 ========================================================= */
 
 #gift.shake {
   animation:
     giftShake
-    0.8s
-    ease-in-out
+    .82s
+    cubic-bezier(.36,.07,.19,.97)
     forwards;
 }
 
@@ -336,83 +354,58 @@ body {
 
   0% {
     opacity: 1;
-
     transform:
       translateX(-50%)
-      translateY(0)
       rotate(0deg)
       scale(1);
   }
 
-  10% {
+  12% {
     transform:
-      translateX(calc(-50% - 3px))
-      translateY(-1px)
-      rotate(-5deg)
-      scale(1.01);
+      translateX(calc(-50% - 2px))
+      rotate(-2.5deg)
+      scale(1.005);
   }
 
-  20% {
+  24% {
+    transform:
+      translateX(calc(-50% + 2.5px))
+      rotate(2.8deg)
+      scale(1.008);
+  }
+
+  36% {
+    transform:
+      translateX(calc(-50% - 3px))
+      rotate(-3deg)
+      scale(1.012);
+  }
+
+  48% {
     transform:
       translateX(calc(-50% + 3px))
-      translateY(0)
-      rotate(5deg)
-      scale(1.015);
-  }
-
-  30% {
-    transform:
-      translateX(calc(-50% - 4px))
-      translateY(-1px)
-      rotate(-6deg)
-      scale(1.02);
-  }
-
-  40% {
-    transform:
-      translateX(calc(-50% + 4px))
-      translateY(0)
-      rotate(6deg)
-      scale(1.02);
-  }
-
-  50% {
-    transform:
-      translateX(calc(-50% - 3px))
-      translateY(-1px)
-      rotate(-5deg)
-      scale(1.015);
+      rotate(3deg)
+      scale(1.012);
   }
 
   60% {
     transform:
-      translateX(calc(-50% + 3px))
-      translateY(0)
-      rotate(5deg)
-      scale(1.01);
-  }
-
-  70% {
-    transform:
       translateX(calc(-50% - 2px))
-      translateY(0)
-      rotate(-3deg)
-      scale(1.005);
+      rotate(-2.2deg)
+      scale(1.006);
   }
 
-  80% {
+  72% {
     transform:
-      translateX(calc(-50% + 2px))
-      translateY(0)
-      rotate(3deg)
-      scale(1);
+      translateX(calc(-50% + 1.5px))
+      rotate(1.8deg)
+      scale(1.003);
   }
 
-  90% {
+  86% {
     transform:
-      translateX(-50%)
-      translateY(0)
-      rotate(-1deg)
+      translateX(calc(-50% - .7px))
+      rotate(-.8deg)
       scale(1);
   }
 
@@ -421,11 +414,11 @@ body {
 
     transform:
       translateX(-50%)
-      translateY(0)
       rotate(0deg)
       scale(1);
   }
 }
+
 
 /* =========================================================
    LID OPEN
@@ -434,8 +427,8 @@ body {
 #gift.explode .gift-lid {
   animation:
     lidOpen
-    0.35s
-    cubic-bezier(.2,.8,.2,1)
+    .32s
+    cubic-bezier(.2,.75,.25,1)
     forwards;
 }
 
@@ -449,25 +442,26 @@ body {
 
   45% {
     transform:
-      rotate(-28deg)
-      translateY(-7px);
+      rotate(-25deg)
+      translateY(-5px);
   }
 
   100% {
     transform:
-      rotate(-58deg)
-      translateY(-13px);
+      rotate(-52deg)
+      translateY(-10px);
   }
 }
 
+
 /* =========================================================
-   GIFT EXPLODE
+   GIFT DISAPPEARS WITH EXPLOSION
 ========================================================= */
 
 #gift.explode {
   animation:
     giftExplode
-    0.35s
+    .32s
     ease-out
     forwards;
 }
@@ -483,13 +477,13 @@ body {
       scale(1);
   }
 
-  35% {
+  30% {
     opacity: 1;
 
     transform:
       translateX(-50%)
-      translateY(-4px)
-      scale(1.12);
+      translateY(-2px)
+      scale(1.05);
   }
 
   100% {
@@ -497,22 +491,24 @@ body {
 
     transform:
       translateX(-50%)
-      translateY(-8px)
-      scale(1.25);
+      translateY(-5px)
+      scale(1.16);
   }
 }
 
-/* =========================================================
-   JAVASCRIPT
-========================================================= */
 </style>
 </head>
+
 
 <body>
 
 <div id="celebration">
 
-  <canvas id="fx" width="860" height="1382"></canvas>
+  <canvas
+    id="fx"
+    width="860"
+    height="1382">
+  </canvas>
 
   <div id="gift">
 
@@ -539,81 +535,83 @@ body {
 
 const W = 430;
 const H = 691;
+
 const DPR = 2;
 
-const canvas = document.getElementById("fx");
-const ctx = canvas.getContext("2d");
+const canvas =
+  document.getElementById("fx");
 
-const gift = document.getElementById("gift");
+const ctx =
+  canvas.getContext("2d");
 
 ctx.scale(DPR, DPR);
 
-/*
-  مرکز انفجار
-  داخل محدوده بالایی
-*/
-const EXPLOSION_X = W / 2;
-const EXPLOSION_Y = 514;
+const gift =
+  document.getElementById("gift");
 
 
 /*
-  جعبه:
-  3.8 ثانیه دیده می‌شود
+  Gift دقیقاً داخل محدوده اول
 */
-const GIFT_WAIT = 3800;
+const EXPLOSION_X =
+  W / 2;
+
+const EXPLOSION_Y =
+  514;
 
 
 /*
-  بعد از آن 0.8 ثانیه می‌لرزد
+  مدت دیده شدن Gift
 */
-const SHAKE_TIME = 800;
+const GIFT_WAIT =
+  3800;
+
+
+/*
+  مدت لرزش
+*/
+const SHAKE_TIME =
+  820;
 
 
 /*
   زمان انفجار
 */
 const EXPLOSION_DELAY =
-  GIFT_WAIT + SHAKE_TIME;
+  GIFT_WAIT +
+  SHAKE_TIME;
 
 
 /*
-  کل سیکل:
-
-  0s      جعبه ظاهر می‌شود
-  0.65s   کامل ظاهر شده
-  3.8s    شروع لرزش
-  4.6s    انفجار
-  ~8s     پایان ذرات
-  13.5s   جعبه بعدی
-
-  یعنی حدود 5.5 ثانیه فاصله خالی
+  فاصله بین دو Gift
 */
-const FULL_CYCLE = 13500;
+const FULL_CYCLE =
+  13500;
 
 
 /* =========================================================
-   ARRAYS
+   PARTICLES
 ========================================================= */
 
 const particles = [];
-const sparks = [];
 const rings = [];
 
 
 /* =========================================================
-   HELPERS
+   RANDOM
 ========================================================= */
 
-function random(min, max) {
-  return Math.random() * (max - min) + min;
+function random(min,max) {
+  return Math.random() *
+    (max-min) +
+    min;
 }
 
-function randomInt(min, max) {
-  return Math.floor(random(min, max + 1));
-}
-
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v));
+function clamp(v,min,max) {
+  return Math.max(
+    min,
+    Math.min(max,v)
+  );
 }
 
 
@@ -623,15 +621,16 @@ function clamp(v, min, max) {
 
 class Particle {
 
-  constructor(type, x, y) {
+  constructor(type,x,y) {
 
     this.type = type;
 
     this.x = x;
     this.y = y;
 
+
     /*
-      پرتاب عمدتاً رو به بالا
+      پرتاب به بالا
     */
     const angle =
       random(
@@ -642,128 +641,150 @@ class Particle {
     let speed;
 
     if (type === "coin") {
-      speed = random(175, 250);
+      speed =
+        random(170,245);
+    }
+    else if (type === "confetti") {
+      speed =
+        random(145,215);
     }
     else {
-      speed = random(150, 235);
+      speed =
+        random(190,280);
     }
 
+
     this.vx =
-      Math.cos(angle) * speed;
+      Math.cos(angle) *
+      speed;
 
     this.vy =
-      Math.sin(angle) * speed;
+      Math.sin(angle) *
+      speed;
+
 
     /*
-      جاذبه
+      فیزیک
     */
     this.gravity =
-      random(250, 320);
+      type === "spark"
+      ? random(180,240)
+      : random(245,315);
 
-    /*
-      مقاومت هوا
-    */
+
     this.drag =
-      random(.982, .992);
+      random(.984,.993);
+
 
     /*
-      موج افقی
+      حرکت نرم جانبی
     */
-    this.wave =
-      random(.8, 2.0);
-
-    this.waveAmp =
-      random(8, 22);
-
     this.wavePhase =
-      random(0, Math.PI * 2);
+      random(0,Math.PI*2);
+
+    this.waveSpeed =
+      random(.8,1.7);
+
+    this.waveAmount =
+      random(5,16);
+
 
     /*
       اندازه
     */
     if (type === "coin") {
       this.size =
-        random(7, 12);
+        random(6.5,10);
     }
     else if (type === "confetti") {
       this.size =
-        random(5, 10);
+        random(4,8);
     }
     else {
       this.size =
-        random(2, 5);
+        random(1.5,3.5);
     }
+
 
     /*
       عمر
     */
     if (type === "coin") {
       this.life =
-        random(3.0, 3.8);
+        random(3.0,3.7);
     }
     else if (type === "confetti") {
       this.life =
-        random(2.8, 3.7);
+        random(2.8,3.5);
     }
     else {
       this.life =
-        random(.8, 1.6);
+        random(.55,1.2);
     }
 
-    this.maxLife = this.life;
+    this.maxLife =
+      this.life;
+
 
     /*
-      چرخش
+      rotation
     */
     this.rotation =
-      random(0, Math.PI * 2);
+      random(0,Math.PI*2);
 
     this.rotationSpeed =
-      random(-8, 8);
+      random(-7,7);
+
 
     /*
-      برای Coin
+      Coin metal
     */
-    this.spin =
-      random(-9, 9);
+    const golds = [
+      "#C99422",
+      "#E0B642",
+      "#F1D77A",
+      "#B77B13",
+      "#D9A72D"
+    ];
 
     /*
-      رنگ
+      Confetti کنترل‌شده
     */
-    const colors = [
-      "#FFD84A",
-      "#FFC928",
-      "#FFEC79",
-      "#FFB700",
-      "#FFF1A8"
+    const confetti = [
+      "#D8B33F",
+      "#B32B3B",
+      "#D7D0B8",
+      "#9B7B28",
+      "#E5E0D2"
     ];
 
-    const confettiColors = [
-      "#FF405A",
-      "#FFD83D",
-      "#4DE1FF",
-      "#8C5CFF",
-      "#55F08A",
-      "#FF7A32"
-    ];
 
     if (type === "coin") {
+
       this.color =
-        colors[
-          randomInt(0, colors.length - 1)
-        ];
-    }
-    else if (type === "confetti") {
-      this.color =
-        confettiColors[
-          randomInt(
-            0,
-            confettiColors.length - 1
+        golds[
+          Math.floor(
+            Math.random() *
+            golds.length
           )
         ];
+
+    }
+    else if (type === "confetti") {
+
+      this.color =
+        confetti[
+          Math.floor(
+            Math.random() *
+            confetti.length
+          )
+        ];
+
     }
     else {
-      this.color = "#FFE878";
+
+      this.color =
+        "#F7D978";
     }
   }
 
@@ -772,120 +793,143 @@ class Particle {
 
     this.life -= dt;
 
-    /*
-      موج نرم افقی
-    */
-    const waveX =
-      Math.sin(
-        this.wavePhase +
-        (this.maxLife - this.life) *
-        this.wave
-      ) *
-      this.waveAmp *
-      dt;
+
+    const elapsed =
+      this.maxLife -
+      this.life;
+
 
     this.x +=
       this.vx * dt +
-      waveX;
+      Math.sin(
+        this.wavePhase +
+        elapsed *
+        this.waveSpeed
+      ) *
+      this.waveAmount *
+      dt;
+
 
     this.y +=
       this.vy * dt;
 
+
     /*
-      جاذبه
+      gravity
     */
     this.vy +=
       this.gravity * dt;
 
+
     /*
-      مقاومت
+      air resistance
     */
     this.vx *=
-      Math.pow(this.drag, dt * 60);
+      Math.pow(
+        this.drag,
+        dt * 60
+      );
+
 
     /*
-      چرخش
+      rotation
     */
     this.rotation +=
-      this.rotationSpeed * dt;
+      this.rotationSpeed *
+      dt;
+
 
     /*
-      مرز پایین
+      پایین محدوده
     */
     if (this.y > H - 5) {
 
-      this.y = H - 5;
+      this.y =
+        H - 5;
 
-      /*
-        آرام شدن نزدیک پایین
-      */
-      this.vy *= -0.12;
-      this.vx *= .88;
+      this.vy *=
+        -0.10;
+
+      this.vx *=
+        .86;
     }
+
 
     /*
-      مرز افقی
+      sides
     */
-    if (this.x < -40) {
-      this.x = -40;
-      this.vx *= -0.35;
+    if (this.x < -35) {
+
+      this.x = -35;
+      this.vx *= -.3;
+
     }
 
-    if (this.x > W + 40) {
-      this.x = W + 40;
-      this.vx *= -0.35;
+    if (this.x > W + 35) {
+
+      this.x = W + 35;
+      this.vx *= -.3;
+
     }
   }
 
 
-  alpha() {
+  getAlpha() {
 
     let a =
       clamp(
-        this.life / this.maxLife,
+        this.life /
+        this.maxLife,
         0,
         1
       );
 
+
     /*
-      Fade نزدیک پایین
+      fade پایین
     */
-    if (this.y > 610) {
+    if (this.y > 600) {
 
       a *=
         clamp(
-          (686 - this.y) / 76,
+          (686-this.y)/86,
           0,
           1
         );
     }
 
+
     /*
-      پایان عمر
+      fade آخر عمر
     */
-    if (this.life < .5) {
+    if (this.life < .45) {
 
       a *=
         clamp(
-          this.life / .5,
+          this.life/.45,
           0,
           1
         );
     }
+
 
     return a;
   }
 
 
-  draw(ctx) {
+  draw() {
 
-    const a = this.alpha();
+    const alpha =
+      this.getAlpha();
 
-    if (a <= 0) return;
+    if (alpha <= 0)
+      return;
+
 
     ctx.save();
 
-    ctx.globalAlpha = a;
+    ctx.globalAlpha =
+      alpha;
 
     ctx.translate(
       this.x,
@@ -897,24 +941,89 @@ class Particle {
     );
 
 
-    /* =========================
+    /* =====================================================
        COIN
-    ========================= */
+    ===================================================== */
 
     if (this.type === "coin") {
 
       /*
-        شبیه‌سازی چرخش سه‌بعدی
+        چرخش فلزی
       */
-      const spinScale =
-        Math.cos(
-          this.rotation * 1.7
+      const depth =
+        Math.max(
+          .16,
+          Math.abs(
+            Math.cos(
+              this.rotation *
+              .9
+            )
+          )
         );
 
       ctx.scale(
-        Math.max(.18, Math.abs(spinScale)),
+        depth,
         1
       );
+
+
+      /*
+        سایه
+      */
+      ctx.beginPath();
+
+      ctx.ellipse(
+        1.5,
+        2,
+        this.size,
+        this.size*.32,
+        0,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fillStyle =
+        "rgba(0,0,0,.20)";
+
+      ctx.fill();
+
+
+      /*
+        بدنه سکه
+      */
+      const gradient =
+        ctx.createLinearGradient(
+          -this.size,
+          -this.size,
+          this.size,
+          this.size
+        );
+
+      gradient.addColorStop(
+        0,
+        "#8B5B0A"
+      );
+
+      gradient.addColorStop(
+        .25,
+        this.color
+      );
+
+      gradient.addColorStop(
+        .5,
+        "#FFF0A0"
+      );
+
+      gradient.addColorStop(
+        .7,
+        this.color
+      );
+
+      gradient.addColorStop(
+        1,
+        "#825207"
+      );
+
 
       ctx.beginPath();
 
@@ -923,96 +1032,108 @@ class Particle {
         0,
         this.size,
         0,
-        Math.PI * 2
+        Math.PI*2
       );
 
       ctx.fillStyle =
-        this.color;
+        gradient;
 
       ctx.fill();
 
-      ctx.lineWidth = 1.5;
+
+      /*
+        لبه سکه
+      */
+      ctx.lineWidth =
+        1;
 
       ctx.strokeStyle =
-        "#A86A00";
+        "rgba(92,57,5,.85)";
 
       ctx.stroke();
 
 
       /*
-        $
+        انعکاس کوچک
       */
-      ctx.fillStyle =
-        "#9A6100";
+      ctx.beginPath();
 
-      ctx.font =
-        `bold ${this.size * 1.15}px Arial`;
-
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      ctx.fillText(
-        "$",
+      ctx.arc(
+        -this.size*.25,
+        -this.size*.3,
+        this.size*.18,
         0,
-        1
+        Math.PI*2
       );
+
+      ctx.fillStyle =
+        "rgba(255,255,255,.45)";
+
+      ctx.fill();
     }
 
 
-    /* =========================
+    /* =====================================================
        CONFETTI
-    ========================= */
+    ===================================================== */
 
-    else if (this.type === "confetti") {
+    else if (
+      this.type === "confetti"
+    ) {
 
       ctx.fillStyle =
         this.color;
 
+      ctx.globalAlpha *= .78;
+
       ctx.fillRect(
-        -this.size * .55,
-        -this.size * .25,
-        this.size * 1.1,
-        this.size * .5
+        -this.size*.6,
+        -this.size*.22,
+        this.size*1.2,
+        this.size*.44
       );
     }
 
 
-    /* =========================
+    /* =====================================================
        SPARK
-    ========================= */
+    ===================================================== */
 
     else {
 
       ctx.strokeStyle =
         this.color;
 
+      ctx.globalAlpha *= .9;
+
       ctx.lineWidth =
-        2;
+        1.3;
 
       ctx.beginPath();
 
       ctx.moveTo(
-        -this.size * 2,
+        -this.size*2.5,
         0
       );
 
       ctx.lineTo(
-        this.size * 2,
+        this.size*2.5,
         0
       );
 
       ctx.moveTo(
         0,
-        -this.size * 2
+        -this.size*2.5
       );
 
       ctx.lineTo(
         0,
-        this.size * 2
+        this.size*2.5
       );
 
       ctx.stroke();
     }
+
 
     ctx.restore();
   }
@@ -1020,89 +1141,100 @@ class Particle {
 
 
 /* =========================================================
-   CREATE EXPLOSION
+   EXPLOSION
 ========================================================= */
 
 function createExplosion() {
 
+
   /*
-    COINS
+    Coins
   */
-  for (let i = 0; i < 18; i++) {
+  for (
+    let i=0;
+    i<18;
+    i++
+  ) {
 
     particles.push(
       new Particle(
         "coin",
+
         EXPLOSION_X +
-          random(-8, 8),
+          random(-7,7),
 
         EXPLOSION_Y +
-          random(-5, 5)
+          random(-4,4)
       )
     );
   }
 
 
   /*
-    CONFETTI
+    Confetti
+    کمتر و ریزتر
   */
-  for (let i = 0; i < 22; i++) {
+  for (
+    let i=0;
+    i<15;
+    i++
+  ) {
 
     particles.push(
       new Particle(
         "confetti",
+
         EXPLOSION_X +
-          random(-12, 12),
+          random(-10,10),
 
         EXPLOSION_Y +
-          random(-8, 8)
+          random(-6,6)
       )
     );
   }
 
 
   /*
-    SPARKS
+    Sparks
   */
-  for (let i = 22; i--;) {
+  for (
+    let i=0;
+    i<25;
+    i++
+  ) {
 
-    const p =
+    particles.push(
       new Particle(
         "spark",
+
         EXPLOSION_X +
-          random(-5, 5),
+          random(-5,5),
 
         EXPLOSION_Y +
-          random(-5, 5)
-      );
-
-    p.life =
-      random(.55, 1.15);
-
-    p.maxLife =
-      p.life;
-
-    particles.push(p);
+          random(-5,5)
+      )
+    );
   }
 
 
   /*
-    انفجار نور
+    حلقه نور
   */
   rings.push({
     x: EXPLOSION_X,
     y: EXPLOSION_Y,
-    r: 4,
-    life: .55,
-    maxLife: .55
+    r: 3,
+    life: .42,
+    maxLife: .42
   });
+
 
   rings.push({
     x: EXPLOSION_X,
     y: EXPLOSION_Y,
-    r: 8,
-    life: .35,
-    maxLife: .35
+    r: 5,
+    life: .28,
+    maxLife: .28
   });
 }
 
@@ -1118,12 +1250,17 @@ let lastTime =
 function render(now) {
 
   let dt =
-    (now - lastTime) / 1000;
+    (now-lastTime)/1000;
 
-  lastTime = now;
+  lastTime =
+    now;
+
 
   dt =
-    Math.min(dt, .033);
+    Math.min(
+      dt,
+      .033
+    );
 
 
   ctx.clearRect(
@@ -1135,12 +1272,11 @@ function render(now) {
 
 
   /*
-    PARTICLES
+    Particles
   */
-
   for (
-    let i = particles.length - 1;
-    i >= 0;
+    let i=particles.length-1;
+    i>=0;
     i--
   ) {
 
@@ -1148,25 +1284,25 @@ function render(now) {
       particles[i];
 
     p.update(dt);
-    p.draw(ctx);
+    p.draw();
+
 
     if (
       p.life <= 0 ||
-      p.y >= H + 20
+      p.y > H+20
     ) {
 
-      particles.splice(i, 1);
+      particles.splice(i,1);
     }
   }
 
 
   /*
-    EXPLOSION RINGS
+    Explosion rings
   */
-
   for (
-    let i = rings.length - 1;
-    i >= 0;
+    let i=rings.length-1;
+    i>=0;
     i--
   ) {
 
@@ -1176,26 +1312,28 @@ function render(now) {
     ring.life -= dt;
 
     ring.r +=
-      150 * dt;
+      155*dt;
+
 
     const alpha =
       clamp(
-        ring.life /
+        ring.life/
         ring.maxLife,
         0,
         1
       );
 
+
     ctx.save();
 
     ctx.globalAlpha =
-      alpha * .55;
+      alpha*.42;
 
     ctx.strokeStyle =
-      "#FFE36A";
+      "#E9C75B";
 
     ctx.lineWidth =
-      3;
+      2;
 
     ctx.beginPath();
 
@@ -1204,7 +1342,7 @@ function render(now) {
       ring.y,
       ring.r,
       0,
-      Math.PI * 2
+      Math.PI*2
     );
 
     ctx.stroke();
@@ -1212,25 +1350,30 @@ function render(now) {
     ctx.restore();
 
 
-    if (ring.life <= 0) {
+    if (
+      ring.life <= 0
+    ) {
 
-      rings.splice(i, 1);
+      rings.splice(i,1);
     }
   }
 
 
-  requestAnimationFrame(render);
+  requestAnimationFrame(
+    render
+  );
 }
 
 
 /* =========================================================
-   CELEBRATION LOOP
+   MAIN LOOP
 ========================================================= */
 
 function playCelebration() {
 
+
   /*
-    همه چیز reset
+    reset Gift
   */
   gift.classList.remove(
     "visible",
@@ -1239,23 +1382,22 @@ function playCelebration() {
     "explode"
   );
 
+
   /*
-    اجبار مرورگر به اجرای دوباره Animation
+    force animation restart
   */
   void gift.offsetWidth;
 
 
   /*
-    پاک کردن انفجار قبلی
+    clear old particles
   */
   particles.length = 0;
-  sparks.length = 0;
   rings.length = 0;
 
 
   /*
-    مرحله 1:
-    جعبه ظاهر می‌شود
+    1 — Gift appears
   */
   gift.classList.add(
     "visible",
@@ -1264,8 +1406,8 @@ function playCelebration() {
 
 
   /*
-    مرحله 2:
-    بعد از 3.8 ثانیه شروع به لرزش می‌کند
+    2 — stays visible,
+        then shakes
   */
   setTimeout(() => {
 
@@ -1273,10 +1415,6 @@ function playCelebration() {
       "show"
     );
 
-    /*
-      visible باقی می‌ماند
-      بنابراین جعبه غیب نمی‌شود
-    */
     gift.classList.add(
       "shake"
     );
@@ -1285,8 +1423,7 @@ function playCelebration() {
 
 
   /*
-    مرحله 3:
-    بعد از پایان لرزش انفجار
+    3 — explode
   */
   setTimeout(() => {
 
@@ -1305,8 +1442,7 @@ function playCelebration() {
 
 
   /*
-    مرحله 4:
-    تکرار بعد از فاصله خالی
+    4 — long empty gap
   */
   setTimeout(() => {
 
@@ -1320,11 +1456,10 @@ function playCelebration() {
    START
 ========================================================= */
 
-requestAnimationFrame(render);
+requestAnimationFrame(
+  render
+);
 
-/*
-  کمی تأخیر در اولین اجرا
-*/
 setTimeout(() => {
 
   playCelebration();
