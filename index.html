@@ -2,1469 +2,1578 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1920,height=1080,initial-scale=1.0">
+<meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
 
 <style>
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html,
 body {
-  margin: 0;
-  width: 1920px;
-  height: 1080px;
-  overflow: hidden;
-  background: transparent;
+    margin: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: transparent;
 }
 
 /* =========================================================
-   EFFECT AREA
-   فقط فضای بالایی
-========================================================= */
+   INVISIBLE EFFECT AREA
+
+   X: 40 → 470
+   TOP: 0
+   BOTTOM: 691
+
+   The upper part is completely open so particles
+   can fly high and remain visible.
+
+   Nothing is drawn here except the animation.
+   ========================================================= */
 
 #celebration {
-  position: absolute;
-  left: 40px;
-  top: 0;
+    position: absolute;
 
-  width: 430px;
-  height: 691px;
+    left: 40px;
+    top: 0;
 
-  overflow: hidden;
-  pointer-events: none;
+    width: 430px;
+    height: 691px;
 
-  background: transparent;
-  border: 0;
-  outline: 0;
-  box-shadow: none;
+    overflow: hidden;
+
+    pointer-events: none;
+
+    background: transparent;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
 }
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
 
 #fx {
-  position: absolute;
-  inset: 0;
+    position: absolute;
 
-  width: 430px;
-  height: 691px;
+    left: 0;
+    top: 0;
 
-  pointer-events: none;
+    width: 430px;
+    height: 691px;
+
+    display: block;
+
+    pointer-events: none;
 }
-
 
 /* =========================================================
    GIFT
-========================================================= */
+   ========================================================= */
 
 #gift {
-  position: absolute;
+    position: absolute;
 
-  left: 50%;
-  top: 487px;
+    left: 50%;
+    top: 487px;
 
-  width: 54px;
-  height: 48px;
+    width: 58px;
+    height: 51px;
 
-  opacity: 0;
+    transform:
+        translateX(-50%)
+        scale(.75);
 
-  transform:
-    translateX(-50%)
-    translateY(0)
-    scale(1);
+    opacity: 0;
 
-  transform-origin: 50% 100%;
+    z-index: 10;
 
-  z-index: 20;
+    transform-origin: 50% 100%;
 
-  filter:
-    drop-shadow(0 5px 7px rgba(0,0,0,.30))
-    drop-shadow(0 0 7px rgba(255,190,55,.18));
+    filter:
+        drop-shadow(0 4px 8px rgba(0,0,0,.25))
+        drop-shadow(0 0 10px rgba(255,190,40,.25));
 }
-
-#gift.visible {
-  opacity: 1;
-}
-
 
 /* =========================================================
    GIFT BODY
-========================================================= */
+   ========================================================= */
 
 .gift-body {
-  position: absolute;
+    position: absolute;
 
-  left: 3px;
-  right: 3px;
-  bottom: 0;
+    left: 5px;
+    bottom: 0;
 
-  height: 35px;
+    width: 48px;
+    height: 34px;
 
-  border-radius: 3px;
+    border-radius: 3px 3px 6px 6px;
 
-  background:
-    linear-gradient(
-      105deg,
-      #6f0813 0%,
-      #a50d1d 24%,
-      #c51a2b 48%,
-      #920b19 73%,
-      #5c0710 100%
-    );
+    background:
+        linear-gradient(
+            90deg,
+            #b70e20 0%,
+            #ed263b 35%,
+            #ff3c4d 52%,
+            #c50f22 100%
+        );
 
-  border: 1px solid rgba(45,0,5,.85);
-
-  box-shadow:
-    inset 1px 1px 2px rgba(255,255,255,.14),
-    inset -2px -4px 7px rgba(0,0,0,.24);
+    box-shadow:
+        inset 0 2px rgba(255,255,255,.16),
+        inset 0 -4px rgba(0,0,0,.15);
 }
 
+/* Vertical ribbon */
 
-/* vertical ribbon */
+.gift-body::before {
+    content: "";
 
-.gift-body::after {
-  content: "";
+    position: absolute;
 
-  position: absolute;
+    left: 19px;
+    top: 0;
 
-  left: 50%;
-  top: 0;
+    width: 10px;
+    height: 100%;
 
-  width: 7px;
-  height: 100%;
-
-  transform: translateX(-50%);
-
-  background:
-    linear-gradient(
-      90deg,
-      #a66c09 0%,
-      #e4b52c 32%,
-      #ffe178 50%,
-      #c58c13 72%,
-      #855706 100%
-    );
-
-  box-shadow:
-    0 0 2px rgba(255,205,65,.25);
+    background:
+        linear-gradient(
+            90deg,
+            #d99c0d,
+            #ffe15a,
+            #fff2a0,
+            #d99c0d
+        );
 }
-
 
 /* =========================================================
-   LID
-========================================================= */
+   GIFT LID
+   ========================================================= */
 
 .gift-lid {
-  position: absolute;
+    position: absolute;
 
-  left: -1px;
-  top: 4px;
+    left: 1px;
+    top: 8px;
 
-  width: 56px;
-  height: 12px;
+    width: 56px;
+    height: 11px;
 
-  border-radius: 3px;
+    border-radius: 3px;
 
-  background:
-    linear-gradient(
-      105deg,
-      #680811,
-      #a60d1c 30%,
-      #c91a2a 50%,
-      #920a18 78%,
-      #5b0610
-    );
+    background:
+        linear-gradient(
+            90deg,
+            #c71124,
+            #ff4050,
+            #c71124
+        );
 
-  border: 1px solid rgba(48,0,5,.8);
-
-  transform-origin: 50% 100%;
-
-  z-index: 5;
-
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,.15),
-    0 2px 3px rgba(0,0,0,.22);
+    transform-origin: 7px 100%;
 }
-
-
-/* ribbon on lid */
 
 .gift-lid::after {
-  content: "";
+    content: "";
 
-  position: absolute;
+    position: absolute;
 
-  left: 50%;
-  top: -1px;
+    left: 22px;
+    top: 0;
 
-  width: 7px;
-  height: 12px;
+    width: 10px;
+    height: 100%;
 
-  transform: translateX(-50%);
-
-  background:
-    linear-gradient(
-      90deg,
-      #986307,
-      #e4b42c,
-      #ffe07a,
-      #bd8610,
-      #825205
-    );
+    background:
+        linear-gradient(
+            90deg,
+            #d99c0d,
+            #ffe15a,
+            #fff0a0,
+            #d99c0d
+        );
 }
 
-
 /* =========================================================
-   SUBTLE BOW
-========================================================= */
+   BOW
+   ========================================================= */
 
 .bow {
-  position: absolute;
+    position: absolute;
 
-  left: 50%;
-  top: -2px;
+    left: 50%;
+    top: -2px;
 
-  width: 25px;
-  height: 17px;
+    width: 30px;
+    height: 17px;
 
-  transform: translateX(-50%);
-
-  z-index: 10;
+    transform: translateX(-50%);
 }
 
 .bow span {
-  position: absolute;
+    position: absolute;
 
-  display: block;
+    top: 2px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #9b670b,
-      #d8a921 35%,
-      #f5d568 52%,
-      #a9700a
-    );
+    width: 16px;
+    height: 11px;
 
-  border: 1px solid rgba(105,67,0,.65);
+    background:
+        linear-gradient(
+            135deg,
+            #fff18a,
+            #ffc928,
+            #d99b0b
+        );
 
-  box-shadow:
-    0 1px 2px rgba(0,0,0,.22);
+    border-radius: 80% 20% 70% 30%;
 }
 
 .bow .left {
-  left: 0;
-  top: 2px;
+    left: 0;
 
-  width: 13px;
-  height: 9px;
-
-  border-radius: 9px 3px 7px 4px;
-
-  transform: rotate(17deg);
+    transform:
+        rotate(24deg);
 }
 
 .bow .right {
-  right: 0;
-  top: 2px;
+    right: 0;
 
-  width: 13px;
-  height: 9px;
-
-  border-radius: 3px 9px 4px 7px;
-
-  transform: rotate(-17deg);
+    transform:
+        scaleX(-1)
+        rotate(24deg);
 }
 
 .bow .center {
-  left: 50%;
-  top: 5px;
+    left: 11px;
+    top: 5px;
 
-  width: 7px;
-  height: 7px;
+    width: 9px;
+    height: 9px;
 
-  transform: translateX(-50%);
+    border-radius: 50%;
 
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fff0a0,
-      #d7a21c 55%,
-      #8a5905
-    );
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #fff9bc,
+            #ffd52f 55%,
+            #d89500
+        );
 }
 
-
 /* =========================================================
-   APPEAR
-========================================================= */
+   GIFT ANIMATION
+   ========================================================= */
 
 #gift.show {
-  animation:
-    giftShow
-    .65s
-    cubic-bezier(.22,.75,.3,1)
-    forwards;
+    animation:
+        giftAppear .65s
+        cubic-bezier(.18,.9,.25,1.25)
+        forwards;
 }
-
-@keyframes giftShow {
-
-  0% {
-    opacity: 0;
-
-    transform:
-      translateX(-50%)
-      translateY(10px)
-      scale(.72);
-  }
-
-  70% {
-    opacity: 1;
-
-    transform:
-      translateX(-50%)
-      translateY(-1px)
-      scale(1.025);
-  }
-
-  100% {
-    opacity: 1;
-
-    transform:
-      translateX(-50%)
-      translateY(0)
-      scale(1);
-  }
-}
-
-
-/* =========================================================
-   REALISTIC SHAKE
-========================================================= */
 
 #gift.shake {
-  animation:
-    giftShake
-    .82s
-    cubic-bezier(.36,.07,.19,.97)
-    forwards;
+    animation:
+        giftShake .5s
+        ease-in-out;
 }
+
+#gift.explode {
+    animation:
+        giftDisappear .32s
+        ease-out
+        forwards;
+}
+
+#gift.explode .gift-lid {
+    animation:
+        lidOpen .34s
+        cubic-bezier(.2,.9,.25,1)
+        forwards;
+}
+
+/* =========================================================
+   GIFT APPEAR
+   ========================================================= */
+
+@keyframes giftAppear {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(12px)
+            scale(.55)
+            rotate(-5deg);
+    }
+
+    65% {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(-2px)
+            scale(1.06)
+            rotate(1deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1)
+            rotate(0);
+    }
+}
+
+/* =========================================================
+   GIFT SHAKE
+   ========================================================= */
 
 @keyframes giftShake {
 
-  0% {
-    opacity: 1;
-    transform:
-      translateX(-50%)
-      rotate(0deg)
-      scale(1);
-  }
+    0% {
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1)
+            rotate(0);
+    }
 
-  12% {
-    transform:
-      translateX(calc(-50% - 2px))
-      rotate(-2.5deg)
-      scale(1.005);
-  }
+    20% {
+        transform:
+            translateX(calc(-50% - 3px))
+            rotate(-4deg)
+            scale(1.02);
+    }
 
-  24% {
-    transform:
-      translateX(calc(-50% + 2.5px))
-      rotate(2.8deg)
-      scale(1.008);
-  }
+    40% {
+        transform:
+            translateX(calc(-50% + 3px))
+            rotate(4deg)
+            scale(1.04);
+    }
 
-  36% {
-    transform:
-      translateX(calc(-50% - 3px))
-      rotate(-3deg)
-      scale(1.012);
-  }
+    60% {
+        transform:
+            translateX(calc(-50% - 2px))
+            rotate(-3deg)
+            scale(1.02);
+    }
 
-  48% {
-    transform:
-      translateX(calc(-50% + 3px))
-      rotate(3deg)
-      scale(1.012);
-  }
+    80% {
+        transform:
+            translateX(calc(-50% + 2px))
+            rotate(2deg)
+            scale(1.03);
+    }
 
-  60% {
-    transform:
-      translateX(calc(-50% - 2px))
-      rotate(-2.2deg)
-      scale(1.006);
-  }
-
-  72% {
-    transform:
-      translateX(calc(-50% + 1.5px))
-      rotate(1.8deg)
-      scale(1.003);
-  }
-
-  86% {
-    transform:
-      translateX(calc(-50% - .7px))
-      rotate(-.8deg)
-      scale(1);
-  }
-
-  100% {
-    opacity: 1;
-
-    transform:
-      translateX(-50%)
-      rotate(0deg)
-      scale(1);
-  }
+    100% {
+        transform:
+            translateX(-50%)
+            rotate(0)
+            scale(1);
+    }
 }
-
 
 /* =========================================================
    LID OPEN
-========================================================= */
-
-#gift.explode .gift-lid {
-  animation:
-    lidOpen
-    .32s
-    cubic-bezier(.2,.75,.25,1)
-    forwards;
-}
+   ========================================================= */
 
 @keyframes lidOpen {
 
-  0% {
-    transform:
-      rotate(0deg)
-      translateY(0);
-  }
+    0% {
+        transform:
+            rotate(0)
+            translateY(0);
+    }
 
-  45% {
-    transform:
-      rotate(-25deg)
-      translateY(-5px);
-  }
+    45% {
+        transform:
+            rotate(-18deg)
+            translateY(-3px);
+    }
 
-  100% {
-    transform:
-      rotate(-52deg)
-      translateY(-10px);
-  }
+    100% {
+        transform:
+            rotate(-55deg)
+            translateY(-11px);
+    }
 }
-
 
 /* =========================================================
-   GIFT DISAPPEARS WITH EXPLOSION
-========================================================= */
+   GIFT DISAPPEAR
+   ========================================================= */
 
-#gift.explode {
-  animation:
-    giftExplode
-    .32s
-    ease-out
-    forwards;
+@keyframes giftDisappear {
+
+    0% {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            scale(1.18);
+    }
 }
-
-@keyframes giftExplode {
-
-  0% {
-    opacity: 1;
-
-    transform:
-      translateX(-50%)
-      translateY(0)
-      scale(1);
-  }
-
-  30% {
-    opacity: 1;
-
-    transform:
-      translateX(-50%)
-      translateY(-2px)
-      scale(1.05);
-  }
-
-  100% {
-    opacity: 0;
-
-    transform:
-      translateX(-50%)
-      translateY(-5px)
-      scale(1.16);
-  }
-}
-
 </style>
 </head>
-
 
 <body>
 
 <div id="celebration">
 
-  <canvas
-    id="fx"
-    width="860"
-    height="1382">
-  </canvas>
+    <canvas
+        id="fx"
+        width="860"
+        height="1382">
+    </canvas>
 
-  <div id="gift">
+    <div id="gift">
 
-    <div class="gift-lid"></div>
+        <div class="gift-lid"></div>
 
-    <div class="bow">
-      <span class="left"></span>
-      <span class="right"></span>
-      <span class="center"></span>
+        <div class="bow">
+            <span class="left"></span>
+            <span class="right"></span>
+            <span class="center"></span>
+        </div>
+
+        <div class="gift-body"></div>
+
     </div>
-
-    <div class="gift-body"></div>
-
-  </div>
 
 </div>
 
 
 <script>
+/* =========================================================
+   PROFESSIONAL GIFT CELEBRATION
+   =========================================================
+
+   Gift position:
+       X ≈ 255
+       Y ≈ 487
+
+   Explosion:
+       X = 215
+       Y = 514
+
+   Particles:
+       Launch upward
+       Slow at apex
+       Float briefly
+       Fall naturally
+       Fade near bottom
+
+   Lower safety boundary:
+       Y = 691
+
+   Nothing can visually enter below it.
+   ========================================================= */
+
+
+const celebration =
+    document.getElementById("celebration");
+
+const canvas =
+    document.getElementById("fx");
+
+const ctx =
+    canvas.getContext("2d");
+
+const gift =
+    document.getElementById("gift");
+
 
 /* =========================================================
-   SETTINGS
-========================================================= */
+   SCENE
+   ========================================================= */
 
 const W = 430;
 const H = 691;
 
 const DPR = 2;
 
-const canvas =
-  document.getElementById("fx");
 
-const ctx =
-  canvas.getContext("2d");
+/* =========================================================
+   EXPLOSION LOCATION
+   ========================================================= */
 
-ctx.scale(DPR, DPR);
-
-const gift =
-  document.getElementById("gift");
-
+const EXPLOSION_X = W / 2;
 
 /*
-  Gift دقیقاً داخل محدوده اول
-*/
-const EXPLOSION_X =
-  W / 2;
-
-const EXPLOSION_Y =
-  514;
-
-
-/*
-  مدت دیده شدن Gift
-*/
-const GIFT_WAIT =
-  3800;
-
-
-/*
-  مدت لرزش
-*/
-const SHAKE_TIME =
-  820;
-
-
-/*
-  زمان انفجار
-*/
-const EXPLOSION_DELAY =
-  GIFT_WAIT +
-  SHAKE_TIME;
-
-
-/*
-  فاصله بین دو Gift
-*/
-const FULL_CYCLE =
-  13500;
+ * Gift starts at top 487.
+ * Its visual center is around 514.
+ */
+const EXPLOSION_Y = 514;
 
 
 /* =========================================================
-   PARTICLES
-========================================================= */
+   PARTICLE ARRAYS
+   ========================================================= */
 
-const particles = [];
-const rings = [];
+let particles = [];
+let sparks = [];
+let rings = [];
 
 
 /* =========================================================
    RANDOM
-========================================================= */
+   ========================================================= */
 
-function random(min,max) {
-  return Math.random() *
-    (max-min) +
-    min;
+function random(min, max) {
+
+    return Math.random() *
+        (max - min) +
+        min;
 }
 
-function clamp(v,min,max) {
-  return Math.max(
-    min,
-    Math.min(max,v)
-  );
+
+/* =========================================================
+   CLAMP
+   ========================================================= */
+
+function clamp(value, min, max) {
+
+    return Math.max(
+        min,
+        Math.min(max, value)
+    );
 }
 
 
 /* =========================================================
    PARTICLE
-========================================================= */
+   ========================================================= */
 
 class Particle {
 
-  constructor(type,x,y) {
+    constructor(type, x, y) {
 
-    this.type = type;
+        this.type = type;
 
-    this.x = x;
-    this.y = y;
+        this.x = x;
+        this.y = y;
 
+        /*
+         * Random upward angle.
+         *
+         * Approximately:
+         *
+         *       ↖  ↑  ↗
+         *
+         * instead of everything
+         * following one line.
+         */
 
-    /*
-      پرتاب به بالا
-    */
-    const angle =
-      random(
-        Math.PI * 1.18,
-        Math.PI * 1.82
-      );
+        const angle =
+            random(
+                Math.PI * 1.18,
+                Math.PI * 1.82
+            );
 
-    let speed;
+        /*
+         * Different initial speeds.
+         */
 
-    if (type === "coin") {
-      speed =
-        random(170,245);
-    }
-    else if (type === "confetti") {
-      speed =
-        random(145,215);
-    }
-    else {
-      speed =
-        random(190,280);
-    }
+        const speed =
+            type === "coin"
+                ? random(155, 235)
+                : random(120, 195);
 
+        this.vx =
+            Math.cos(angle) *
+            speed;
 
-    this.vx =
-      Math.cos(angle) *
-      speed;
-
-    this.vy =
-      Math.sin(angle) *
-      speed;
-
-
-    /*
-      فیزیک
-    */
-    this.gravity =
-      type === "spark"
-      ? random(180,240)
-      : random(245,315);
+        this.vy =
+            Math.sin(angle) *
+            speed;
 
 
-    this.drag =
-      random(.984,.993);
+        /*
+         * Gravity.
+         */
+
+        this.gravity =
+            type === "coin"
+                ? random(245, 310)
+                : random(175, 245);
 
 
-    /*
-      حرکت نرم جانبی
-    */
-    this.wavePhase =
-      random(0,Math.PI*2);
+        /*
+         * Air resistance.
+         */
 
-    this.waveSpeed =
-      random(.8,1.7);
-
-    this.waveAmount =
-      random(5,16);
+        this.drag =
+            type === "coin"
+                ? random(.993, .997)
+                : random(.989, .996);
 
 
-    /*
-      اندازه
-    */
-    if (type === "coin") {
-      this.size =
-        random(6.5,10);
-    }
-    else if (type === "confetti") {
-      this.size =
-        random(4,8);
-    }
-    else {
-      this.size =
-        random(1.5,3.5);
-    }
+        /*
+         * Size.
+         */
+
+        this.size =
+            type === "coin"
+                ? random(7, 11)
+                : random(4, 8);
 
 
-    /*
-      عمر
-    */
-    if (type === "coin") {
-      this.life =
-        random(3.0,3.7);
-    }
-    else if (type === "confetti") {
-      this.life =
-        random(2.8,3.5);
-    }
-    else {
-      this.life =
-        random(.55,1.2);
-    }
+        /*
+         * Rotation.
+         */
 
-    this.maxLife =
-      this.life;
+        this.rotation =
+            random(
+                0,
+                Math.PI * 2
+            );
+
+        this.rotationSpeed =
+            random(-13, 13);
 
 
-    /*
-      rotation
-    */
-    this.rotation =
-      random(0,Math.PI*2);
+        /*
+         * Lifetime.
+         */
 
-    this.rotationSpeed =
-      random(-7,7);
+        this.life = 0;
 
-
-    /*
-      Coin metal
-    */
-    const golds = [
-      "#C99422",
-      "#E0B642",
-      "#F1D77A",
-      "#B77B13",
-      "#D9A72D"
-    ];
-
-    /*
-      Confetti کنترل‌شده
-    */
-    const confetti = [
-      "#D8B33F",
-      "#B32B3B",
-      "#D7D0B8",
-      "#9B7B28",
-      "#E5E0D2"
-    ];
+        this.maxLife =
+            type === "coin"
+                ? random(2.5, 3.4)
+                : random(1.8, 2.8);
 
 
-    if (type === "coin") {
+        /*
+         * Natural side movement.
+         */
 
-      this.color =
-        golds[
-          Math.floor(
-            Math.random() *
-            golds.length
-          )
-        ];
+        this.wave =
+            random(
+                0,
+                Math.PI * 2
+            );
 
-    }
-    else if (type === "confetti") {
+        this.waveSpeed =
+            random(2.2, 5.2);
 
-      this.color =
-        confetti[
-          Math.floor(
-            Math.random() *
-            confetti.length
-          )
-        ];
-
-    }
-    else {
-
-      this.color =
-        "#F7D978";
-    }
-  }
+        this.waveAmount =
+            random(3, 12);
 
 
-  update(dt) {
+        /*
+         * Alpha.
+         */
 
-    this.life -= dt;
-
-
-    const elapsed =
-      this.maxLife -
-      this.life;
-
-
-    this.x +=
-      this.vx * dt +
-      Math.sin(
-        this.wavePhase +
-        elapsed *
-        this.waveSpeed
-      ) *
-      this.waveAmount *
-      dt;
-
-
-    this.y +=
-      this.vy * dt;
-
-
-    /*
-      gravity
-    */
-    this.vy +=
-      this.gravity * dt;
-
-
-    /*
-      air resistance
-    */
-    this.vx *=
-      Math.pow(
-        this.drag,
-        dt * 60
-      );
-
-
-    /*
-      rotation
-    */
-    this.rotation +=
-      this.rotationSpeed *
-      dt;
-
-
-    /*
-      پایین محدوده
-    */
-    if (this.y > H - 5) {
-
-      this.y =
-        H - 5;
-
-      this.vy *=
-        -0.10;
-
-      this.vx *=
-        .86;
+        this.alpha = 1;
     }
 
 
-    /*
-      sides
-    */
-    if (this.x < -35) {
+    update(dt) {
 
-      this.x = -35;
-      this.vx *= -.3;
-
-    }
-
-    if (this.x > W + 35) {
-
-      this.x = W + 35;
-      this.vx *= -.3;
-
-    }
-  }
+        this.life += dt;
 
 
-  getAlpha() {
+        /*
+         * Gravity.
+         *
+         * This is what creates the
+         * real up → apex → down feeling.
+         */
 
-    let a =
-      clamp(
-        this.life /
-        this.maxLife,
-        0,
-        1
-      );
+        this.vy +=
+            this.gravity * dt;
 
 
-    /*
-      fade پایین
-    */
-    if (this.y > 600) {
+        /*
+         * Air resistance.
+         */
 
-      a *=
-        clamp(
-          (686-this.y)/86,
-          0,
-          1
+        this.vx *=
+            Math.pow(
+                this.drag,
+                dt * 60
+            );
+
+        this.vy *=
+            Math.pow(
+                this.drag,
+                dt * 30
+            );
+
+
+        /*
+         * Horizontal movement.
+         */
+
+        this.x +=
+            this.vx * dt;
+
+
+        /*
+         * Slight natural curve.
+         */
+
+        this.x +=
+            Math.sin(
+                this.life *
+                this.waveSpeed +
+                this.wave
+            ) *
+            this.waveAmount *
+            dt;
+
+
+        /*
+         * Vertical movement.
+         */
+
+        this.y +=
+            this.vy * dt;
+
+
+        /*
+         * Rotation.
+         */
+
+        this.rotation +=
+            this.rotationSpeed *
+            dt;
+
+
+        /*
+         * Fade close to bottom
+         * of the allowed area.
+         */
+
+        if (
+            this.y > 610 ||
+            this.life >
+            this.maxLife - .5
+        ) {
+
+            const bottomFade =
+                clamp(
+                    (691 - this.y) / 65,
+                    0,
+                    1
+                );
+
+            const lifeFade =
+                clamp(
+                    (this.maxLife - this.life) / .5,
+                    0,
+                    1
+                );
+
+            this.alpha =
+                Math.min(
+                    bottomFade,
+                    lifeFade
+                );
+        }
+
+
+        /*
+         * Hard lower boundary.
+         *
+         * Absolutely nothing can
+         * pass into the lower area.
+         */
+
+        if (this.y >= 686) {
+
+            this.y = 686;
+
+            this.vy *= -.12;
+
+            this.alpha *= .65;
+        }
+
+
+        /*
+         * Horizontal safety.
+         */
+
+        if (this.x < -40) {
+
+            this.x = -40;
+
+            this.vx *= -.25;
+        }
+
+        if (this.x > W + 40) {
+
+            this.x = W + 40;
+
+            this.vx *= -.25;
+        }
+
+
+        return (
+            this.life <
+            this.maxLife &&
+            this.alpha > .01
         );
     }
 
 
-    /*
-      fade آخر عمر
-    */
-    if (this.life < .45) {
+    draw(ctx) {
 
-      a *=
-        clamp(
-          this.life/.45,
-          0,
-          1
+        ctx.save();
+
+        ctx.globalAlpha =
+            this.alpha;
+
+        ctx.translate(
+            this.x,
+            this.y
         );
+
+        ctx.rotate(
+            this.rotation
+        );
+
+
+        if (this.type === "coin") {
+
+            this.drawCoin(ctx);
+
+        } else if (
+            this.type === "confetti"
+        ) {
+
+            this.drawConfetti(ctx);
+
+        } else {
+
+            this.drawSpark(ctx);
+        }
+
+
+        ctx.restore();
     }
-
-
-    return a;
-  }
-
-
-  draw() {
-
-    const alpha =
-      this.getAlpha();
-
-    if (alpha <= 0)
-      return;
-
-
-    ctx.save();
-
-    ctx.globalAlpha =
-      alpha;
-
-    ctx.translate(
-      this.x,
-      this.y
-    );
-
-    ctx.rotate(
-      this.rotation
-    );
 
 
     /* =====================================================
        COIN
-    ===================================================== */
+       ===================================================== */
 
-    if (this.type === "coin") {
+    drawCoin(ctx) {
 
-      /*
-        چرخش فلزی
-      */
-      const depth =
-        Math.max(
-          .16,
-          Math.abs(
-            Math.cos(
-              this.rotation *
-              .9
-            )
-          )
+        /*
+         * Simulated 3D spin.
+         */
+
+        const spin =
+            Math.abs(
+                Math.cos(
+                    this.rotation * .72
+                )
+            );
+
+
+        const width =
+            this.size *
+            (.28 + spin * .72);
+
+
+        const height =
+            this.size * 1.15;
+
+
+        const gradient =
+            ctx.createRadialGradient(
+                -width * .3,
+                -height * .35,
+                1,
+                0,
+                0,
+                height
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "#fff8b0"
         );
 
-      ctx.scale(
-        depth,
-        1
-      );
-
-
-      /*
-        سایه
-      */
-      ctx.beginPath();
-
-      ctx.ellipse(
-        1.5,
-        2,
-        this.size,
-        this.size*.32,
-        0,
-        0,
-        Math.PI*2
-      );
-
-      ctx.fillStyle =
-        "rgba(0,0,0,.20)";
-
-      ctx.fill();
-
-
-      /*
-        بدنه سکه
-      */
-      const gradient =
-        ctx.createLinearGradient(
-          -this.size,
-          -this.size,
-          this.size,
-          this.size
+        gradient.addColorStop(
+            .3,
+            "#ffe14b"
         );
 
-      gradient.addColorStop(
-        0,
-        "#8B5B0A"
-      );
+        gradient.addColorStop(
+            .72,
+            "#e8a914"
+        );
 
-      gradient.addColorStop(
-        .25,
-        this.color
-      );
-
-      gradient.addColorStop(
-        .5,
-        "#FFF0A0"
-      );
-
-      gradient.addColorStop(
-        .7,
-        this.color
-      );
-
-      gradient.addColorStop(
-        1,
-        "#825207"
-      );
+        gradient.addColorStop(
+            1,
+            "#a86700"
+        );
 
 
-      ctx.beginPath();
-
-      ctx.arc(
-        0,
-        0,
-        this.size,
-        0,
-        Math.PI*2
-      );
-
-      ctx.fillStyle =
-        gradient;
-
-      ctx.fill();
+        ctx.fillStyle =
+            gradient;
 
 
-      /*
-        لبه سکه
-      */
-      ctx.lineWidth =
-        1;
+        ctx.beginPath();
 
-      ctx.strokeStyle =
-        "rgba(92,57,5,.85)";
+        ctx.ellipse(
+            0,
+            0,
+            width,
+            height,
+            0,
+            0,
+            Math.PI * 2
+        );
 
-      ctx.stroke();
+        ctx.fill();
 
 
-      /*
-        انعکاس کوچک
-      */
-      ctx.beginPath();
+        ctx.strokeStyle =
+            "rgba(255,246,170,.9)";
 
-      ctx.arc(
-        -this.size*.25,
-        -this.size*.3,
-        this.size*.18,
-        0,
-        Math.PI*2
-      );
+        ctx.lineWidth = 1;
 
-      ctx.fillStyle =
-        "rgba(255,255,255,.45)";
+        ctx.stroke();
 
-      ctx.fill();
+
+        /*
+         * Dollar symbol.
+         */
+
+        ctx.save();
+
+        ctx.scale(
+            Math.max(
+                .2,
+                spin
+            ),
+            1
+        );
+
+        ctx.fillStyle =
+            "rgba(120,72,0,.72)";
+
+        ctx.font =
+            `bold ${Math.max(
+                6,
+                this.size * .72
+            )}px Arial`;
+
+        ctx.textAlign =
+            "center";
+
+        ctx.textBaseline =
+            "middle";
+
+        ctx.fillText(
+            "$",
+            0,
+            0
+        );
+
+        ctx.restore();
     }
 
 
     /* =====================================================
        CONFETTI
-    ===================================================== */
+       ===================================================== */
 
-    else if (
-      this.type === "confetti"
-    ) {
+    drawConfetti(ctx) {
 
-      ctx.fillStyle =
-        this.color;
+        ctx.fillStyle =
+            this.color ||
+            "#ffd43b";
 
-      ctx.globalAlpha *= .78;
 
-      ctx.fillRect(
-        -this.size*.6,
-        -this.size*.22,
-        this.size*1.2,
-        this.size*.44
-      );
+        ctx.fillRect(
+            -this.size / 2,
+            -this.size,
+            this.size,
+            this.size * 2.2
+        );
     }
 
 
     /* =====================================================
        SPARK
-    ===================================================== */
+       ===================================================== */
 
-    else {
+    drawSpark(ctx) {
 
-      ctx.strokeStyle =
-        this.color;
+        const s =
+            this.size;
 
-      ctx.globalAlpha *= .9;
 
-      ctx.lineWidth =
-        1.3;
+        ctx.fillStyle =
+            "rgba(255,247,170,.95)";
 
-      ctx.beginPath();
+        ctx.shadowColor =
+            "rgba(255,215,50,.95)";
 
-      ctx.moveTo(
-        -this.size*2.5,
-        0
-      );
+        ctx.shadowBlur = 9;
 
-      ctx.lineTo(
-        this.size*2.5,
-        0
-      );
 
-      ctx.moveTo(
-        0,
-        -this.size*2.5
-      );
+        ctx.beginPath();
 
-      ctx.lineTo(
-        0,
-        this.size*2.5
-      );
+        ctx.moveTo(
+            0,
+            -s * 1.8
+        );
 
-      ctx.stroke();
+        ctx.lineTo(
+            s * .35,
+            -s * .35
+        );
+
+        ctx.lineTo(
+            s * 1.8,
+            0
+        );
+
+        ctx.lineTo(
+            s * .35,
+            s * .35
+        );
+
+        ctx.lineTo(
+            0,
+            s * 1.8
+        );
+
+        ctx.lineTo(
+            -s * .35,
+            s * .35
+        );
+
+        ctx.lineTo(
+            -s * 1.8,
+            0
+        );
+
+        ctx.lineTo(
+            -s * .35,
+            -s * .35
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
     }
-
-
-    ctx.restore();
-  }
 }
 
 
 /* =========================================================
    EXPLOSION
-========================================================= */
+   ========================================================= */
 
 function createExplosion() {
 
+    /*
+     * ===============================
+     * COINS
+     * ===============================
+     */
 
-  /*
-    Coins
-  */
-  for (
-    let i=0;
-    i<18;
-    i++
-  ) {
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
 
-    particles.push(
-      new Particle(
-        "coin",
+        const p =
+            new Particle(
+                "coin",
+                EXPLOSION_X +
+                random(-7, 7),
 
-        EXPLOSION_X +
-          random(-7,7),
-
-        EXPLOSION_Y +
-          random(-4,4)
-      )
-    );
-  }
-
-
-  /*
-    Confetti
-    کمتر و ریزتر
-  */
-  for (
-    let i=0;
-    i<15;
-    i++
-  ) {
-
-    particles.push(
-      new Particle(
-        "confetti",
-
-        EXPLOSION_X +
-          random(-10,10),
-
-        EXPLOSION_Y +
-          random(-6,6)
-      )
-    );
-  }
+                EXPLOSION_Y +
+                random(-4, 4)
+            );
 
 
-  /*
-    Sparks
-  */
-  for (
-    let i=0;
-    i<25;
-    i++
-  ) {
-
-    particles.push(
-      new Particle(
-        "spark",
-
-        EXPLOSION_X +
-          random(-5,5),
-
-        EXPLOSION_Y +
-          random(-5,5)
-      )
-    );
-  }
+        particles.push(p);
+    }
 
 
-  /*
-    حلقه نور
-  */
-  rings.push({
-    x: EXPLOSION_X,
-    y: EXPLOSION_Y,
-    r: 3,
-    life: .42,
-    maxLife: .42
-  });
+    /*
+     * ===============================
+     * CONFETTI
+     * ===============================
+     */
+
+    const colors = [
+        "#ff5264",
+        "#ffd438",
+        "#4ddfff",
+        "#77ef78",
+        "#c47cff",
+        "#ffffff"
+    ];
 
 
-  rings.push({
-    x: EXPLOSION_X,
-    y: EXPLOSION_Y,
-    r: 5,
-    life: .28,
-    maxLife: .28
-  });
+    for (
+        let i = 0;
+        i < 22;
+        i++
+    ) {
+
+        const p =
+            new Particle(
+                "confetti",
+                EXPLOSION_X +
+                random(-6, 6),
+
+                EXPLOSION_Y +
+                random(-4, 4)
+            );
+
+
+        p.color =
+            colors[
+                Math.floor(
+                    Math.random() *
+                    colors.length
+                )
+            ];
+
+
+        p.size =
+            random(4, 7);
+
+
+        p.maxLife =
+            random(
+                2.1,
+                3.2
+            );
+
+
+        particles.push(p);
+    }
+
+
+    /*
+     * ===============================
+     * SPARKS
+     * ===============================
+     */
+
+    for (
+        let i = 0;
+        i < 22;
+        i++
+    ) {
+
+        const p =
+            new Particle(
+                "spark",
+                EXPLOSION_X +
+                random(-4, 4),
+
+                EXPLOSION_Y +
+                random(-3, 3)
+            );
+
+
+        p.maxLife =
+            random(
+                .55,
+                1.25
+            );
+
+
+        p.gravity =
+            random(
+                90,
+                170
+            );
+
+
+        p.vx *=
+            random(
+                .8,
+                1.35
+            );
+
+
+        p.vy *=
+            random(
+                .75,
+                1.15
+            );
+
+
+        sparks.push(p);
+    }
+
+
+    /*
+     * ===============================
+     * EXPLOSION RINGS
+     * ===============================
+     */
+
+    rings.push({
+        x: EXPLOSION_X,
+        y: EXPLOSION_Y,
+
+        radius: 3,
+
+        alpha: .9,
+
+        life: 0,
+
+        maxLife: .42
+    });
+
+
+    rings.push({
+        x: EXPLOSION_X,
+        y: EXPLOSION_Y,
+
+        radius: 2,
+
+        alpha: .5,
+
+        life: 0,
+
+        maxLife: .7
+    });
 }
 
 
 /* =========================================================
    RENDER
-========================================================= */
+   ========================================================= */
 
-let lastTime =
-  performance.now();
+let previous =
+    performance.now();
 
 
 function render(now) {
 
-  let dt =
-    (now-lastTime)/1000;
+    const dt =
+        Math.min(
+            (now - previous) /
+            1000,
 
-  lastTime =
-    now;
-
-
-  dt =
-    Math.min(
-      dt,
-      .033
-    );
+            .033
+        );
 
 
-  ctx.clearRect(
-    0,
-    0,
-    W,
-    H
-  );
+    previous = now;
 
 
-  /*
-    Particles
-  */
-  for (
-    let i=particles.length-1;
-    i>=0;
-    i--
-  ) {
-
-    const p =
-      particles[i];
-
-    p.update(dt);
-    p.draw();
-
-
-    if (
-      p.life <= 0 ||
-      p.y > H+20
-    ) {
-
-      particles.splice(i,1);
-    }
-  }
-
-
-  /*
-    Explosion rings
-  */
-  for (
-    let i=rings.length-1;
-    i>=0;
-    i--
-  ) {
-
-    const ring =
-      rings[i];
-
-    ring.life -= dt;
-
-    ring.r +=
-      155*dt;
-
-
-    const alpha =
-      clamp(
-        ring.life/
-        ring.maxLife,
+    ctx.clearRect(
         0,
-        1
-      );
+        0,
+        canvas.width,
+        canvas.height
+    );
 
 
     ctx.save();
 
-    ctx.globalAlpha =
-      alpha*.42;
+    /*
+     * Render at 2x resolution
+     * for sharper OBS output.
+     */
 
-    ctx.strokeStyle =
-      "#E9C75B";
-
-    ctx.lineWidth =
-      2;
-
-    ctx.beginPath();
-
-    ctx.arc(
-      ring.x,
-      ring.y,
-      ring.r,
-      0,
-      Math.PI*2
+    ctx.scale(
+        DPR,
+        DPR
     );
 
-    ctx.stroke();
+
+    /*
+     * ===============================
+     * MAIN PARTICLES
+     * ===============================
+     */
+
+    particles =
+        particles.filter(
+            particle => {
+
+                const alive =
+                    particle.update(dt);
+
+
+                if (alive) {
+
+                    particle.draw(ctx);
+                }
+
+
+                return alive;
+            }
+        );
+
+
+    /*
+     * ===============================
+     * SPARKS
+     * ===============================
+     */
+
+    sparks =
+        sparks.filter(
+            spark => {
+
+                const alive =
+                    spark.update(dt);
+
+
+                if (alive) {
+
+                    spark.draw(ctx);
+                }
+
+
+                return alive;
+            }
+        );
+
+
+    /*
+     * ===============================
+     * EXPLOSION RINGS
+     * ===============================
+     */
+
+    rings =
+        rings.filter(
+            ring => {
+
+                ring.life += dt;
+
+
+                const progress =
+                    ring.life /
+                    ring.maxLife;
+
+
+                ring.radius +=
+                    165 * dt;
+
+
+                ring.alpha =
+                    .85 *
+                    (1 - progress);
+
+
+                if (
+                    ring.alpha > 0
+                ) {
+
+                    ctx.beginPath();
+
+
+                    ctx.arc(
+                        ring.x,
+                        ring.y,
+                        ring.radius,
+                        0,
+                        Math.PI * 2
+                    );
+
+
+                    ctx.strokeStyle =
+                        `rgba(
+                            255,
+                            220,
+                            70,
+                            ${ring.alpha}
+                        )`;
+
+
+                    ctx.lineWidth =
+                        2.5 *
+                        (1 - progress);
+
+
+                    ctx.shadowColor =
+                        "rgba(255,200,30,.8)";
+
+
+                    ctx.shadowBlur = 10;
+
+
+                    ctx.stroke();
+                }
+
+
+                return (
+                    ring.life <
+                    ring.maxLife
+                );
+            }
+        );
+
 
     ctx.restore();
 
 
-    if (
-      ring.life <= 0
-    ) {
-
-      rings.splice(i,1);
-    }
-  }
-
-
-  requestAnimationFrame(
-    render
-  );
+    requestAnimationFrame(
+        render
+    );
 }
 
 
 /* =========================================================
-   MAIN LOOP
-========================================================= */
+   CELEBRATION CYCLE
+   ========================================================= */
+
+let running = false;
+
+
+function resetGift() {
+
+    gift.classList.remove(
+        "show",
+        "shake",
+        "explode"
+    );
+
+
+    /*
+     * Force browser to reset
+     * CSS animation state.
+     */
+
+    void gift.offsetWidth;
+
+
+    gift.classList.add(
+        "show"
+    );
+}
+
 
 function playCelebration() {
 
-
-  /*
-    reset Gift
-  */
-  gift.classList.remove(
-    "visible",
-    "show",
-    "shake",
-    "explode"
-  );
+    if (running) {
+        return;
+    }
 
 
-  /*
-    force animation restart
-  */
-  void gift.offsetWidth;
+    running = true;
 
 
-  /*
-    clear old particles
-  */
-  particles.length = 0;
-  rings.length = 0;
+    /*
+     * Clean old particles.
+     */
+
+    particles.length = 0;
+
+    sparks.length = 0;
+
+    rings.length = 0;
 
 
-  /*
-    1 — Gift appears
-  */
-  gift.classList.add(
-    "visible",
-    "show"
-  );
+    /*
+     * Gift appears.
+     */
+
+    resetGift();
 
 
-  /*
-    2 — stays visible,
-        then shakes
-  */
-  setTimeout(() => {
+    /*
+     * Small anticipation.
+     */
 
-    gift.classList.remove(
-      "show"
+    setTimeout(
+        () => {
+
+            gift.classList.add(
+                "shake"
+            );
+
+        },
+        2400
     );
 
-    gift.classList.add(
-      "shake"
+
+    /*
+     * Explosion.
+     */
+
+    setTimeout(
+        () => {
+
+            gift.classList.remove(
+                "shake"
+            );
+
+
+            gift.classList.add(
+                "explode"
+            );
+
+
+            createExplosion();
+
+        },
+        2920
     );
 
-  }, GIFT_WAIT);
 
+    /*
+     * Long enough pause before
+     * the next Gift.
+     */
 
-  /*
-    3 — explode
-  */
-  setTimeout(() => {
+    setTimeout(
+        () => {
 
-    gift.classList.remove(
-      "shake",
-      "visible"
+            running = false;
+
+            playCelebration();
+
+        },
+        8500
     );
-
-    gift.classList.add(
-      "explode"
-    );
-
-    createExplosion();
-
-  }, EXPLOSION_DELAY);
-
-
-  /*
-    4 — long empty gap
-  */
-  setTimeout(() => {
-
-    playCelebration();
-
-  }, FULL_CYCLE);
 }
 
 
 /* =========================================================
    START
-========================================================= */
+   ========================================================= */
 
 requestAnimationFrame(
-  render
+    render
 );
 
-setTimeout(() => {
 
-  playCelebration();
+setTimeout(
+    () => {
 
-}, 800);
+        playCelebration();
+
+    },
+    700
+);
 
 </script>
 
