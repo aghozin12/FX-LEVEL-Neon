@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 
 <style>
-html,
-body {
+html, body {
     width: 1920px;
     height: 1080px;
     margin: 0;
@@ -14,103 +13,114 @@ body {
     background: transparent !important;
 }
 
-/* =========================================================
-   فقط محدوده‌ی افکت‌ها — کاملاً نامرئی
-   ========================================================= */
+/* =====================================================
+   محدوده اول — بالای نوشته
+   ===================================================== */
 
-.effect-top,
-.effect-middle {
+.gift-zone {
     position: absolute;
     left: 40px;
+    bottom: 539px;
     width: 430px;
+    height: 55px;
+    overflow: visible;
+    pointer-events: none;
+    background: transparent !important;
+}
+
+/* =====================================================
+   محدوده دوم — محل ریزش
+   ===================================================== */
+
+.fall-zone {
+    position: absolute;
+    left: 40px;
+    bottom: 389px;
+    width: 430px;
+    height: 140px;
     overflow: hidden;
     pointer-events: none;
     background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
 }
 
-/* محدوده اول */
-.effect-top {
-    bottom: 539px;
-    height: 55px;
-}
+/* =====================================================
+   GIFT
+   ===================================================== */
 
-/* محدوده دوم */
-.effect-middle {
-    bottom: 389px;
-    height: 140px;
-}
-
-
-/* =========================================================
-   TOP AREA
-   🎁 Gift Burst
-   ========================================================= */
-
-.top-gift {
+.gift {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 32px;
-    height: 28px;
-    transform: translate(-50%, -50%) scale(.2);
-    opacity: 0;
 
-    animation: topGift 4.6s ease-in-out infinite;
+    left: 50%;
+    top: -4px;
+
+    width: 38px;
+    height: 32px;
+
+    transform: translateX(-50%) scale(.85);
+    transform-origin: center bottom;
+
+    animation: giftShake 6s infinite;
+    z-index: 20;
 }
 
-/* جعبه */
-.top-gift-box {
+/* بدنه */
+.gift-box {
     position: absolute;
     left: 3px;
     bottom: 0;
-    width: 26px;
-    height: 19px;
 
-    background: linear-gradient(
-        90deg,
-        #ff1744,
-        #ff4081,
-        #ff1744
-    );
+    width: 32px;
+    height: 23px;
 
     border-radius: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff1744,
+            #ff4081,
+            #ff1744
+        );
 
     box-shadow:
         0 0 8px rgba(255, 23, 68, .9),
-        0 0 18px rgba(255, 23, 68, .5);
+        0 0 18px rgba(255, 64, 129, .5);
 }
 
 /* درب */
-.top-gift-lid {
+.gift-lid {
     position: absolute;
+
     left: 1px;
     top: 3px;
-    width: 30px;
-    height: 7px;
 
-    background: linear-gradient(
-        90deg,
-        #ff4081,
-        #ff80ab,
-        #ff4081
-    );
+    width: 36px;
+    height: 8px;
 
     border-radius: 3px;
 
-    transform-origin: left bottom;
+    background:
+        linear-gradient(
+            90deg,
+            #ff4081,
+            #ff80ab,
+            #ff4081
+        );
 
-    animation: topLid 4.6s ease-in-out infinite;
+    transform-origin: center bottom;
+
+    animation: lidOpen 6s infinite;
 }
 
-/* روبان عمودی */
-.top-gift-ribbon {
+/* روبان */
+.gift-ribbon-v {
     position: absolute;
-    left: 13px;
+
+    left: 16px;
     top: 3px;
-    width: 5px;
-    height: 25px;
+
+    width: 6px;
+    height: 29px;
 
     background: #ffd740;
 
@@ -118,205 +128,192 @@ body {
         0 0 7px #ffd740;
 }
 
-/* روبان افقی */
-.top-gift-ribbon2 {
+.gift-ribbon-h {
     position: absolute;
-    left: 3px;
-    top: 10px;
-    width: 26px;
+
+    left: 4px;
+    top: 11px;
+
+    width: 30px;
     height: 4px;
 
     background: #ffd740;
 }
 
 
-/* =========================================================
-   TOP COINS
-   ========================================================= */
+/* =====================================================
+   نور قبل از انفجار
+   ===================================================== */
 
-.top-coin {
+.flash {
     position: absolute;
-    left: 50%;
-    top: 50%;
 
-    width: 8px;
-    height: 8px;
+    left: 50%;
+    top: 15px;
+
+    width: 65px;
+    height: 65px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
-            circle at 35% 30%,
-            #fff8a6,
-            #ffd740 45%,
-            #ff9800
+            circle,
+            rgba(255,255,255,.95),
+            rgba(255,215,64,.5),
+            transparent 70%
         );
-
-    box-shadow:
-        0 0 5px #ffd740,
-        0 0 10px rgba(255, 193, 7, .7);
-
-    opacity: 0;
-
-    animation: topCoin 4.6s ease-out infinite;
-}
-
-.top-coin::after {
-    content: "$";
-
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 5px;
-    font-weight: bold;
-    color: #8d5a00;
-}
-
-
-/* مسیر سکه‌ها */
-
-.top-coin:nth-of-type(2) {
-    --tx: -145px;
-    --ty: -16px;
-}
-
-.top-coin:nth-of-type(3) {
-    --tx: -85px;
-    --ty: 17px;
-}
-
-.top-coin:nth-of-type(4) {
-    --tx: 85px;
-    --ty: -15px;
-}
-
-.top-coin:nth-of-type(5) {
-    --tx: 145px;
-    --ty: 16px;
-}
-
-
-/* =========================================================
-   TOP SPARKS
-   ========================================================= */
-
-.top-spark {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 3px;
-    height: 3px;
-
-    background: white;
-
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 5px #fff,
-        0 0 10px #ffd740;
-
-    opacity: 0;
-
-    animation: topSpark 4.6s ease-out infinite;
-}
-
-.top-spark:nth-of-type(6) {
-    --sx: -105px;
-    --sy: -22px;
-}
-
-.top-spark:nth-of-type(7) {
-    --sx: 105px;
-    --sy: -22px;
-}
-
-.top-spark:nth-of-type(8) {
-    --sx: -120px;
-    --sy: 22px;
-}
-
-.top-spark:nth-of-type(9) {
-    --sx: 120px;
-    --sy: 22px;
-}
-
-
-/* =========================================================
-   TOP LIGHT FLASH
-   ========================================================= */
-
-.top-flash {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 110px;
-    height: 110px;
 
     transform: translate(-50%, -50%) scale(.1);
 
-    border-radius: 50%;
-
-    background: radial-gradient(
-        circle,
-        rgba(255,255,255,.9) 0%,
-        rgba(255,215,64,.35) 25%,
-        transparent 70%
-    );
-
     opacity: 0;
 
-    animation: topFlash 4.6s infinite;
+    animation: flash 6s infinite;
 }
 
 
-/* =========================================================
-   MIDDLE AREA
-   🎉 CONFETTI PARTY
-   ========================================================= */
+/* =====================================================
+   برگ‌ها / Confetti
+   از بالا شروع می‌شوند و پایین می‌ریزند
+   ===================================================== */
 
-.middle-burst {
+.leaf {
     position: absolute;
 
     left: 50%;
-    top: 52%;
+    top: 10px;
 
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 11px;
 
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        0 0 8px white,
-        0 0 16px #ffd740;
-
-    animation: middleBurst 5.2s ease-out infinite;
+    border-radius: 2px 7px 2px 7px;
 
     opacity: 0;
+
+    animation: leafFall 6s infinite;
+}
+
+/* رنگ‌ها و مسیرهای مختلف */
+
+.leaf:nth-child(1) {
+    background: #ff4081;
+    --x: -190px;
+    --y: 125px;
+    --r: 500deg;
+    animation-delay: 2.0s;
+}
+
+.leaf:nth-child(2) {
+    background: #ffd740;
+    --x: -150px;
+    --y: 135px;
+    --r: -430deg;
+    animation-delay: 2.15s;
+}
+
+.leaf:nth-child(3) {
+    background: #40c4ff;
+    --x: -110px;
+    --y: 115px;
+    --r: 620deg;
+    animation-delay: 2.3s;
+}
+
+.leaf:nth-child(4) {
+    background: #69f0ae;
+    --x: -65px;
+    --y: 130px;
+    --r: -520deg;
+    animation-delay: 2.45s;
+}
+
+.leaf:nth-child(5) {
+    background: #ff5252;
+    --x: 60px;
+    --y: 120px;
+    --r: 560deg;
+    animation-delay: 2.1s;
+}
+
+.leaf:nth-child(6) {
+    background: #7c4dff;
+    --x: 105px;
+    --y: 135px;
+    --r: -600deg;
+    animation-delay: 2.25s;
+}
+
+.leaf:nth-child(7) {
+    background: #ffab40;
+    --x: 150px;
+    --y: 118px;
+    --r: 470deg;
+    animation-delay: 2.4s;
+}
+
+.leaf:nth-child(8) {
+    background: #fff;
+    --x: 190px;
+    --y: 130px;
+    --r: -560deg;
+    animation-delay: 2.55s;
 }
 
 
-/* =========================================================
-   MIDDLE COINS
-   ========================================================= */
+/* =====================================================
+   برگ‌های کوچک‌تر
+   ===================================================== */
 
-.middle-coin {
+.leaf.small {
+    width: 4px;
+    height: 7px;
+}
+
+.leaf:nth-child(9) {
+    background: #ffd740;
+    --x: -175px;
+    --y: 100px;
+    --r: 380deg;
+    animation-delay: 2.35s;
+}
+
+.leaf:nth-child(10) {
+    background: #ff4081;
+    --x: -30px;
+    --y: 138px;
+    --r: -470deg;
+    animation-delay: 2.5s;
+}
+
+.leaf:nth-child(11) {
+    background: #40c4ff;
+    --x: 30px;
+    --y: 105px;
+    --r: 430deg;
+    animation-delay: 2.15s;
+}
+
+.leaf:nth-child(12) {
+    background: #69f0ae;
+    --x: 175px;
+    --y: 140px;
+    --r: -500deg;
+    animation-delay: 2.4s;
+}
+
+
+/* =====================================================
+   سکه‌ها
+   ===================================================== */
+
+.coin {
     position: absolute;
 
     left: 50%;
-    top: 50%;
+    top: 14px;
 
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
 
     border-radius: 50%;
 
@@ -324,22 +321,22 @@ body {
         radial-gradient(
             circle at 30% 25%,
             #fffbd0,
-            #ffd740 40%,
-            #f57c00 100%
+            #ffd740 45%,
+            #f57c00
         );
 
-    border: 1px solid rgba(255,255,255,.65);
+    border: 1px solid rgba(255,255,255,.7);
 
     box-shadow:
-        0 0 8px #ffd740,
-        0 0 18px rgba(255,193,7,.7);
+        0 0 7px #ffd740,
+        0 0 15px rgba(255,193,7,.7);
 
     opacity: 0;
 
-    animation: middleCoin 5.2s ease-out infinite;
+    animation: coinFall 6s infinite;
 }
 
-.middle-coin::after {
+.coin::after {
     content: "$";
 
     position: absolute;
@@ -349,320 +346,153 @@ body {
     align-items: center;
     justify-content: center;
 
-    font-size: 8px;
+    font-size: 6px;
     font-weight: bold;
-
     color: #8d5a00;
 }
 
-
-/* مسیرهای متفاوت */
-
-.middle-coin:nth-of-type(2) {
-    --mx: -175px;
-    --my: -45px;
-    --rot: 520deg;
+.coin:nth-of-type(13) {
+    --x: -145px;
+    --y: 120px;
+    --r: 420deg;
+    animation-delay: 1.9s;
 }
 
-.middle-coin:nth-of-type(3) {
-    --mx: -125px;
-    --my: 42px;
-    --rot: -430deg;
+.coin:nth-of-type(14) {
+    --x: -85px;
+    --y: 100px;
+    --r: -520deg;
+    animation-delay: 2.05s;
 }
 
-.middle-coin:nth-of-type(4) {
-    --mx: 125px;
-    --my: -40px;
-    --rot: 480deg;
+.coin:nth-of-type(15) {
+    --x: 85px;
+    --y: 115px;
+    --r: 480deg;
+    animation-delay: 2.2s;
 }
 
-.middle-coin:nth-of-type(5) {
-    --mx: 175px;
-    --my: 45px;
-    --rot: -520deg;
-}
-
-.middle-coin:nth-of-type(6) {
-    --mx: 0px;
-    --my: -58px;
-    --rot: 360deg;
+.coin:nth-of-type(16) {
+    --x: 145px;
+    --y: 130px;
+    --r: -450deg;
+    animation-delay: 2.35s;
 }
 
 
-/* =========================================================
-   CONFETTI
-   ========================================================= */
+/* =====================================================
+   جرقه‌های انفجار
+   ===================================================== */
 
-.confetti {
+.spark {
     position: absolute;
 
     left: 50%;
-    top: 48%;
-
-    width: 5px;
-    height: 13px;
-
-    border-radius: 1px;
-
-    opacity: 0;
-
-    animation: confettiFall 5.2s linear infinite;
-}
-
-/* رنگ‌ها */
-.confetti:nth-of-type(7) {
-    background: #ff4081;
-    --cx: -190px;
-    --cy: 100px;
-    --cr: 480deg;
-}
-
-.confetti:nth-of-type(8) {
-    background: #ffd740;
-    --cx: -145px;
-    --cy: 90px;
-    --cr: -540deg;
-}
-
-.confetti:nth-of-type(9) {
-    background: #40c4ff;
-    --cx: -80px;
-    --cy: 105px;
-    --cr: 620deg;
-}
-
-.confetti:nth-of-type(10) {
-    background: #69f0ae;
-    --cx: 80px;
-    --cy: 100px;
-    --cr: -580deg;
-}
-
-.confetti:nth-of-type(11) {
-    background: #ff5252;
-    --cx: 145px;
-    --cy: 90px;
-    --cr: 500deg;
-}
-
-.confetti:nth-of-type(12) {
-    background: #7c4dff;
-    --cx: 190px;
-    --cy: 105px;
-    --cr: -620deg;
-}
-
-.confetti:nth-of-type(13) {
-    background: #fff;
-    --cx: -55px;
-    --cy: 75px;
-    --cr: 450deg;
-}
-
-.confetti:nth-of-type(14) {
-    background: #ffab40;
-    --cx: 55px;
-    --cy: 78px;
-    --cr: -470deg;
-}
-
-
-/* =========================================================
-   MIDDLE SPARK RING
-   ========================================================= */
-
-.ring-spark {
-    position: absolute;
-
-    left: 50%;
-    top: 52%;
+    top: 15px;
 
     width: 4px;
     height: 4px;
 
-    background: #fff;
-
     border-radius: 50%;
 
+    background: white;
+
     box-shadow:
-        0 0 7px #fff,
-        0 0 14px #ffd740;
+        0 0 6px white,
+        0 0 13px #ffd740;
 
     opacity: 0;
 
-    animation: ringSpark 5.2s ease-out infinite;
+    animation: sparkBurst 6s infinite;
 }
 
-.ring-spark:nth-of-type(15) {
-    --rx: -155px;
-    --ry: -55px;
+.spark:nth-of-type(17) {
+    --x: -100px;
+    --y: 50px;
 }
 
-.ring-spark:nth-of-type(16) {
-    --rx: 155px;
-    --ry: -55px;
+.spark:nth-of-type(18) {
+    --x: 100px;
+    --y: 50px;
 }
 
-.ring-spark:nth-of-type(17) {
-    --rx: -165px;
-    --ry: 55px;
+.spark:nth-of-type(19) {
+    --x: -145px;
+    --y: 75px;
 }
 
-.ring-spark:nth-of-type(18) {
-    --rx: 165px;
-    --ry: 55px;
-}
-
-.ring-spark:nth-of-type(19) {
-    --rx: -95px;
-    --ry: 65px;
-}
-
-.ring-spark:nth-of-type(20) {
-    --rx: 95px;
-    --ry: 65px;
+.spark:nth-of-type(20) {
+    --x: 145px;
+    --y: 75px;
 }
 
 
-/* =========================================================
-   TOP ANIMATIONS
-   ========================================================= */
+/* =====================================================
+   انیمیشن تکان Gift
+   ===================================================== */
 
-@keyframes topGift {
+@keyframes giftShake {
 
-    0%, 8% {
+    0%,
+    8% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(.15);
+        transform: translateX(-50%) scale(.7);
     }
 
-    16% {
+    10% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(.85);
     }
 
+    /* تکان آرام */
+    15% {
+        transform:
+            translateX(-50%)
+            rotate(-5deg)
+            scale(.9);
+    }
+
+    17% {
+        transform:
+            translateX(-50%)
+            rotate(5deg)
+            scale(.92);
+    }
+
+    19% {
+        transform:
+            translateX(-50%)
+            rotate(-7deg)
+            scale(.94);
+    }
+
+    21% {
+        transform:
+            translateX(-50%)
+            rotate(7deg)
+            scale(.96);
+    }
+
+    /* تکان شدید */
     23% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    35% {
-        transform: translate(-50%, -50%) scale(.9);
-    }
-
-    45%, 100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.35);
-    }
-}
-
-@keyframes topLid {
-
-    0%, 18% {
-        transform: rotate(0deg) translateY(0);
-    }
-
-    25% {
-        transform: rotate(-32deg) translate(-4px, -5px);
-    }
-
-    42% {
-        transform: rotate(-32deg) translate(-4px, -5px);
-    }
-
-    52%, 100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes topCoin {
-
-    0%, 20% {
-        opacity: 0;
         transform:
-            translate(-50%, -50%)
-            scale(.2);
-    }
-
-    28% {
-        opacity: 1;
-    }
-
-    58% {
-        opacity: 1;
-        transform:
-            translate(
-                calc(-50% + var(--tx)),
-                calc(-50% + var(--ty))
-            )
+            translateX(-50%)
+            rotate(-12deg)
             scale(1);
     }
 
-    82% {
+    25% {
+        transform:
+            translateX(-50%)
+            rotate(12deg)
+            scale(1.02);
+    }
+
+    /* انفجار */
+    28% {
         opacity: 0;
         transform:
-            translate(
-                calc(-50% + var(--tx)),
-                calc(-50% + var(--ty))
-            )
-            scale(.55)
-            rotate(300deg);
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes topSpark {
-
-    0%, 22% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.1);
-    }
-
-    35% {
-        opacity: 1;
-    }
-
-    60% {
-        opacity: 1;
-        transform:
-            translate(
-                calc(-50% + var(--sx)),
-                calc(-50% + var(--sy))
-            )
-            scale(1.3);
-    }
-
-    82% {
-        opacity: 0;
-        transform:
-            translate(
-                calc(-50% + var(--sx)),
-                calc(-50% + var(--sy))
-            )
-            scale(.2);
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes topFlash {
-
-    0%, 18% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.1);
-    }
-
-    27% {
-        opacity: .8;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    40% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.7);
+            translateX(-50%)
+            scale(1.5);
     }
 
     100% {
@@ -671,138 +501,230 @@ body {
 }
 
 
-/* =========================================================
-   MIDDLE ANIMATIONS
-   ========================================================= */
+/* =====================================================
+   باز شدن درب
+   ===================================================== */
 
-@keyframes middleBurst {
+@keyframes lidOpen {
 
-    0%, 8% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.1);
+    0%,
+    21% {
+        transform:
+            rotate(0deg)
+            translateY(0);
     }
 
-    18% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.4);
+    25% {
+        transform:
+            rotate(-28deg)
+            translate(-5px, -6px);
     }
 
-    45% {
-        opacity: .8;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    70%, 100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
+    28%,
+    100% {
+        transform:
+            rotate(-40deg)
+            translate(-7px, -9px);
     }
 }
 
-@keyframes middleCoin {
 
-    0%, 10% {
+/* =====================================================
+   Flash
+   ===================================================== */
+
+@keyframes flash {
+
+    0%,
+    23% {
         opacity: 0;
         transform:
             translate(-50%, -50%)
-            scale(.15)
-            rotate(0deg);
+            scale(.1);
     }
 
-    18% {
-        opacity: 1;
-    }
-
-    55% {
-        opacity: 1;
+    27% {
+        opacity: .95;
         transform:
-            translate(
-                calc(-50% + var(--mx)),
-                calc(-50% + var(--my))
-            )
-            scale(1)
-            rotate(var(--rot));
+            translate(-50%, -50%)
+            scale(1);
     }
 
-    78% {
-        opacity: .7;
+    34% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(2);
     }
 
     100% {
         opacity: 0;
-        transform:
-            translate(
-                calc(-50% + var(--mx)),
-                calc(-50% + var(--my))
-            )
-            scale(.3)
-            rotate(var(--rot));
     }
 }
 
-@keyframes confettiFall {
+
+/* =====================================================
+   ریزش برگ‌ها
+   ===================================================== */
+
+@keyframes leafFall {
 
     0% {
         opacity: 0;
         transform:
             translate(-50%, -50%)
-            translateY(-15px)
-            rotate(0deg);
+            translate(0, 0)
+            rotate(0deg)
+            scale(.4);
     }
 
-    12% {
+    8% {
         opacity: 1;
-    }
-
-    75% {
-        opacity: .9;
-        transform:
-            translate(
-                calc(-50% + var(--cx)),
-                calc(-50% + var(--cy))
-            )
-            rotate(var(--cr));
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(
-                calc(-50% + var(--cx)),
-                calc(-50% + var(--cy))
-            )
-            rotate(calc(var(--cr) + 180deg));
-    }
-}
-
-@keyframes ringSpark {
-
-    0%, 12% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.1);
     }
 
     25% {
         opacity: 1;
     }
 
-    60% {
+    55% {
+        opacity: .9;
+
+        transform:
+            translate(-50%, -50%)
+            translate(
+                calc(var(--x) * .55),
+                calc(var(--y) * .45)
+            )
+            rotate(calc(var(--r) * .45))
+            scale(1);
+    }
+
+    82% {
+        opacity: .75;
+
+        transform:
+            translate(-50%, -50%)
+            translate(
+                var(--x),
+                var(--y)
+            )
+            rotate(var(--r))
+            scale(.8);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            translate(
+                calc(var(--x) * 1.08),
+                calc(var(--y) * 1.08)
+            )
+            rotate(calc(var(--r) + 180deg))
+            scale(.45);
+    }
+}
+
+
+/* =====================================================
+   سقوط سکه
+   ===================================================== */
+
+@keyframes coinFall {
+
+    0%,
+    22% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(.1);
+    }
+
+    29% {
         opacity: 1;
+    }
+
+    55% {
+        opacity: 1;
+
         transform:
             translate(
-                calc(-50% + var(--rx)),
-                calc(-50% + var(--ry))
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y) * .45)
+            )
+            rotate(var(--r))
+            scale(1);
+    }
+
+    85% {
+        opacity: .7;
+
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            rotate(var(--r))
+            scale(.7);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            rotate(calc(var(--r) + 180deg))
+            scale(.3);
+    }
+}
+
+
+/* =====================================================
+   Spark Burst
+   ===================================================== */
+
+@keyframes sparkBurst {
+
+    0%,
+    22% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(.1);
+    }
+
+    27% {
+        opacity: 1;
+    }
+
+    48% {
+        opacity: 1;
+
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
             )
             scale(1.5);
     }
 
-    85%, 100% {
+    70% {
         opacity: 0;
         transform:
             translate(
-                calc(-50% + var(--rx)),
-                calc(-50% + var(--ry))
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
             )
             scale(.2);
+    }
+
+    100% {
+        opacity: 0;
     }
 }
 </style>
@@ -810,65 +732,56 @@ body {
 
 <body>
 
-<!-- =====================================================
-     ناحیه اول
-     🎁 Gift Explosion
-     ===================================================== -->
+<!-- ================================
+     Gift بالای نوشته
+     ================================ -->
 
-<div class="effect-top">
+<div class="gift-zone">
 
-    <div class="top-flash"></div>
+    <div class="flash"></div>
 
-    <div class="top-gift">
-        <div class="top-gift-box"></div>
-        <div class="top-gift-lid"></div>
-        <div class="top-gift-ribbon"></div>
-        <div class="top-gift-ribbon2"></div>
+    <div class="gift">
+        <div class="gift-box"></div>
+        <div class="gift-lid"></div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
     </div>
-
-    <div class="top-coin"></div>
-    <div class="top-coin"></div>
-    <div class="top-coin"></div>
-    <div class="top-coin"></div>
-
-    <div class="top-spark"></div>
-    <div class="top-spark"></div>
-    <div class="top-spark"></div>
-    <div class="top-spark"></div>
 
 </div>
 
 
-<!-- =====================================================
-     ناحیه دوم
-     🎉 Confetti Party
-     ===================================================== -->
+<!-- ================================
+     ریزش بعد از انفجار
+     ================================ -->
 
-<div class="effect-middle">
+<div class="fall-zone">
 
-    <div class="middle-burst"></div>
+    <!-- برگ‌ها -->
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
 
-    <div class="middle-coin"></div>
-    <div class="middle-coin"></div>
-    <div class="middle-coin"></div>
-    <div class="middle-coin"></div>
-    <div class="middle-coin"></div>
+    <div class="leaf small"></div>
+    <div class="leaf small"></div>
+    <div class="leaf small"></div>
+    <div class="leaf small"></div>
 
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
+    <!-- سکه -->
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
 
-    <div class="ring-spark"></div>
-    <div class="ring-spark"></div>
-    <div class="ring-spark"></div>
-    <div class="ring-spark"></div>
-    <div class="ring-spark"></div>
-    <div class="ring-spark"></div>
+    <!-- جرقه -->
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
 
 </div>
 
