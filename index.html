@@ -20,8 +20,8 @@ body{
 
 /* =========================================================
    EFFECT AREA
-   X: 40 → 470
-   Y: 0 → 691
+   X = 40 → 470
+   Y = 0 → 691
    ========================================================= */
 
 #celebration{
@@ -69,8 +69,8 @@ body{
 
     left:50%;
 
-    /* GIFT MOVED HIGHER */
-    top:455px;
+    /* HIGHER GIFT */
+    top:430px;
 
     width:64px;
     height:54px;
@@ -90,7 +90,9 @@ body{
         drop-shadow(0 0 9px rgba(255,205,85,.16));
 }
 
-/* subtle aura */
+/* =========================================================
+   SUBTLE AURA
+   ========================================================= */
 
 #gift::after{
     content:"";
@@ -161,8 +163,6 @@ body{
         inset 4px 0 5px rgba(255,255,255,.035);
 }
 
-/* vertical ribbon */
-
 .gift-body::before{
     content:"";
 
@@ -187,8 +187,6 @@ body{
     box-shadow:
         0 0 3px rgba(255,220,120,.18);
 }
-
-/* bottom highlight */
 
 .gift-body::after{
     content:"";
@@ -237,8 +235,6 @@ body{
     transform-origin:
         7px 100%;
 }
-
-/* lid ribbon */
 
 .gift-lid::after{
     content:"";
@@ -604,10 +600,9 @@ body{
     left:50%;
 
     /*
-     * Starts around the gift,
-     * then moves DOWN.
+     * Starts inside / just behind the gift.
      */
-    top:485px;
+    top:460px;
 
     transform:
         translate(-50%,10px)
@@ -643,7 +638,7 @@ body{
     pointer-events:none;
 }
 
-/* WIN glow */
+/* WIN GLOW */
 
 #winText::before{
     content:"";
@@ -673,10 +668,6 @@ body{
     z-index:-1;
 }
 
-/* =========================================================
-   WIN RISE → DOWNWARD MOVEMENT
-   ========================================================= */
-
 #winText.show{
     animation:
         winRise
@@ -685,80 +676,144 @@ body{
         forwards;
 }
 
+/* =========================================================
+   NATURAL WIN MOVEMENT
+   ========================================================= */
+
 @keyframes winRise{
 
-    /* emerges from inside the gift */
+    /*
+     * 0%
+     * Still inside the gift.
+     */
 
     0%{
         opacity:0;
 
         transform:
-            translate(-50%,10px)
-            scale(.55);
+            translate(-50%,18px)
+            scale(.55)
+            rotate(-3deg);
 
         filter:blur(3px);
     }
 
-    /* comes out of box */
+    /*
+     * Comes out of the gift.
+     */
 
-    15%{
+    12%{
         opacity:1;
 
         transform:
-            translate(-50%,-22px)
-            scale(1.12);
+            translate(-50%,-18px)
+            scale(1.08)
+            rotate(2deg);
 
         filter:blur(0);
     }
 
-    /* reaches top */
+    /*
+     * Continues upward.
+     */
 
-    28%{
+    25%{
         opacity:1;
 
         transform:
-            translate(-50%,-28px)
-            scale(1.02);
+            translate(-50%,-42px)
+            scale(1.02)
+            rotate(-1deg);
     }
 
-    /* starts moving downward */
+    /*
+     * Natural little pause.
+     */
 
-    48%{
+    36%{
         opacity:1;
 
         transform:
-            translate(-50%,18px)
-            scale(1);
+            translate(-50%,-38px)
+            scale(1)
+            rotate(.5deg);
     }
 
-    /* moves lower */
+    /*
+     * Starts falling naturally.
+     */
 
-    70%{
-        opacity:.95;
+    50%{
+        opacity:1;
 
         transform:
-            translate(-50%,72px)
-            scale(.97);
+            translate(-50%,-5px)
+            scale(.99)
+            rotate(-.5deg);
     }
 
-    /* reaches lower part */
+    /*
+     * Slight movement to the right.
+     */
 
-    88%{
-        opacity:.86;
+    65%{
+        opacity:.98;
 
         transform:
-            translate(-50%,116px)
-            scale(.93);
+            translate(
+                calc(-50% + 5px),
+                45px
+            )
+            scale(.97)
+            rotate(.7deg);
     }
 
-    /* final position */
+    /*
+     * Slight movement back to the left.
+     */
+
+    80%{
+        opacity:.91;
+
+        transform:
+            translate(
+                calc(-50% - 4px),
+                92px
+            )
+            scale(.94)
+            rotate(-.5deg);
+    }
+
+    /*
+     * Settles down.
+     */
+
+    92%{
+        opacity:.84;
+
+        transform:
+            translate(
+                calc(-50% + 2px),
+                125px
+            )
+            scale(.92)
+            rotate(.25deg);
+    }
+
+    /*
+     * Final resting position.
+     */
 
     100%{
         opacity:.78;
 
         transform:
-            translate(-50%,135px)
-            scale(.91);
+            translate(
+                -50%,
+                138px
+            )
+            scale(.91)
+            rotate(0deg);
     }
 }
 
@@ -780,28 +835,48 @@ body{
         opacity:.78;
 
         transform:
-            translate(-50%,135px)
-            scale(.91);
+            translate(-50%,138px)
+            scale(.91)
+            rotate(0deg);
 
         filter:blur(0);
     }
 
-    45%{
-        opacity:.42;
+    35%{
+        opacity:.62;
 
         transform:
-            translate(-50%,155px)
-            scale(.86);
+            translate(
+                calc(-50% + 2px),
+                148px
+            )
+            scale(.89)
+            rotate(-.3deg);
 
-        filter:blur(.5px);
+        filter:blur(.3px);
+    }
+
+    70%{
+        opacity:.30;
+
+        transform:
+            translate(
+                calc(-50% - 2px),
+                163px
+            )
+            scale(.84)
+            rotate(.3deg);
+
+        filter:blur(1.2px);
     }
 
     100%{
         opacity:0;
 
         transform:
-            translate(-50%,178px)
-            scale(.78);
+            translate(-50%,180px)
+            scale(.78)
+            rotate(0);
 
         filter:blur(3px);
     }
@@ -815,7 +890,8 @@ body{
     position:absolute;
 
     left:50%;
-    top:482px;
+
+    top:457px;
 
     width:8px;
     height:8px;
@@ -940,18 +1016,17 @@ const H = 691;
 const DPR = 2;
 
 /*
- * Gift is now higher.
- * Explosion is also higher.
+ * Gift / explosion position.
  */
 
-const EXPLOSION_X = W / 2;
+const EXPLOSION_X =
+    W / 2;
 
-const EXPLOSION_Y = 482;
+const EXPLOSION_Y =
+    457;
 
 let particles = [];
-
 let sparks = [];
-
 let rings = [];
 
 let previous =
@@ -1168,7 +1243,7 @@ class Particle{
             );
 
         /*
-         * Horizontal.
+         * Horizontal movement.
          */
 
         this.x +=
@@ -1184,7 +1259,7 @@ class Particle{
             dt;
 
         /*
-         * Vertical.
+         * Vertical movement.
          */
 
         this.y +=
@@ -1229,9 +1304,9 @@ class Particle{
         }
 
         /*
-         * HARD LOWER BOUNDARY
+         * HARD LOWER BOUNDARY.
          *
-         * Nothing can pass 691.
+         * Nothing passes 691.
          */
 
         if(this.y >= 685){
@@ -1311,10 +1386,6 @@ class Particle{
        ===================================================== */
 
     drawCoin(){
-
-        /*
-         * 3D spinning effect.
-         */
 
         const spin =
             Math.abs(
@@ -1574,7 +1645,7 @@ function createExplosion(){
             );
 
         /*
-         * Some coins fly especially high.
+         * Some coins fly higher.
          */
 
         if(i < 8){
@@ -1634,7 +1705,7 @@ function createExplosion(){
 
 
     /*
-     * FAST SPARKS
+     * SPARKS
      */
 
     for(let i=0;i<34;i++){
@@ -1721,10 +1792,6 @@ function render(now){
 
     ctx.save();
 
-    /*
-     * 2x resolution.
-     */
-
     ctx.scale(
         DPR,
         DPR
@@ -1743,6 +1810,7 @@ function render(now){
                     particle.update(dt);
 
                 if(alive){
+
                     particle.draw();
                 }
 
@@ -1763,6 +1831,7 @@ function render(now){
                     spark.update(dt);
 
                 if(alive){
+
                     spark.draw();
                 }
 
@@ -1882,6 +1951,7 @@ function resetGift(){
 function playCelebration(){
 
     if(running){
+
         return;
     }
 
@@ -1918,7 +1988,7 @@ function playCelebration(){
     /*
      * PRE-EXPLOSION BUILDUP
      *
-     * Gift stays fully visible.
+     * Gift remains visible.
      */
 
     setTimeout(()=>{
@@ -1957,14 +2027,13 @@ function playCelebration(){
         );
 
         /*
-         * Coins / sparks /
-         * confetti.
+         * Particles.
          */
 
         createExplosion();
 
         /*
-         * WIN comes from inside.
+         * WIN emerges.
          */
 
         winText.classList.add(
@@ -1975,7 +2044,7 @@ function playCelebration(){
 
 
     /*
-     * WIN starts fading.
+     * Keep WIN visible longer.
      */
 
     setTimeout(()=>{
@@ -1988,7 +2057,7 @@ function playCelebration(){
             "fade"
         );
 
-    },7600);
+    },8200);
 
 
     /*
