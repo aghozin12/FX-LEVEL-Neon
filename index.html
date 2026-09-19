@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FX LEVEL Green Glow Frame</title>
 
 <style>
 
@@ -10,248 +9,79 @@ html,
 body {
     width: 1920px;
     height: 1080px;
+
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background: transparent !important;
-    font-family: Arial, sans-serif;
-}
 
-:root {
-    --green: #00ff88;
+    overflow: hidden;
+
+    background: transparent !important;
 }
 
 
 /* =====================================================
-   COPY TRADE PANEL
-   بدون تغییر در ابعاد و ظاهر
+   دو محدوده نامرئی فقط برای محدود کردن افکت
+   هیچ قاب، رنگ یا Border ندارند
 ===================================================== */
 
-.copy-trade-panel {
+.top-effect {
     position: absolute;
+
     left: 40px;
     bottom: 539px;
+
     width: 430px;
     height: 55px;
 
-    border: 3px solid var(--green);
-    box-sizing: border-box;
+    overflow: hidden;
 
-    background: radial-gradient(
-        ellipse at center,
-        rgba(0,255,136,.035),
-        rgba(0,255,136,.012) 50%,
-        transparent 80%
-    );
-
-    box-shadow:
-        0 0 2px #fff,
-        0 0 5px var(--green),
-        0 0 10px rgba(0,255,136,.70),
-        0 0 20px rgba(0,255,136,.35),
-        inset 0 0 10px rgba(0,255,136,.14);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.copy-trade-text {
-    color: #ff6600;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: .7px;
-    text-align: center;
-    white-space: nowrap;
-    text-shadow:
-        0 0 2px #ffb066,
-        0 0 6px #ff6600,
-        0 0 12px rgba(255,102,0,.85);
+    pointer-events: none;
 }
 
 
-/* =====================================================
-   دو پنل اصلی
-   ابعاد دقیقاً مثل کد خودت
-===================================================== */
-
-.webcam-panel {
+.middle-effect {
     position: absolute;
+
     left: 40px;
     bottom: 389px;
 
     width: 430px;
     height: 140px;
 
-    border: 4px solid var(--green);
-    box-sizing: border-box;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(0,255,136,.045) 0%,
-            rgba(0,255,136,.018) 45%,
-            transparent 78%
-        );
-
-    box-shadow:
-        0 0 2px #ffffff,
-        0 0 5px var(--green),
-        0 0 12px rgba(0,255,136,.80),
-        0 0 24px rgba(0,255,136,.48),
-        0 0 45px rgba(0,210,110,.28),
-        inset 0 0 12px rgba(0,255,136,.18),
-        inset 0 0 30px rgba(0,255,136,.08);
-
-    animation: greenBreath 6s ease-in-out infinite;
-}
-
-
-.webcam-frame {
-    position: absolute;
-    left: 40px;
-    bottom: 125px;
-
-    width: 430px;
-    height: 250px;
-
-    border: 4px solid var(--green);
-    box-sizing: border-box;
-
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(0,255,136,.045) 0%,
-            rgba(0,255,136,.018) 45%,
-            transparent 78%
-        );
-
-    box-shadow:
-        0 0 2px #ffffff,
-        0 0 5px var(--green),
-        0 0 12px rgba(0,255,136,.80),
-        0 0 24px rgba(0,255,136,.48),
-        0 0 45px rgba(0,210,110,.28),
-        inset 0 0 12px rgba(0,255,136,.18),
-        inset 0 0 30px rgba(0,255,136,.08);
-
-    animation: greenBreath 6s ease-in-out infinite;
-}
-
-
-/* =====================================================
-   INNER GLOW
-===================================================== */
-
-.webcam-panel::before,
-.webcam-frame::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 5px;
-
-    border: 1px solid rgba(0,255,136,.42);
-
-    box-shadow:
-        inset 0 0 10px rgba(0,255,136,.20),
-        inset 0 0 28px rgba(0,255,136,.08);
-
-    pointer-events: none;
-
-    z-index: 1;
-}
-
-
-/* =====================================================
-   MOVING LIGHT
-===================================================== */
-
-.webcam-panel::after {
-
-    content: "";
-
-    position: absolute;
-
-    top: -4px;
-    right: -4px;
-
-    width: 115px;
-    height: 4px;
-
-    background:
-        linear-gradient(
-            270deg,
-            transparent,
-            rgba(0,255,136,.45),
-            #fff 50%,
-            rgba(0,255,136,.90),
-            transparent
-        );
-
-    box-shadow:
-        0 0 4px #fff,
-        0 0 9px var(--green),
-        0 0 20px rgba(0,255,136,.65);
-
-    animation: scanGreenReverse 7s ease-in-out infinite;
-
-    z-index: 20;
-}
-
-
-.webcam-frame::after {
-
-    content: "";
-
-    position: absolute;
-
-    top: -4px;
-    left: -4px;
-
-    width: 105px;
-    height: 4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(0,255,136,.45),
-            #fff 50%,
-            rgba(0,255,136,.90),
-            transparent
-        );
-
-    box-shadow:
-        0 0 4px #fff,
-        0 0 9px var(--green),
-        0 0 20px rgba(0,255,136,.65);
-
-    animation: scanGreen 7s ease-in-out infinite;
-
-    z-index: 20;
-}
-
-
-/* =====================================================
-   GIFT CELEBRATION
-   فقط داخل همین دو پنل
-===================================================== */
-
-.celebration {
-    position: absolute;
-    inset: 0;
-
     overflow: hidden;
 
     pointer-events: none;
+}
 
-    z-index: 10;
+
+/* =====================================================
+   CENTER FLASH
+===================================================== */
+
+.flash {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 10px white,
+        0 0 25px #fff,
+        0 0 45px #00ff88,
+        0 0 70px #00ff88;
+
+    transform: translate(-50%, -50%) scale(0);
+
+    opacity: 0;
+
+    animation: flash 3.8s infinite;
 }
 
 
@@ -265,131 +95,163 @@ body {
     left: 50%;
     top: 50%;
 
-    width: 58px;
-    height: 52px;
+    width: 64px;
+    height: 58px;
 
     transform:
         translate(-50%, -50%)
-        scale(.3);
+        scale(.2);
 
     opacity: 0;
 
+    z-index: 5;
+
     filter:
-        drop-shadow(0 0 7px #ff2670)
-        drop-shadow(0 0 18px #ff0066);
+        drop-shadow(0 0 8px #ff2670)
+        drop-shadow(0 0 20px #ff0066)
+        drop-shadow(0 0 35px rgba(255,0,100,.8));
 
     animation:
-        giftAppear 3.6s
-        cubic-bezier(.2, .8, .2, 1)
+        giftShow 3.8s
+        cubic-bezier(.2,.8,.2,1)
         infinite;
 }
 
 
-/* جعبه */
+/* Gift box */
 
 .gift-box {
     position: absolute;
 
-    left: 5px;
+    left: 6px;
     bottom: 0;
 
-    width: 48px;
-    height: 34px;
+    width: 52px;
+    height: 37px;
 
-    border-radius: 4px;
+    border-radius: 5px;
 
     background:
         linear-gradient(
             135deg,
-            #ff416c,
-            #ff005d 55%,
-            #c9004b
+            #ff4775 0%,
+            #ff005d 50%,
+            #b90045 100%
         );
+
+    box-shadow:
+        inset 0 2px 4px rgba(255,255,255,.35);
 }
 
 
-/* درب */
+/* Gift lid */
 
 .gift-lid {
     position: absolute;
 
     left: 1px;
-    top: 8px;
+    top: 9px;
 
-    width: 56px;
-    height: 11px;
+    width: 62px;
+    height: 12px;
 
-    border-radius: 4px;
+    border-radius: 5px;
 
     background:
         linear-gradient(
             90deg,
             #ff174f,
-            #ff4d7d,
+            #ff5a83,
             #ff174f
         );
 
     transform-origin: left bottom;
 
-    animation: lidOpen 3.6s infinite;
+    animation: lid 3.8s infinite;
+
+    z-index: 3;
 }
 
 
-/* روبان عمودی */
+/* Vertical ribbon */
 
 .gift-ribbon-v {
     position: absolute;
 
-    left: 25px;
+    left: 27px;
     top: 8px;
 
-    width: 8px;
-    height: 43px;
+    width: 9px;
+    height: 48px;
 
-    background: #ffd21c;
+    background:
+        linear-gradient(
+            90deg,
+            #ffb800,
+            #fff06a,
+            #ffb800
+        );
 
     box-shadow:
-        0 0 6px #ffd21c;
+        0 0 7px #ffd21c;
+
+    z-index: 4;
 }
 
 
-/* روبان افقی */
+/* Horizontal ribbon */
 
 .gift-ribbon-h {
     position: absolute;
 
-    left: 5px;
-    top: 22px;
+    left: 6px;
+    top: 24px;
 
-    width: 48px;
-    height: 6px;
+    width: 52px;
+    height: 7px;
 
-    background: #ffd21c;
+    background:
+        linear-gradient(
+            90deg,
+            #ffb800,
+            #fff06a,
+            #ffb800
+        );
+
+    z-index: 4;
 }
 
 
-/* نور داخل جعبه */
+/* Bow */
 
-.gift-glow {
+.gift-bow-left,
+.gift-bow-right {
+
     position: absolute;
 
-    left: 50%;
-    top: 12px;
+    top: -2px;
 
-    width: 30px;
-    height: 20px;
+    width: 25px;
+    height: 17px;
 
-    transform: translateX(-50%);
+    background: #ffd21c;
 
-    background: #fff;
+    border-radius: 70% 20% 70% 20%;
 
-    border-radius: 50%;
+    box-shadow:
+        0 0 7px #ffd21c;
+}
 
-    filter: blur(8px);
+.gift-bow-left {
+    left: 9px;
 
-    opacity: 0;
+    transform: rotate(-30deg);
+}
 
-    animation: giftLight 3.6s infinite;
+.gift-bow-right {
+    right: 9px;
+
+    transform: rotate(30deg);
 }
 
 
@@ -398,50 +260,55 @@ body {
 ===================================================== */
 
 .coin {
+
     position: absolute;
 
     left: 50%;
     top: 50%;
 
-    width: 14px;
-    height: 14px;
+    width: 15px;
+    height: 15px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
-            circle at 35% 30%,
+            circle at 30% 25%,
             #fffbd0,
-            #ffe23b 35%,
-            #ffae00 75%,
-            #d87b00
+            #ffe43b 35%,
+            #ffb000 70%,
+            #d87800
         );
 
     border: 1px solid #fff4a0;
 
     box-shadow:
-        0 0 6px #ffd21c,
-        0 0 16px #ffae00;
+        0 0 6px #ffe14a,
+        0 0 14px #ffae00,
+        0 0 22px rgba(255,180,0,.8);
 
     opacity: 0;
 
-    animation: coinBurst 3.6s infinite;
+    animation: coin 3.8s ease-out infinite;
 }
 
-
 .coin::after {
+
     content: "$";
 
     position: absolute;
+
     inset: 0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    color: #a76500;
+    color: #9c5d00;
 
     font-size: 8px;
+
     font-weight: 900;
 }
 
@@ -451,6 +318,7 @@ body {
 ===================================================== */
 
 .spark {
+
     position: absolute;
 
     left: 50%;
@@ -461,16 +329,46 @@ body {
 
     border-radius: 50%;
 
-    background: #fff;
+    background: white;
 
     box-shadow:
-        0 0 5px #fff,
+        0 0 5px white,
         0 0 12px #00ff88,
-        0 0 20px #fff;
+        0 0 22px white;
 
     opacity: 0;
 
-    animation: sparkBurst 3.6s infinite;
+    animation: spark 3.8s ease-out infinite;
+}
+
+
+/* =====================================================
+   STAR RAYS
+===================================================== */
+
+.ray {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 3px;
+    height: 35px;
+
+    background:
+        linear-gradient(
+            to top,
+            transparent,
+            white,
+            #00ff88
+        );
+
+    transform-origin: bottom center;
+
+    opacity: 0;
+
+    animation: ray 3.8s infinite;
 }
 
 
@@ -479,10 +377,11 @@ body {
 ===================================================== */
 
 .confetti {
+
     position: absolute;
 
-    top: 50%;
     left: 50%;
+    top: 50%;
 
     width: 6px;
     height: 13px;
@@ -491,42 +390,48 @@ body {
 
     opacity: 0;
 
-    animation: confettiBurst 3.6s infinite;
+    animation: confetti 3.8s linear infinite;
 }
 
 
 /* =====================================================
-   ANIMATION
+   GIFT ANIMATION
 ===================================================== */
 
-@keyframes giftAppear {
+@keyframes giftShow {
 
-    0%, 52%, 100% {
+    0%,
+    48%,
+    100% {
+
         opacity: 0;
 
         transform:
             translate(-50%, -50%)
-            scale(.25)
+            scale(.2)
             rotate(-12deg);
     }
 
-    8% {
+    7% {
+
         opacity: 1;
 
         transform:
             translate(-50%, -50%)
             scale(1.25)
-            rotate(5deg);
+            rotate(6deg);
     }
 
-    16% {
+    13% {
+
         transform:
             translate(-50%, -50%)
             scale(.92)
             rotate(-3deg);
     }
 
-    25% {
+    20% {
+
         opacity: 1;
 
         transform:
@@ -535,294 +440,385 @@ body {
             rotate(0);
     }
 
-    48% {
+    43% {
+
         opacity: 1;
 
         transform:
             translate(-50%, -50%)
-            scale(1.05);
+            scale(1.08)
+            rotate(0);
     }
 }
 
 
-@keyframes lidOpen {
+/* =====================================================
+   LID
+===================================================== */
 
-    0%, 8% {
-        transform:
-            rotate(0deg)
-            translateY(0);
-    }
+@keyframes lid {
 
-    18%, 48% {
-        transform:
-            rotate(-32deg)
-            translate(-4px, -13px);
-    }
-
-    55%, 100% {
-        transform:
-            rotate(0deg)
-            translateY(0);
-    }
-}
-
-
-@keyframes giftLight {
-
-    0%, 15%, 100% {
-        opacity: 0;
-        transform: translateX(-50%) scale(.3);
-    }
-
-    20% {
-        opacity: 1;
-        transform: translateX(-50%) scale(1.7);
-    }
-
-    35% {
-        opacity: .8;
-        transform: translateX(-50%) scale(1.1);
-    }
-
-    50% {
-        opacity: 0;
-    }
-}
-
-
-@keyframes coinBurst {
-
-    0%, 8% {
-        opacity: 0;
+    0%,
+    8% {
 
         transform:
-            translate(-50%, -50%)
-            translate(0, 0)
             rotate(0)
-            scale(.3);
+            translate(0,0);
     }
 
-    15% {
-        opacity: 1;
+    15%,
+    43% {
+
+        transform:
+            rotate(-34deg)
+            translate(-5px,-15px);
     }
 
-    58% {
+    52%,
+    100% {
+
+        transform:
+            rotate(0)
+            translate(0,0);
+    }
+}
+
+
+/* =====================================================
+   FLASH
+===================================================== */
+
+@keyframes flash {
+
+    0%,
+    12% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.1);
+    }
+
+    17% {
+
         opacity: 1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.2);
+    }
+
+    28% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(3.8);
     }
 
     100% {
         opacity: 0;
-
-        transform:
-            translate(-50%, -50%)
-            translate(var(--x), var(--y))
-            rotate(720deg)
-            scale(1.15);
     }
 }
 
 
-@keyframes sparkBurst {
+/* =====================================================
+   COINS
+===================================================== */
 
-    0%, 10% {
+@keyframes coin {
+
+    0%,
+    10% {
+
         opacity: 0;
 
         transform:
-            translate(-50%, -50%)
+            translate(-50%,-50%)
+            translate(0,0)
+            scale(.3)
+            rotate(0);
+    }
+
+    17% {
+        opacity: 1;
+    }
+
+    62% {
+        opacity: 1;
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%,-50%)
+            translate(var(--x),var(--y))
+            scale(1.15)
+            rotate(900deg);
+    }
+}
+
+
+/* =====================================================
+   SPARKS
+===================================================== */
+
+@keyframes spark {
+
+    0%,
+    10% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%,-50%)
+            translate(0,0)
             scale(.2);
     }
 
-    18% {
+    16% {
         opacity: 1;
     }
 
-    60% {
+    55% {
         opacity: 1;
     }
 
     100% {
+
         opacity: 0;
 
         transform:
-            translate(-50%, -50%)
-            translate(var(--x), var(--y))
+            translate(-50%,-50%)
+            translate(var(--x),var(--y))
             scale(1.8);
     }
 }
 
 
-@keyframes confettiBurst {
+/* =====================================================
+   RAYS
+===================================================== */
 
-    0%, 8% {
+@keyframes ray {
+
+    0%,
+    10% {
+
         opacity: 0;
 
         transform:
-            translate(-50%, -50%)
-            translate(0, 0)
+            translate(-50%,-100%)
+            rotate(var(--angle))
+            scaleY(.2);
+    }
+
+    17% {
+        opacity: 1;
+    }
+
+    35% {
+
+        opacity: .8;
+
+        transform:
+            translate(-50%,-100%)
+            rotate(var(--angle))
+            scaleY(1);
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+@keyframes confetti {
+
+    0%,
+    10% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%,-50%)
+            translate(0,0)
             rotate(0);
     }
 
-    15% {
+    16% {
         opacity: 1;
     }
 
     100% {
+
         opacity: 0;
 
         transform:
-            translate(-50%, -50%)
-            translate(var(--x), var(--y))
-            rotate(720deg);
+            translate(-50%,-50%)
+            translate(var(--x),var(--y))
+            rotate(900deg);
     }
 }
 
 
 /* =====================================================
-   POSITIONS
+   COIN POSITIONS
 ===================================================== */
 
 .coin:nth-child(3) {
-    --x: -145px;
-    --y: -55px;
+    --x: -170px;
+    --y: -35px;
 }
 
 .coin:nth-child(4) {
-    --x: 150px;
-    --y: -70px;
+    --x: 170px;
+    --y: -40px;
 }
 
 .coin:nth-child(5) {
-    --x: -105px;
-    --y: 50px;
+    --x: -125px;
+    --y: 35px;
 }
 
 .coin:nth-child(6) {
-    --x: 115px;
-    --y: 55px;
-}
-
-
-/* Sparks */
-
-.spark:nth-child(7) {
-    --x: -155px;
-    --y: -65px;
-}
-
-.spark:nth-child(8) {
-    --x: 160px;
-    --y: -80px;
-}
-
-.spark:nth-child(9) {
-    --x: -135px;
-    --y: 70px;
-}
-
-.spark:nth-child(10) {
-    --x: 140px;
-    --y: 80px;
-}
-
-
-/* Confetti */
-
-.confetti:nth-child(11) {
-    --x: -175px;
-    --y: -85px;
-    background: #ff315d;
-}
-
-.confetti:nth-child(12) {
-    --x: -80px;
-    --y: -110px;
-    background: #ffd21c;
-}
-
-.confetti:nth-child(13) {
-    --x: 80px;
-    --y: -115px;
-    background: #00ff88;
-}
-
-.confetti:nth-child(14) {
-    --x: 175px;
-    --y: -80px;
-    background: #8c52ff;
-}
-
-.confetti:nth-child(15) {
-    --x: -160px;
-    --y: 95px;
-    background: #00d9ff;
-}
-
-.confetti:nth-child(16) {
-    --x: 160px;
-    --y: 100px;
-    background: #ff6b00;
+    --x: 125px;
+    --y: 40px;
 }
 
 
 /* =====================================================
-   GREEN BREATH
+   SPARK POSITIONS
 ===================================================== */
 
-@keyframes greenBreath {
+.spark:nth-child(7) {
+    --x: -175px;
+    --y: -45px;
+}
 
-    0%, 100% {
-        filter: brightness(1);
-    }
+.spark:nth-child(8) {
+    --x: 175px;
+    --y: -50px;
+}
 
-    50% {
-        filter: brightness(1.04);
-    }
+.spark:nth-child(9) {
+    --x: -145px;
+    --y: 45px;
+}
+
+.spark:nth-child(10) {
+    --x: 145px;
+    --y: 50px;
 }
 
 
-@keyframes scanGreen {
+/* =====================================================
+   RAYS
+===================================================== */
 
-    0% {
-        transform: translateX(0);
-        opacity: .18;
-    }
+.ray:nth-child(11) {
+    --angle: 0deg;
+}
 
-    10% {
-        opacity: .90;
-    }
+.ray:nth-child(12) {
+    --angle: 45deg;
+}
 
-    25% {
-        transform: translateX(325px);
-        opacity: .95;
-    }
+.ray:nth-child(13) {
+    --angle: 90deg;
+}
 
-    31%, 100% {
-        transform: translateX(325px);
-        opacity: .12;
-    }
+.ray:nth-child(14) {
+    --angle: 135deg;
+}
+
+.ray:nth-child(15) {
+    --angle: 180deg;
+}
+
+.ray:nth-child(16) {
+    --angle: 225deg;
+}
+
+.ray:nth-child(17) {
+    --angle: 270deg;
+}
+
+.ray:nth-child(18) {
+    --angle: 315deg;
 }
 
 
-@keyframes scanGreenReverse {
+/* =====================================================
+   CONFETTI
+===================================================== */
 
-    0% {
-        transform: translateX(0);
-        opacity: .18;
-    }
+.confetti:nth-child(19) {
+    --x: -190px;
+    --y: -40px;
+    background: #ff315d;
+}
 
-    10% {
-        opacity: .90;
-    }
+.confetti:nth-child(20) {
+    --x: -120px;
+    --y: -70px;
+    background: #ffd21c;
+}
 
-    25% {
-        transform: translateX(-325px);
-        opacity: .95;
-    }
+.confetti:nth-child(21) {
+    --x: -50px;
+    --y: -85px;
+    background: #00ff88;
+}
 
-    31%, 100% {
-        transform: translateX(-325px);
-        opacity: .12;
-    }
+.confetti:nth-child(22) {
+    --x: 55px;
+    --y: -85px;
+    background: #8c52ff;
+}
+
+.confetti:nth-child(23) {
+    --x: 125px;
+    --y: -65px;
+    background: #00d9ff;
+}
+
+.confetti:nth-child(24) {
+    --x: 190px;
+    --y: -35px;
+    background: #ff6600;
+}
+
+
+/* =====================================================
+   COPY TRADE AREA
+   کوچکتر است، پس افکت کمی جمع‌وجورتر می‌شود
+===================================================== */
+
+.top-effect .gift {
+    transform:
+        translate(-50%, -50%)
+        scale(.65);
+}
+
+.top-effect .coin {
+    transform:
+        translate(-50%, -50%)
+        scale(.75);
+}
+
+.top-effect .spark {
+    transform:
+        translate(-50%, -50%)
+        scale(.7);
 }
 
 </style>
@@ -831,70 +827,115 @@ body {
 
 <body>
 
-<!-- COPY TRADE PANEL -->
-<div class="copy-trade-panel">
-    <div class="copy-trade-text" id="copyTradeBalance"></div>
-</div>
-
 
 <!-- =================================================
-     پنل بالایی
+     جشن ناحیه بالایی
 ================================================= -->
 
-<div class="webcam-panel">
+<div class="top-effect">
 
-    <div class="celebration">
+    <div class="flash"></div>
 
-        <div class="gift">
+    <div class="gift">
 
-            <div class="gift-glow"></div>
-            <div class="gift-lid"></div>
-            <div class="gift-box"></div>
-            <div class="gift-ribbon-v"></div>
-            <div class="gift-ribbon-h"></div>
+        <div class="gift-box"></div>
+        <div class="gift-lid"></div>
 
-        </div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
 
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-        <div class="coin"></div>
-
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-        <div class="spark"></div>
-
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
+        <div class="gift-bow-left"></div>
+        <div class="gift-bow-right"></div>
 
     </div>
 
+
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
+
+
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+
+
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+
+
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+
 </div>
 
 
+
 <!-- =================================================
-     پنل پایینی اصلی
-     هیچ جشن یا افکتی داخلش نیست
+     جشن ناحیه دوم
 ================================================= -->
 
-<div class="webcam-frame"></div>
+<div class="middle-effect">
+
+    <div class="flash"></div>
+
+    <div class="gift">
+
+        <div class="gift-box"></div>
+        <div class="gift-lid"></div>
+
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
+
+        <div class="gift-bow-left"></div>
+        <div class="gift-bow-right"></div>
+
+    </div>
 
 
-<script>
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
 
-/* فقط عدد Copy Trade */
-const copyTradeBalance = 10000;
 
-document.getElementById("copyTradeBalance").textContent =
-    "TOTAL BALANCE COPY TRADE: $" +
-    copyTradeBalance.toLocaleString("en-US");
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
 
-</script>
+
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+    <div class="ray"></div>
+
+
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+
+</div>
+
 
 </body>
 </html>
