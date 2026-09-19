@@ -4,325 +4,289 @@
 <meta charset="UTF-8">
 
 <style>
-
 html,
 body {
     width: 1920px;
     height: 1080px;
-
     margin: 0;
     padding: 0;
-
     overflow: hidden;
-
     background: transparent !important;
 }
 
+/* =========================================================
+   فقط محدوده‌ی افکت‌ها — کاملاً نامرئی
+   ========================================================= */
 
-/* =====================================================
-   دو محدوده نامرئی فقط برای محدود کردن افکت
-   هیچ قاب، رنگ یا Border ندارند
-===================================================== */
-
-.top-effect {
+.effect-top,
+.effect-middle {
     position: absolute;
-
     left: 40px;
+    width: 430px;
+    overflow: hidden;
+    pointer-events: none;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* محدوده اول */
+.effect-top {
     bottom: 539px;
-
-    width: 430px;
     height: 55px;
-
-    overflow: hidden;
-
-    pointer-events: none;
 }
 
-
-.middle-effect {
-    position: absolute;
-
-    left: 40px;
+/* محدوده دوم */
+.effect-middle {
     bottom: 389px;
-
-    width: 430px;
     height: 140px;
-
-    overflow: hidden;
-
-    pointer-events: none;
 }
 
 
-/* =====================================================
-   CENTER FLASH
-===================================================== */
+/* =========================================================
+   TOP AREA
+   🎁 Gift Burst
+   ========================================================= */
 
-.flash {
+.top-gift {
     position: absolute;
-
     left: 50%;
     top: 50%;
-
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        0 0 10px white,
-        0 0 25px #fff,
-        0 0 45px #00ff88,
-        0 0 70px #00ff88;
-
-    transform: translate(-50%, -50%) scale(0);
-
+    width: 32px;
+    height: 28px;
+    transform: translate(-50%, -50%) scale(.2);
     opacity: 0;
 
-    animation: flash 3.8s infinite;
+    animation: topGift 4.6s ease-in-out infinite;
 }
 
-
-/* =====================================================
-   GIFT
-===================================================== */
-
-.gift {
+/* جعبه */
+.top-gift-box {
     position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 64px;
-    height: 58px;
-
-    transform:
-        translate(-50%, -50%)
-        scale(.2);
-
-    opacity: 0;
-
-    z-index: 5;
-
-    filter:
-        drop-shadow(0 0 8px #ff2670)
-        drop-shadow(0 0 20px #ff0066)
-        drop-shadow(0 0 35px rgba(255,0,100,.8));
-
-    animation:
-        giftShow 3.8s
-        cubic-bezier(.2,.8,.2,1)
-        infinite;
-}
-
-
-/* Gift box */
-
-.gift-box {
-    position: absolute;
-
-    left: 6px;
+    left: 3px;
     bottom: 0;
+    width: 26px;
+    height: 19px;
 
-    width: 52px;
-    height: 37px;
+    background: linear-gradient(
+        90deg,
+        #ff1744,
+        #ff4081,
+        #ff1744
+    );
 
-    border-radius: 5px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff4775 0%,
-            #ff005d 50%,
-            #b90045 100%
-        );
+    border-radius: 3px;
 
     box-shadow:
-        inset 0 2px 4px rgba(255,255,255,.35);
+        0 0 8px rgba(255, 23, 68, .9),
+        0 0 18px rgba(255, 23, 68, .5);
 }
 
-
-/* Gift lid */
-
-.gift-lid {
+/* درب */
+.top-gift-lid {
     position: absolute;
-
     left: 1px;
-    top: 9px;
+    top: 3px;
+    width: 30px;
+    height: 7px;
 
-    width: 62px;
-    height: 12px;
+    background: linear-gradient(
+        90deg,
+        #ff4081,
+        #ff80ab,
+        #ff4081
+    );
 
-    border-radius: 5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff174f,
-            #ff5a83,
-            #ff174f
-        );
+    border-radius: 3px;
 
     transform-origin: left bottom;
 
-    animation: lid 3.8s infinite;
-
-    z-index: 3;
+    animation: topLid 4.6s ease-in-out infinite;
 }
 
-
-/* Vertical ribbon */
-
-.gift-ribbon-v {
+/* روبان عمودی */
+.top-gift-ribbon {
     position: absolute;
+    left: 13px;
+    top: 3px;
+    width: 5px;
+    height: 25px;
 
-    left: 27px;
-    top: 8px;
-
-    width: 9px;
-    height: 48px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffb800,
-            #fff06a,
-            #ffb800
-        );
+    background: #ffd740;
 
     box-shadow:
-        0 0 7px #ffd21c;
-
-    z-index: 4;
+        0 0 7px #ffd740;
 }
 
-
-/* Horizontal ribbon */
-
-.gift-ribbon-h {
+/* روبان افقی */
+.top-gift-ribbon2 {
     position: absolute;
+    left: 3px;
+    top: 10px;
+    width: 26px;
+    height: 4px;
 
-    left: 6px;
-    top: 24px;
-
-    width: 52px;
-    height: 7px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffb800,
-            #fff06a,
-            #ffb800
-        );
-
-    z-index: 4;
+    background: #ffd740;
 }
 
 
-/* Bow */
+/* =========================================================
+   TOP COINS
+   ========================================================= */
 
-.gift-bow-left,
-.gift-bow-right {
-
+.top-coin {
     position: absolute;
-
-    top: -2px;
-
-    width: 25px;
-    height: 17px;
-
-    background: #ffd21c;
-
-    border-radius: 70% 20% 70% 20%;
-
-    box-shadow:
-        0 0 7px #ffd21c;
-}
-
-.gift-bow-left {
-    left: 9px;
-
-    transform: rotate(-30deg);
-}
-
-.gift-bow-right {
-    right: 9px;
-
-    transform: rotate(30deg);
-}
-
-
-/* =====================================================
-   COINS
-===================================================== */
-
-.coin {
-
-    position: absolute;
-
     left: 50%;
     top: 50%;
 
-    width: 15px;
-    height: 15px;
+    width: 8px;
+    height: 8px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
-            circle at 30% 25%,
-            #fffbd0,
-            #ffe43b 35%,
-            #ffb000 70%,
-            #d87800
+            circle at 35% 30%,
+            #fff8a6,
+            #ffd740 45%,
+            #ff9800
         );
 
-    border: 1px solid #fff4a0;
-
     box-shadow:
-        0 0 6px #ffe14a,
-        0 0 14px #ffae00,
-        0 0 22px rgba(255,180,0,.8);
+        0 0 5px #ffd740,
+        0 0 10px rgba(255, 193, 7, .7);
 
     opacity: 0;
 
-    animation: coin 3.8s ease-out infinite;
+    animation: topCoin 4.6s ease-out infinite;
 }
 
-.coin::after {
-
+.top-coin::after {
     content: "$";
 
     position: absolute;
-
     inset: 0;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    color: #9c5d00;
-
-    font-size: 8px;
-
-    font-weight: 900;
+    font-size: 5px;
+    font-weight: bold;
+    color: #8d5a00;
 }
 
 
-/* =====================================================
-   SPARKS
-===================================================== */
+/* مسیر سکه‌ها */
 
-.spark {
+.top-coin:nth-of-type(2) {
+    --tx: -145px;
+    --ty: -16px;
+}
 
+.top-coin:nth-of-type(3) {
+    --tx: -85px;
+    --ty: 17px;
+}
+
+.top-coin:nth-of-type(4) {
+    --tx: 85px;
+    --ty: -15px;
+}
+
+.top-coin:nth-of-type(5) {
+    --tx: 145px;
+    --ty: 16px;
+}
+
+
+/* =========================================================
+   TOP SPARKS
+   ========================================================= */
+
+.top-spark {
     position: absolute;
 
     left: 50%;
     top: 50%;
+
+    width: 3px;
+    height: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 5px #fff,
+        0 0 10px #ffd740;
+
+    opacity: 0;
+
+    animation: topSpark 4.6s ease-out infinite;
+}
+
+.top-spark:nth-of-type(6) {
+    --sx: -105px;
+    --sy: -22px;
+}
+
+.top-spark:nth-of-type(7) {
+    --sx: 105px;
+    --sy: -22px;
+}
+
+.top-spark:nth-of-type(8) {
+    --sx: -120px;
+    --sy: 22px;
+}
+
+.top-spark:nth-of-type(9) {
+    --sx: 120px;
+    --sy: 22px;
+}
+
+
+/* =========================================================
+   TOP LIGHT FLASH
+   ========================================================= */
+
+.top-flash {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 110px;
+    height: 110px;
+
+    transform: translate(-50%, -50%) scale(.1);
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,.9) 0%,
+        rgba(255,215,64,.35) 25%,
+        transparent 70%
+    );
+
+    opacity: 0;
+
+    animation: topFlash 4.6s infinite;
+}
+
+
+/* =========================================================
+   MIDDLE AREA
+   🎉 CONFETTI PARTY
+   ========================================================= */
+
+.middle-burst {
+    position: absolute;
+
+    left: 50%;
+    top: 52%;
 
     width: 5px;
     height: 5px;
@@ -332,600 +296,563 @@ body {
     background: white;
 
     box-shadow:
-        0 0 5px white,
-        0 0 12px #00ff88,
-        0 0 22px white;
+        0 0 8px white,
+        0 0 16px #ffd740;
+
+    animation: middleBurst 5.2s ease-out infinite;
 
     opacity: 0;
-
-    animation: spark 3.8s ease-out infinite;
 }
 
 
-/* =====================================================
-   STAR RAYS
-===================================================== */
+/* =========================================================
+   MIDDLE COINS
+   ========================================================= */
 
-.ray {
-
+.middle-coin {
     position: absolute;
 
     left: 50%;
     top: 50%;
 
-    width: 3px;
-    height: 35px;
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
 
     background:
-        linear-gradient(
-            to top,
-            transparent,
-            white,
-            #00ff88
+        radial-gradient(
+            circle at 30% 25%,
+            #fffbd0,
+            #ffd740 40%,
+            #f57c00 100%
         );
 
-    transform-origin: bottom center;
+    border: 1px solid rgba(255,255,255,.65);
+
+    box-shadow:
+        0 0 8px #ffd740,
+        0 0 18px rgba(255,193,7,.7);
 
     opacity: 0;
 
-    animation: ray 3.8s infinite;
+    animation: middleCoin 5.2s ease-out infinite;
+}
+
+.middle-coin::after {
+    content: "$";
+
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 8px;
+    font-weight: bold;
+
+    color: #8d5a00;
 }
 
 
-/* =====================================================
+/* مسیرهای متفاوت */
+
+.middle-coin:nth-of-type(2) {
+    --mx: -175px;
+    --my: -45px;
+    --rot: 520deg;
+}
+
+.middle-coin:nth-of-type(3) {
+    --mx: -125px;
+    --my: 42px;
+    --rot: -430deg;
+}
+
+.middle-coin:nth-of-type(4) {
+    --mx: 125px;
+    --my: -40px;
+    --rot: 480deg;
+}
+
+.middle-coin:nth-of-type(5) {
+    --mx: 175px;
+    --my: 45px;
+    --rot: -520deg;
+}
+
+.middle-coin:nth-of-type(6) {
+    --mx: 0px;
+    --my: -58px;
+    --rot: 360deg;
+}
+
+
+/* =========================================================
    CONFETTI
-===================================================== */
+   ========================================================= */
 
 .confetti {
-
     position: absolute;
 
     left: 50%;
-    top: 50%;
+    top: 48%;
 
-    width: 6px;
+    width: 5px;
     height: 13px;
 
-    border-radius: 2px;
+    border-radius: 1px;
 
     opacity: 0;
 
-    animation: confetti 3.8s linear infinite;
+    animation: confettiFall 5.2s linear infinite;
+}
+
+/* رنگ‌ها */
+.confetti:nth-of-type(7) {
+    background: #ff4081;
+    --cx: -190px;
+    --cy: 100px;
+    --cr: 480deg;
+}
+
+.confetti:nth-of-type(8) {
+    background: #ffd740;
+    --cx: -145px;
+    --cy: 90px;
+    --cr: -540deg;
+}
+
+.confetti:nth-of-type(9) {
+    background: #40c4ff;
+    --cx: -80px;
+    --cy: 105px;
+    --cr: 620deg;
+}
+
+.confetti:nth-of-type(10) {
+    background: #69f0ae;
+    --cx: 80px;
+    --cy: 100px;
+    --cr: -580deg;
+}
+
+.confetti:nth-of-type(11) {
+    background: #ff5252;
+    --cx: 145px;
+    --cy: 90px;
+    --cr: 500deg;
+}
+
+.confetti:nth-of-type(12) {
+    background: #7c4dff;
+    --cx: 190px;
+    --cy: 105px;
+    --cr: -620deg;
+}
+
+.confetti:nth-of-type(13) {
+    background: #fff;
+    --cx: -55px;
+    --cy: 75px;
+    --cr: 450deg;
+}
+
+.confetti:nth-of-type(14) {
+    background: #ffab40;
+    --cx: 55px;
+    --cy: 78px;
+    --cr: -470deg;
 }
 
 
-/* =====================================================
-   GIFT ANIMATION
-===================================================== */
+/* =========================================================
+   MIDDLE SPARK RING
+   ========================================================= */
 
-@keyframes giftShow {
+.ring-spark {
+    position: absolute;
 
-    0%,
-    48%,
-    100% {
+    left: 50%;
+    top: 52%;
 
-        opacity: 0;
+    width: 4px;
+    height: 4px;
 
-        transform:
-            translate(-50%, -50%)
-            scale(.2)
-            rotate(-12deg);
-    }
+    background: #fff;
 
-    7% {
+    border-radius: 50%;
 
-        opacity: 1;
+    box-shadow:
+        0 0 7px #fff,
+        0 0 14px #ffd740;
 
-        transform:
-            translate(-50%, -50%)
-            scale(1.25)
-            rotate(6deg);
-    }
+    opacity: 0;
 
-    13% {
+    animation: ringSpark 5.2s ease-out infinite;
+}
 
-        transform:
-            translate(-50%, -50%)
-            scale(.92)
-            rotate(-3deg);
-    }
+.ring-spark:nth-of-type(15) {
+    --rx: -155px;
+    --ry: -55px;
+}
 
-    20% {
+.ring-spark:nth-of-type(16) {
+    --rx: 155px;
+    --ry: -55px;
+}
 
-        opacity: 1;
+.ring-spark:nth-of-type(17) {
+    --rx: -165px;
+    --ry: 55px;
+}
 
-        transform:
-            translate(-50%, -50%)
-            scale(1)
-            rotate(0);
-    }
+.ring-spark:nth-of-type(18) {
+    --rx: 165px;
+    --ry: 55px;
+}
 
-    43% {
+.ring-spark:nth-of-type(19) {
+    --rx: -95px;
+    --ry: 65px;
+}
 
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            scale(1.08)
-            rotate(0);
-    }
+.ring-spark:nth-of-type(20) {
+    --rx: 95px;
+    --ry: 65px;
 }
 
 
-/* =====================================================
-   LID
-===================================================== */
+/* =========================================================
+   TOP ANIMATIONS
+   ========================================================= */
 
-@keyframes lid {
+@keyframes topGift {
 
-    0%,
-    8% {
-
-        transform:
-            rotate(0)
-            translate(0,0);
-    }
-
-    15%,
-    43% {
-
-        transform:
-            rotate(-34deg)
-            translate(-5px,-15px);
-    }
-
-    52%,
-    100% {
-
-        transform:
-            rotate(0)
-            translate(0,0);
-    }
-}
-
-
-/* =====================================================
-   FLASH
-===================================================== */
-
-@keyframes flash {
-
-    0%,
-    12% {
-
+    0%, 8% {
         opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            scale(.1);
-    }
-
-    17% {
-
-        opacity: 1;
-
-        transform:
-            translate(-50%,-50%)
-            scale(1.2);
-    }
-
-    28% {
-
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            scale(3.8);
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-
-/* =====================================================
-   COINS
-===================================================== */
-
-@keyframes coin {
-
-    0%,
-    10% {
-
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(0,0)
-            scale(.3)
-            rotate(0);
-    }
-
-    17% {
-        opacity: 1;
-    }
-
-    62% {
-        opacity: 1;
-    }
-
-    100% {
-
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(var(--x),var(--y))
-            scale(1.15)
-            rotate(900deg);
-    }
-}
-
-
-/* =====================================================
-   SPARKS
-===================================================== */
-
-@keyframes spark {
-
-    0%,
-    10% {
-
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(0,0)
-            scale(.2);
+        transform: translate(-50%, -50%) scale(.15);
     }
 
     16% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(.85);
+    }
+
+    23% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    35% {
+        transform: translate(-50%, -50%) scale(.9);
+    }
+
+    45%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.35);
+    }
+}
+
+@keyframes topLid {
+
+    0%, 18% {
+        transform: rotate(0deg) translateY(0);
+    }
+
+    25% {
+        transform: rotate(-32deg) translate(-4px, -5px);
+    }
+
+    42% {
+        transform: rotate(-32deg) translate(-4px, -5px);
+    }
+
+    52%, 100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes topCoin {
+
+    0%, 20% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(.2);
+    }
+
+    28% {
+        opacity: 1;
+    }
+
+    58% {
+        opacity: 1;
+        transform:
+            translate(
+                calc(-50% + var(--tx)),
+                calc(-50% + var(--ty))
+            )
+            scale(1);
+    }
+
+    82% {
+        opacity: 0;
+        transform:
+            translate(
+                calc(-50% + var(--tx)),
+                calc(-50% + var(--ty))
+            )
+            scale(.55)
+            rotate(300deg);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes topSpark {
+
+    0%, 22% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.1);
+    }
+
+    35% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+        transform:
+            translate(
+                calc(-50% + var(--sx)),
+                calc(-50% + var(--sy))
+            )
+            scale(1.3);
+    }
+
+    82% {
+        opacity: 0;
+        transform:
+            translate(
+                calc(-50% + var(--sx)),
+                calc(-50% + var(--sy))
+            )
+            scale(.2);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes topFlash {
+
+    0%, 18% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.1);
+    }
+
+    27% {
+        opacity: .8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    40% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.7);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   MIDDLE ANIMATIONS
+   ========================================================= */
+
+@keyframes middleBurst {
+
+    0%, 8% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.1);
+    }
+
+    18% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.4);
+    }
+
+    45% {
+        opacity: .8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    70%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
+
+@keyframes middleCoin {
+
+    0%, 10% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(.15)
+            rotate(0deg);
+    }
+
+    18% {
         opacity: 1;
     }
 
     55% {
         opacity: 1;
+        transform:
+            translate(
+                calc(-50% + var(--mx)),
+                calc(-50% + var(--my))
+            )
+            scale(1)
+            rotate(var(--rot));
+    }
+
+    78% {
+        opacity: .7;
     }
 
     100% {
-
         opacity: 0;
-
         transform:
-            translate(-50%,-50%)
-            translate(var(--x),var(--y))
-            scale(1.8);
+            translate(
+                calc(-50% + var(--mx)),
+                calc(-50% + var(--my))
+            )
+            scale(.3)
+            rotate(var(--rot));
     }
 }
 
+@keyframes confettiFall {
 
-/* =====================================================
-   RAYS
-===================================================== */
-
-@keyframes ray {
-
-    0%,
-    10% {
-
+    0% {
         opacity: 0;
-
         transform:
-            translate(-50%,-100%)
-            rotate(var(--angle))
-            scaleY(.2);
+            translate(-50%, -50%)
+            translateY(-15px)
+            rotate(0deg);
     }
 
-    17% {
+    12% {
         opacity: 1;
     }
 
-    35% {
-
-        opacity: .8;
-
+    75% {
+        opacity: .9;
         transform:
-            translate(-50%,-100%)
-            rotate(var(--angle))
-            scaleY(1);
-    }
-
-    50% {
-        opacity: 0;
-    }
-}
-
-
-/* =====================================================
-   CONFETTI
-===================================================== */
-
-@keyframes confetti {
-
-    0%,
-    10% {
-
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(0,0)
-            rotate(0);
-    }
-
-    16% {
-        opacity: 1;
+            translate(
+                calc(-50% + var(--cx)),
+                calc(-50% + var(--cy))
+            )
+            rotate(var(--cr));
     }
 
     100% {
-
         opacity: 0;
-
         transform:
-            translate(-50%,-50%)
-            translate(var(--x),var(--y))
-            rotate(900deg);
+            translate(
+                calc(-50% + var(--cx)),
+                calc(-50% + var(--cy))
+            )
+            rotate(calc(var(--cr) + 180deg));
     }
 }
 
+@keyframes ringSpark {
 
-/* =====================================================
-   COIN POSITIONS
-===================================================== */
+    0%, 12% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.1);
+    }
 
-.coin:nth-child(3) {
-    --x: -170px;
-    --y: -35px;
+    25% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+        transform:
+            translate(
+                calc(-50% + var(--rx)),
+                calc(-50% + var(--ry))
+            )
+            scale(1.5);
+    }
+
+    85%, 100% {
+        opacity: 0;
+        transform:
+            translate(
+                calc(-50% + var(--rx)),
+                calc(-50% + var(--ry))
+            )
+            scale(.2);
+    }
 }
-
-.coin:nth-child(4) {
-    --x: 170px;
-    --y: -40px;
-}
-
-.coin:nth-child(5) {
-    --x: -125px;
-    --y: 35px;
-}
-
-.coin:nth-child(6) {
-    --x: 125px;
-    --y: 40px;
-}
-
-
-/* =====================================================
-   SPARK POSITIONS
-===================================================== */
-
-.spark:nth-child(7) {
-    --x: -175px;
-    --y: -45px;
-}
-
-.spark:nth-child(8) {
-    --x: 175px;
-    --y: -50px;
-}
-
-.spark:nth-child(9) {
-    --x: -145px;
-    --y: 45px;
-}
-
-.spark:nth-child(10) {
-    --x: 145px;
-    --y: 50px;
-}
-
-
-/* =====================================================
-   RAYS
-===================================================== */
-
-.ray:nth-child(11) {
-    --angle: 0deg;
-}
-
-.ray:nth-child(12) {
-    --angle: 45deg;
-}
-
-.ray:nth-child(13) {
-    --angle: 90deg;
-}
-
-.ray:nth-child(14) {
-    --angle: 135deg;
-}
-
-.ray:nth-child(15) {
-    --angle: 180deg;
-}
-
-.ray:nth-child(16) {
-    --angle: 225deg;
-}
-
-.ray:nth-child(17) {
-    --angle: 270deg;
-}
-
-.ray:nth-child(18) {
-    --angle: 315deg;
-}
-
-
-/* =====================================================
-   CONFETTI
-===================================================== */
-
-.confetti:nth-child(19) {
-    --x: -190px;
-    --y: -40px;
-    background: #ff315d;
-}
-
-.confetti:nth-child(20) {
-    --x: -120px;
-    --y: -70px;
-    background: #ffd21c;
-}
-
-.confetti:nth-child(21) {
-    --x: -50px;
-    --y: -85px;
-    background: #00ff88;
-}
-
-.confetti:nth-child(22) {
-    --x: 55px;
-    --y: -85px;
-    background: #8c52ff;
-}
-
-.confetti:nth-child(23) {
-    --x: 125px;
-    --y: -65px;
-    background: #00d9ff;
-}
-
-.confetti:nth-child(24) {
-    --x: 190px;
-    --y: -35px;
-    background: #ff6600;
-}
-
-
-/* =====================================================
-   COPY TRADE AREA
-   کوچکتر است، پس افکت کمی جمع‌وجورتر می‌شود
-===================================================== */
-
-.top-effect .gift {
-    transform:
-        translate(-50%, -50%)
-        scale(.65);
-}
-
-.top-effect .coin {
-    transform:
-        translate(-50%, -50%)
-        scale(.75);
-}
-
-.top-effect .spark {
-    transform:
-        translate(-50%, -50%)
-        scale(.7);
-}
-
 </style>
 </head>
 
-
 <body>
 
+<!-- =====================================================
+     ناحیه اول
+     🎁 Gift Explosion
+     ===================================================== -->
 
-<!-- =================================================
-     جشن ناحیه بالایی
-================================================= -->
+<div class="effect-top">
 
-<div class="top-effect">
+    <div class="top-flash"></div>
 
-    <div class="flash"></div>
-
-    <div class="gift">
-
-        <div class="gift-box"></div>
-        <div class="gift-lid"></div>
-
-        <div class="gift-ribbon-v"></div>
-        <div class="gift-ribbon-h"></div>
-
-        <div class="gift-bow-left"></div>
-        <div class="gift-bow-right"></div>
-
+    <div class="top-gift">
+        <div class="top-gift-box"></div>
+        <div class="top-gift-lid"></div>
+        <div class="top-gift-ribbon"></div>
+        <div class="top-gift-ribbon2"></div>
     </div>
 
+    <div class="top-coin"></div>
+    <div class="top-coin"></div>
+    <div class="top-coin"></div>
+    <div class="top-coin"></div>
 
-    <div class="coin"></div>
-    <div class="coin"></div>
-    <div class="coin"></div>
-    <div class="coin"></div>
-
-
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-
-
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-
-
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
+    <div class="top-spark"></div>
+    <div class="top-spark"></div>
+    <div class="top-spark"></div>
+    <div class="top-spark"></div>
 
 </div>
 
 
+<!-- =====================================================
+     ناحیه دوم
+     🎉 Confetti Party
+     ===================================================== -->
 
-<!-- =================================================
-     جشن ناحیه دوم
-================================================= -->
+<div class="effect-middle">
 
-<div class="middle-effect">
+    <div class="middle-burst"></div>
 
-    <div class="flash"></div>
-
-    <div class="gift">
-
-        <div class="gift-box"></div>
-        <div class="gift-lid"></div>
-
-        <div class="gift-ribbon-v"></div>
-        <div class="gift-ribbon-h"></div>
-
-        <div class="gift-bow-left"></div>
-        <div class="gift-bow-right"></div>
-
-    </div>
-
-
-    <div class="coin"></div>
-    <div class="coin"></div>
-    <div class="coin"></div>
-    <div class="coin"></div>
-
-
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-    <div class="spark"></div>
-
-
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-
+    <div class="middle-coin"></div>
+    <div class="middle-coin"></div>
+    <div class="middle-coin"></div>
+    <div class="middle-coin"></div>
+    <div class="middle-coin"></div>
 
     <div class="confetti"></div>
     <div class="confetti"></div>
@@ -933,9 +860,17 @@ body {
     <div class="confetti"></div>
     <div class="confetti"></div>
     <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+
+    <div class="ring-spark"></div>
+    <div class="ring-spark"></div>
+    <div class="ring-spark"></div>
+    <div class="ring-spark"></div>
+    <div class="ring-spark"></div>
+    <div class="ring-spark"></div>
 
 </div>
-
 
 </body>
 </html>
