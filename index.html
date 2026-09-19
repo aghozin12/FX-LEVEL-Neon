@@ -1,1 +1,1245 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FX Copy Trade Celebration</title>
+
+<style>
+
+html,
+body {
+
+    width: 1920px;
+    height: 1080px;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background: transparent !important;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* =====================================================
+   COLORS
+===================================================== */
+
+:root {
+
+    --green: #00ff88;
+
+    --green-soft: rgba(0,255,136,.45);
+
+    --orange: #ff6600;
+
+    --gold: #ffd21f;
+
+    --white: #ffffff;
+}
+
+
+/* =====================================================
+   PANEL BASE
+===================================================== */
+
+.webcam-panel,
+.webcam-frame {
+
+    position: absolute;
+
+    left: 40px;
+
+    width: 430px;
+
+    border: 4px solid var(--green);
+
+    border-radius: 0;
+
+    box-sizing: border-box;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            rgba(0,255,136,.045) 0%,
+            rgba(0,255,136,.018) 45%,
+            transparent 78%
+        );
+
+    box-shadow:
+
+        0 0 2px #ffffff,
+        0 0 5px var(--green),
+        0 0 12px rgba(0,255,136,.80),
+        0 0 24px rgba(0,255,136,.48),
+        0 0 45px rgba(0,210,110,.28),
+
+        inset 0 0 12px rgba(0,255,136,.18),
+        inset 0 0 30px rgba(0,255,136,.08);
+
+}
+
+
+/* =====================================================
+   UPPER PANEL
+   ORIGINAL SIZE / POSITION
+===================================================== */
+
+.webcam-panel {
+
+    bottom: 389px;
+
+    height: 140px;
+
+}
+
+
+/* =====================================================
+   MIDDLE / WEBCAM PANEL
+   ORIGINAL SIZE / POSITION
+===================================================== */
+
+.webcam-frame {
+
+    bottom: 125px;
+
+    height: 250px;
+
+}
+
+
+/* =====================================================
+   INNER GLOW
+===================================================== */
+
+.webcam-panel::before,
+.webcam-frame::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+    left: 5px;
+
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+
+    border: 1px solid rgba(0,255,136,.42);
+
+    box-sizing: border-box;
+
+    box-shadow:
+
+        inset 0 0 10px rgba(0,255,136,.20),
+        inset 0 0 28px rgba(0,255,136,.08);
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   MOVING LIGHT - UPPER
+===================================================== */
+
+.webcam-panel::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: -4px;
+    right: -4px;
+
+    width: 115px;
+    height: 4px;
+
+    background:
+
+        linear-gradient(
+            270deg,
+            transparent,
+            rgba(0,255,136,.45),
+            #ffffff 50%,
+            rgba(0,255,136,.90),
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 4px #ffffff,
+        0 0 9px var(--green),
+        0 0 20px rgba(0,255,136,.65);
+
+    animation: scanReverse 7s ease-in-out infinite;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   MOVING LIGHT - MIDDLE
+===================================================== */
+
+.webcam-frame::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: -4px;
+    left: -4px;
+
+    width: 105px;
+    height: 4px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,255,136,.45),
+            #ffffff 50%,
+            rgba(0,255,136,.90),
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 4px #ffffff,
+        0 0 9px var(--green),
+        0 0 20px rgba(0,255,136,.65);
+
+    animation: scan 7s ease-in-out infinite;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   CELEBRATION LAYER
+   IMPORTANT:
+   ONLY INSIDE THE TWO PANELS
+===================================================== */
+
+.celebration {
+
+    position: absolute;
+
+    left: 40px;
+
+    top: 389px;
+
+    width: 430px;
+
+    height: 516px;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 50;
+
+}
+
+
+/*
+   The layer is transparent and has NO border.
+   It only provides the clipping area.
+
+   Upper panel:
+   top 0 → 140px
+
+   Gap:
+   140 → 264px
+
+   Middle panel:
+   264 → 516px
+*/
+
+
+/* =====================================================
+   GOLD FLASH
+===================================================== */
+
+.celebration-flash {
+
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 430px;
+
+    height: 516px;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            rgba(255,210,31,.28) 0%,
+            rgba(255,102,0,.12) 25%,
+            transparent 65%
+        );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+.celebration.active .celebration-flash {
+
+    animation: celebrationFlash 1.2s ease-out;
+
+}
+
+
+/* =====================================================
+   GIFT
+===================================================== */
+
+.gift {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 48px;
+
+    transform:
+
+        translateX(-50%)
+        scale(.2)
+        rotate(-8deg);
+
+    width: 46px;
+
+    height: 42px;
+
+    opacity: 0;
+
+    filter:
+
+        drop-shadow(0 0 5px #ffd21f)
+        drop-shadow(0 0 15px #ff6600);
+
+}
+
+
+.celebration.active .gift {
+
+    animation: giftPop 1.7s cubic-bezier(.2,1.4,.4,1) forwards;
+
+}
+
+
+/* GIFT BOX */
+
+.gift-box {
+
+    position: absolute;
+
+    left: 4px;
+
+    bottom: 0;
+
+    width: 38px;
+
+    height: 30px;
+
+    background: #ff6600;
+
+    border: 2px solid #ffd21f;
+
+    box-sizing: border-box;
+
+}
+
+
+/* GIFT LID */
+
+.gift-lid {
+
+    position: absolute;
+
+    left: 0;
+
+    top: 2px;
+
+    width: 46px;
+
+    height: 10px;
+
+    background: #ff7a00;
+
+    border: 2px solid #ffd21f;
+
+    box-sizing: border-box;
+
+}
+
+
+/* RIBBON */
+
+.gift-ribbon-v {
+
+    position: absolute;
+
+    left: 20px;
+
+    top: 0;
+
+    width: 6px;
+
+    height: 42px;
+
+    background: #ffd21f;
+
+}
+
+
+.gift-ribbon-h {
+
+    position: absolute;
+
+    left: 4px;
+
+    top: 13px;
+
+    width: 38px;
+
+    height: 6px;
+
+    background: #ffd21f;
+
+}
+
+
+/* BOW */
+
+.gift-bow-left,
+.gift-bow-right {
+
+    position: absolute;
+
+    top: -7px;
+
+    width: 15px;
+
+    height: 12px;
+
+    border: 3px solid #ffd21f;
+
+    border-radius: 50%;
+
+}
+
+
+.gift-bow-left {
+
+    left: 5px;
+
+    transform: rotate(-25deg);
+
+}
+
+
+.gift-bow-right {
+
+    right: 5px;
+
+    transform: rotate(25deg);
+
+}
+
+
+/* =====================================================
+   COINS
+===================================================== */
+
+.coin {
+
+    position: absolute;
+
+    width: 16px;
+
+    height: 16px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            #fff4a0 0%,
+            #ffd21f 45%,
+            #ff9900 100%
+        );
+
+    border: 2px solid #fff1a0;
+
+    box-shadow:
+
+        0 0 5px #ffd21f,
+        0 0 12px #ff9900;
+
+    opacity: 0;
+
+}
+
+
+.coin::after {
+
+    content: "$";
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #a94d00;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+}
+
+
+/* INDIVIDUAL COINS */
+
+.coin1 {
+
+    left: 70px;
+    top: 95px;
+
+}
+
+
+.coin2 {
+
+    left: 325px;
+    top: 80px;
+
+}
+
+
+.coin3 {
+
+    left: 125px;
+    top: 320px;
+
+}
+
+
+.coin4 {
+
+    left: 300px;
+    top: 365px;
+
+}
+
+
+.coin5 {
+
+    left: 55px;
+    top: 420px;
+
+}
+
+
+.coin6 {
+
+    left: 360px;
+    top: 450px;
+
+}
+
+
+.celebration.active .coin1 {
+
+    animation: coinFly1 1.8s ease-out forwards;
+
+}
+
+
+.celebration.active .coin2 {
+
+    animation: coinFly2 1.9s ease-out forwards;
+
+}
+
+
+.celebration.active .coin3 {
+
+    animation: coinFly3 1.7s ease-out forwards;
+
+}
+
+
+.celebration.active .coin4 {
+
+    animation: coinFly4 2s ease-out forwards;
+
+}
+
+
+.celebration.active .coin5 {
+
+    animation: coinFly5 1.8s ease-out forwards;
+
+}
+
+
+.celebration.active .coin6 {
+
+    animation: coinFly6 2.1s ease-out forwards;
+
+}
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+.confetti {
+
+    position: absolute;
+
+    width: 5px;
+
+    height: 14px;
+
+    opacity: 0;
+
+    box-shadow:
+
+        0 0 5px currentColor;
+
+}
+
+
+.c1 {
+    left: 35px;
+    top: 30px;
+    background: #ff6600;
+}
+
+.c2 {
+    left: 90px;
+    top: 150px;
+    background: #ffd21f;
+}
+
+.c3 {
+    left: 170px;
+    top: 35px;
+    background: #ffffff;
+}
+
+.c4 {
+    left: 250px;
+    top: 160px;
+    background: #ff6600;
+}
+
+.c5 {
+    left: 370px;
+    top: 25px;
+    background: #ffd21f;
+}
+
+.c6 {
+    left: 45px;
+    top: 350px;
+    background: #ffffff;
+}
+
+.c7 {
+    left: 200px;
+    top: 290px;
+    background: #ff6600;
+}
+
+.c8 {
+    left: 350px;
+    top: 330px;
+    background: #ffd21f;
+}
+
+
+.celebration.active .confetti {
+
+    animation: confettiFall 1.8s ease-out forwards;
+
+}
+
+
+/* =====================================================
+   BIG PROFIT SPARKS
+===================================================== */
+
+.spark {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 70px;
+
+    width: 5px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+
+        0 0 5px #ffffff,
+        0 0 12px #ffd21f,
+        0 0 25px #ff6600;
+
+    opacity: 0;
+
+}
+
+
+.celebration.active .spark {
+
+    animation: sparkBurst 1.2s ease-out forwards;
+
+}
+
+
+.spark:nth-child(1) {
+    --x: -150px;
+    --y: -50px;
+}
+
+.spark:nth-child(2) {
+    --x: 150px;
+    --y: -40px;
+}
+
+.spark:nth-child(3) {
+    --x: -190px;
+    --y: 80px;
+}
+
+.spark:nth-child(4) {
+    --x: 190px;
+    --y: 90px;
+}
+
+.spark:nth-child(5) {
+    --x: -120px;
+    --y: 180px;
+}
+
+.spark:nth-child(6) {
+    --x: 130px;
+    --y: 200px;
+}
+
+
+/* =====================================================
+   CELEBRATION ANIMATIONS
+===================================================== */
+
+@keyframes celebrationFlash {
+
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+@keyframes giftPop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            scale(.2)
+            rotate(-8deg);
+
+    }
+
+    25% {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1.35)
+            rotate(8deg);
+
+    }
+
+    45% {
+
+        transform:
+            translateX(-50%)
+            scale(.95)
+            rotate(-4deg);
+
+    }
+
+    65% {
+
+        transform:
+            translateX(-50%)
+            scale(1.08)
+            rotate(2deg);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1)
+            rotate(0deg);
+
+    }
+
+}
+
+
+@keyframes sparkBurst {
+
+    0% {
+
+        opacity: 1;
+
+        transform:
+            translate(0,0)
+            scale(1);
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(var(--x),var(--y))
+            scale(.1);
+
+    }
+
+}
+
+
+@keyframes confettiFall {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(.5);
+
+    }
+
+    15% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translateY(230px)
+            rotate(540deg)
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================================
+   COIN ANIMATIONS
+===================================================== */
+
+@keyframes coinFly1 {
+
+    0% {
+        opacity: 0;
+        transform: translate(0,0) rotate(0);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50px,130px) rotate(540deg);
+    }
+
+}
+
+
+@keyframes coinFly2 {
+
+    0% {
+        opacity: 0;
+        transform: translate(0,0) rotate(0);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(55px,150px) rotate(720deg);
+    }
+
+}
+
+
+@keyframes coinFly3 {
+
+    0% {
+        opacity: 0;
+        transform: translate(0,0) rotate(0);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-70px,-80px) rotate(540deg);
+    }
+
+}
+
+
+@keyframes coinFly4 {
+
+    0% {
+        opacity: 0;
+        transform: translate(0,0) rotate(0);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(70px,-100px) rotate(720deg);
+    }
+
+}
+
+
+@keyframes coinFly5 {
+
+    0% {
+        opacity: 0;
+        transform: translate(0,0) rotate(0);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(100px,-40px) rotate(540deg);
+    }
+
+}
+
+
+@keyframes coinFly6 {
+
+    0% {
+        opacity: 0;
+        transform: translate(0,0) rotate(0);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-100px,-60px) rotate(720deg);
+    }
+
+}
+
+
+/* =====================================================
+   FRAME BREATH
+===================================================== */
+
+.webcam-frame,
+.webcam-panel {
+
+    animation: greenBreath 6s ease-in-out infinite;
+
+}
+
+
+@keyframes greenBreath {
+
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.04);
+    }
+
+}
+
+
+/* =====================================================
+   SCAN LIGHT
+===================================================== */
+
+@keyframes scan {
+
+    0% {
+        transform: translateX(0);
+        opacity: .18;
+    }
+
+    10% {
+        opacity: .90;
+    }
+
+    25% {
+        transform: translateX(325px);
+        opacity: .95;
+    }
+
+    31% {
+        opacity: .12;
+    }
+
+    100% {
+        transform: translateX(325px);
+        opacity: .12;
+    }
+
+}
+
+
+@keyframes scanReverse {
+
+    0% {
+        transform: translateX(0);
+        opacity: .18;
+    }
+
+    10% {
+        opacity: .90;
+    }
+
+    25% {
+        transform: translateX(-325px);
+        opacity: .95;
+    }
+
+    31% {
+        opacity: .12;
+    }
+
+    100% {
+        transform: translateX(-325px);
+        opacity: .12;
+    }
+
+}
+
+
+/* =====================================================
+   TRANSPARENCY
+===================================================== */
+
+html,
+body {
+
+    background-color: transparent !important;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     ONLY TWO PANELS
+===================================================== -->
+
+<div class="webcam-panel"></div>
+
+<div class="webcam-frame"></div>
+
+
+<!-- =====================================================
+     CELEBRATION
+     NO THIRD PANEL
+===================================================== -->
+
+<div class="celebration" id="celebration">
+
+    <div class="celebration-flash"></div>
+
+
+    <!-- GIFT -->
+
+    <div class="gift">
+
+        <div class="gift-bow-left"></div>
+
+        <div class="gift-bow-right"></div>
+
+        <div class="gift-lid"></div>
+
+        <div class="gift-box"></div>
+
+        <div class="gift-ribbon-v"></div>
+
+        <div class="gift-ribbon-h"></div>
+
+    </div>
+
+
+    <!-- COINS -->
+
+    <div class="coin coin1"></div>
+    <div class="coin coin2"></div>
+    <div class="coin coin3"></div>
+    <div class="coin coin4"></div>
+    <div class="coin coin5"></div>
+    <div class="coin coin6"></div>
+
+
+    <!-- CONFETTI -->
+
+    <div class="confetti c1"></div>
+    <div class="confetti c2"></div>
+    <div class="confetti c3"></div>
+    <div class="confetti c4"></div>
+    <div class="confetti c5"></div>
+    <div class="confetti c6"></div>
+    <div class="confetti c7"></div>
+    <div class="confetti c8"></div>
+
+
+    <!-- SPARKS -->
+
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+    <div class="spark"></div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   COPY TRADE PROFIT
+===================================================== */
+
+/*
+   فقط این عدد را تغییر بده.
+
+   مثبت  = حالت جشن فعال
+   صفر    = خاموش
+   منفی   = خاموش
+*/
+
+const copyTradeProfit = 250;
+
+
+/* =====================================================
+   CELEBRATION CONTROL
+===================================================== */
+
+const celebration =
+    document.getElementById("celebration");
+
+
+if (copyTradeProfit > 0) {
+
+    celebration.classList.add("active");
+
+}
+
+
+/*
+   اگر خواستی جشن دوباره اجرا شود،
+   این تابع را می‌توانی بعداً صدا بزنی.
+*/
+
+function triggerProfitCelebration() {
+
+    celebration.classList.remove("active");
+
+    void celebration.offsetWidth;
+
+    celebration.classList.add("active");
+
+}
+
+</script>
+
+
+</body>
+</html>
+```
 
