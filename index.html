@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
 
 <style>
 * {
@@ -18,25 +19,35 @@ body {
 }
 
 /* =========================================================
-   ONLY EFFECT AREA
-   x = 40 → 470
-   y = 480 → 691
+   INVISIBLE EFFECT AREA
 
-   Completely invisible.
-   No border / background / shadow.
+   X: 40 → 470
+   TOP: 0
+   BOTTOM: 691
+
+   The upper part is completely open so particles
+   can fly high and remain visible.
+
+   Nothing is drawn here except the animation.
    ========================================================= */
 
 #celebration {
     position: absolute;
+
     left: 40px;
-    top: 480px;
+    top: 0;
+
     width: 430px;
-    height: 211px;
+    height: 691px;
 
     overflow: hidden;
 
     pointer-events: none;
+
     background: transparent;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
 }
 
 /* =========================================================
@@ -45,10 +56,12 @@ body {
 
 #fx {
     position: absolute;
-    inset: 0;
+
+    left: 0;
+    top: 0;
 
     width: 430px;
-    height: 211px;
+    height: 691px;
 
     display: block;
 
@@ -63,7 +76,7 @@ body {
     position: absolute;
 
     left: 50%;
-    top: 7px;
+    top: 487px;
 
     width: 58px;
     height: 51px;
@@ -76,14 +89,16 @@ body {
 
     z-index: 10;
 
+    transform-origin: 50% 100%;
+
     filter:
         drop-shadow(0 4px 8px rgba(0,0,0,.25))
         drop-shadow(0 0 10px rgba(255,190,40,.25));
-
-    transform-origin: 50% 100%;
 }
 
-/* Box */
+/* =========================================================
+   GIFT BODY
+   ========================================================= */
 
 .gift-body {
     position: absolute;
@@ -133,7 +148,9 @@ body {
         );
 }
 
-/* Lid */
+/* =========================================================
+   GIFT LID
+   ========================================================= */
 
 .gift-lid {
     position: absolute;
@@ -157,8 +174,6 @@ body {
     transform-origin: 7px 100%;
 }
 
-/* Lid ribbon */
-
 .gift-lid::after {
     content: "";
 
@@ -180,7 +195,9 @@ body {
         );
 }
 
-/* Bow */
+/* =========================================================
+   BOW
+   ========================================================= */
 
 .bow {
     position: absolute;
@@ -215,11 +232,14 @@ body {
 
 .bow .left {
     left: 0;
-    transform: rotate(24deg);
+
+    transform:
+        rotate(24deg);
 }
 
 .bow .right {
     right: 0;
+
     transform:
         scaleX(-1)
         rotate(24deg);
@@ -244,30 +264,45 @@ body {
 }
 
 /* =========================================================
-   GIFT ANIMATION STATES
-   Controlled by JS
+   GIFT ANIMATION
    ========================================================= */
 
 #gift.show {
-    animation: giftAppear .65s cubic-bezier(.18,.9,.25,1.25) forwards;
+    animation:
+        giftAppear .65s
+        cubic-bezier(.18,.9,.25,1.25)
+        forwards;
 }
 
 #gift.shake {
-    animation: giftShake .5s ease-in-out;
+    animation:
+        giftShake .5s
+        ease-in-out;
 }
 
 #gift.explode {
-    animation: giftDisappear .32s ease-out forwards;
+    animation:
+        giftDisappear .32s
+        ease-out
+        forwards;
 }
 
 #gift.explode .gift-lid {
-    animation: lidOpen .34s cubic-bezier(.2,.9,.25,1) forwards;
+    animation:
+        lidOpen .34s
+        cubic-bezier(.2,.9,.25,1)
+        forwards;
 }
+
+/* =========================================================
+   GIFT APPEAR
+   ========================================================= */
 
 @keyframes giftAppear {
 
     0% {
         opacity: 0;
+
         transform:
             translateX(-50%)
             translateY(12px)
@@ -277,6 +312,7 @@ body {
 
     65% {
         opacity: 1;
+
         transform:
             translateX(-50%)
             translateY(-2px)
@@ -286,6 +322,7 @@ body {
 
     100% {
         opacity: 1;
+
         transform:
             translateX(-50%)
             translateY(0)
@@ -293,6 +330,10 @@ body {
             rotate(0);
     }
 }
+
+/* =========================================================
+   GIFT SHAKE
+   ========================================================= */
 
 @keyframes giftShake {
 
@@ -340,6 +381,10 @@ body {
     }
 }
 
+/* =========================================================
+   LID OPEN
+   ========================================================= */
+
 @keyframes lidOpen {
 
     0% {
@@ -361,10 +406,15 @@ body {
     }
 }
 
+/* =========================================================
+   GIFT DISAPPEAR
+   ========================================================= */
+
 @keyframes giftDisappear {
 
     0% {
         opacity: 1;
+
         transform:
             translateX(-50%)
             scale(1);
@@ -372,6 +422,7 @@ body {
 
     100% {
         opacity: 0;
+
         transform:
             translateX(-50%)
             scale(1.18);
@@ -384,7 +435,11 @@ body {
 
 <div id="celebration">
 
-    <canvas id="fx" width="860" height="422"></canvas>
+    <canvas
+        id="fx"
+        width="860"
+        height="1382">
+    </canvas>
 
     <div id="gift">
 
@@ -402,45 +457,106 @@ body {
 
 </div>
 
+
 <script>
 /* =========================================================
    PROFESSIONAL GIFT CELEBRATION
+   =========================================================
+
+   Gift position:
+       X ≈ 255
+       Y ≈ 487
+
+   Explosion:
+       X = 215
+       Y = 514
+
+   Particles:
+       Launch upward
+       Slow at apex
+       Float briefly
+       Fall naturally
+       Fade near bottom
+
+   Lower safety boundary:
+       Y = 691
+
+   Nothing can visually enter below it.
    ========================================================= */
 
-const scene = document.getElementById("celebration");
-const canvas = document.getElementById("fx");
-const ctx = canvas.getContext("2d");
-const gift = document.getElementById("gift");
+
+const celebration =
+    document.getElementById("celebration");
+
+const canvas =
+    document.getElementById("fx");
+
+const ctx =
+    canvas.getContext("2d");
+
+const gift =
+    document.getElementById("gift");
+
+
+/* =========================================================
+   SCENE
+   ========================================================= */
 
 const W = 430;
-const H = 211;
+const H = 691;
 
 const DPR = 2;
+
+
+/* =========================================================
+   EXPLOSION LOCATION
+   ========================================================= */
+
+const EXPLOSION_X = W / 2;
+
+/*
+ * Gift starts at top 487.
+ * Its visual center is around 514.
+ */
+const EXPLOSION_Y = 514;
+
+
+/* =========================================================
+   PARTICLE ARRAYS
+   ========================================================= */
 
 let particles = [];
 let sparks = [];
 let rings = [];
 
-let running = false;
-let raf = null;
-
 
 /* =========================================================
-   HELPERS
+   RANDOM
    ========================================================= */
 
-const random = (min, max) =>
-    Math.random() * (max - min) + min;
+function random(min, max) {
 
-const clamp = (v, min, max) =>
-    Math.max(min, Math.min(max, v));
-
-const easeOutCubic = t =>
-    1 - Math.pow(1 - t, 3);
+    return Math.random() *
+        (max - min) +
+        min;
+}
 
 
 /* =========================================================
-   PARTICLE CLASS
+   CLAMP
+   ========================================================= */
+
+function clamp(value, min, max) {
+
+    return Math.max(
+        min,
+        Math.min(max, value)
+    );
+}
+
+
+/* =========================================================
+   PARTICLE
    ========================================================= */
 
 class Particle {
@@ -453,66 +569,116 @@ class Particle {
         this.y = y;
 
         /*
-         * Strong initial upward velocity.
+         * Random upward angle.
          *
-         * Each particle gets a different angle.
+         * Approximately:
+         *
+         *       ↖  ↑  ↗
+         *
+         * instead of everything
+         * following one line.
          */
-        const angle = random(
-            Math.PI * 1.18,
-            Math.PI * 1.82
-        );
+
+        const angle =
+            random(
+                Math.PI * 1.18,
+                Math.PI * 1.82
+            );
+
+        /*
+         * Different initial speeds.
+         */
 
         const speed =
             type === "coin"
-                ? random(145, 220)
-                : random(115, 185);
+                ? random(155, 235)
+                : random(120, 195);
 
         this.vx =
-            Math.cos(angle) * speed;
+            Math.cos(angle) *
+            speed;
 
         this.vy =
-            Math.sin(angle) * speed;
+            Math.sin(angle) *
+            speed;
+
 
         /*
          * Gravity.
          */
+
         this.gravity =
             type === "coin"
-                ? random(260, 330)
-                : random(190, 260);
+                ? random(245, 310)
+                : random(175, 245);
+
 
         /*
          * Air resistance.
          */
+
         this.drag =
             type === "coin"
-                ? random(.992, .997)
-                : random(.988, .995);
+                ? random(.993, .997)
+                : random(.989, .996);
+
+
+        /*
+         * Size.
+         */
 
         this.size =
             type === "coin"
                 ? random(7, 11)
                 : random(4, 8);
 
+
+        /*
+         * Rotation.
+         */
+
         this.rotation =
-            random(0, Math.PI * 2);
+            random(
+                0,
+                Math.PI * 2
+            );
 
         this.rotationSpeed =
-            random(-12, 12);
+            random(-13, 13);
+
+
+        /*
+         * Lifetime.
+         */
 
         this.life = 0;
 
         this.maxLife =
             type === "coin"
-                ? random(2.0, 2.7)
-                : random(1.7, 2.4);
+                ? random(2.5, 3.4)
+                : random(1.8, 2.8);
+
 
         /*
-         * Horizontal floating/wobble.
+         * Natural side movement.
          */
-        this.wave = random(0, Math.PI * 2);
-        this.waveSpeed = random(2.5, 5.5);
-        this.waveAmount = random(3, 12);
+
+        this.wave =
+            random(
+                0,
+                Math.PI * 2
+            );
+
+        this.waveSpeed =
+            random(2.2, 5.2);
+
+        this.waveAmount =
+            random(3, 12);
+
+
+        /*
+         * Alpha.
+         */
 
         this.alpha = 1;
     }
@@ -522,62 +688,148 @@ class Particle {
 
         this.life += dt;
 
+
         /*
-         * First: explosive launch.
+         * Gravity.
          *
-         * Then gravity gradually dominates.
+         * This is what creates the
+         * real up → apex → down feeling.
          */
-        this.vy += this.gravity * dt;
 
-        this.vx *= Math.pow(this.drag, dt * 60);
+        this.vy +=
+            this.gravity * dt;
 
-        this.vy *= Math.pow(this.drag, dt * 30);
-
-        this.x += this.vx * dt;
 
         /*
-         * Natural side-to-side movement.
+         * Air resistance.
          */
+
+        this.vx *=
+            Math.pow(
+                this.drag,
+                dt * 60
+            );
+
+        this.vy *=
+            Math.pow(
+                this.drag,
+                dt * 30
+            );
+
+
+        /*
+         * Horizontal movement.
+         */
+
+        this.x +=
+            this.vx * dt;
+
+
+        /*
+         * Slight natural curve.
+         */
+
         this.x +=
             Math.sin(
-                this.life * this.waveSpeed +
+                this.life *
+                this.waveSpeed +
                 this.wave
             ) *
             this.waveAmount *
             dt;
 
-        this.y += this.vy * dt;
-
-        this.rotation +=
-            this.rotationSpeed * dt;
 
         /*
-         * Fade only near the end.
+         * Vertical movement.
          */
-        if (this.life > this.maxLife - .45) {
 
-            this.alpha =
+        this.y +=
+            this.vy * dt;
+
+
+        /*
+         * Rotation.
+         */
+
+        this.rotation +=
+            this.rotationSpeed *
+            dt;
+
+
+        /*
+         * Fade close to bottom
+         * of the allowed area.
+         */
+
+        if (
+            this.y > 610 ||
+            this.life >
+            this.maxLife - .5
+        ) {
+
+            const bottomFade =
                 clamp(
-                    (this.maxLife - this.life) / .45,
+                    (691 - this.y) / 65,
                     0,
                     1
                 );
+
+            const lifeFade =
+                clamp(
+                    (this.maxLife - this.life) / .5,
+                    0,
+                    1
+                );
+
+            this.alpha =
+                Math.min(
+                    bottomFade,
+                    lifeFade
+                );
         }
+
 
         /*
-         * Hard safety boundary.
+         * Hard lower boundary.
          *
-         * Particles can NEVER enter
-         * the lower area.
+         * Absolutely nothing can
+         * pass into the lower area.
          */
-        if (this.y > H - 5) {
 
-            this.y = H - 5;
-            this.vy *= -.15;
-            this.alpha *= .75;
+        if (this.y >= 686) {
+
+            this.y = 686;
+
+            this.vy *= -.12;
+
+            this.alpha *= .65;
         }
 
-        return this.life < this.maxLife;
+
+        /*
+         * Horizontal safety.
+         */
+
+        if (this.x < -40) {
+
+            this.x = -40;
+
+            this.vx *= -.25;
+        }
+
+        if (this.x > W + 40) {
+
+            this.x = W + 40;
+
+            this.vx *= -.25;
+        }
+
+
+        return (
+            this.life <
+            this.maxLife &&
+            this.alpha > .01
+        );
     }
 
 
@@ -585,17 +837,26 @@ class Particle {
 
         ctx.save();
 
-        ctx.globalAlpha = this.alpha;
+        ctx.globalAlpha =
+            this.alpha;
 
-        ctx.translate(this.x, this.y);
+        ctx.translate(
+            this.x,
+            this.y
+        );
 
-        ctx.rotate(this.rotation);
+        ctx.rotate(
+            this.rotation
+        );
+
 
         if (this.type === "coin") {
 
             this.drawCoin(ctx);
 
-        } else if (this.type === "confetti") {
+        } else if (
+            this.type === "confetti"
+        ) {
 
             this.drawConfetti(ctx);
 
@@ -604,41 +865,73 @@ class Particle {
             this.drawSpark(ctx);
         }
 
+
         ctx.restore();
     }
 
 
+    /* =====================================================
+       COIN
+       ===================================================== */
+
     drawCoin(ctx) {
 
         /*
-         * Fake 3D coin:
-         * width changes during rotation.
+         * Simulated 3D spin.
          */
+
         const spin =
-            Math.abs(Math.cos(this.rotation * .7));
+            Math.abs(
+                Math.cos(
+                    this.rotation * .72
+                )
+            );
+
 
         const width =
-            this.size * (.35 + spin * .65);
+            this.size *
+            (.28 + spin * .72);
+
 
         const height =
             this.size * 1.15;
 
+
         const gradient =
             ctx.createRadialGradient(
-                -width * .25,
-                -height * .3,
+                -width * .3,
+                -height * .35,
                 1,
                 0,
                 0,
                 height
             );
 
-        gradient.addColorStop(0, "#fff7a8");
-        gradient.addColorStop(.35, "#ffd83d");
-        gradient.addColorStop(.75, "#e9a817");
-        gradient.addColorStop(1, "#a96700");
 
-        ctx.fillStyle = gradient;
+        gradient.addColorStop(
+            0,
+            "#fff8b0"
+        );
+
+        gradient.addColorStop(
+            .3,
+            "#ffe14b"
+        );
+
+        gradient.addColorStop(
+            .72,
+            "#e8a914"
+        );
+
+        gradient.addColorStop(
+            1,
+            "#a86700"
+        );
+
+
+        ctx.fillStyle =
+            gradient;
+
 
         ctx.beginPath();
 
@@ -654,38 +947,64 @@ class Particle {
 
         ctx.fill();
 
+
         ctx.strokeStyle =
-            "rgba(255,245,160,.9)";
+            "rgba(255,246,170,.9)";
 
         ctx.lineWidth = 1;
 
         ctx.stroke();
 
+
         /*
-         * Dollar mark.
+         * Dollar symbol.
          */
+
+        ctx.save();
+
         ctx.scale(
-            Math.max(.25, spin),
+            Math.max(
+                .2,
+                spin
+            ),
             1
         );
 
         ctx.fillStyle =
-            "rgba(125,75,0,.7)";
+            "rgba(120,72,0,.72)";
 
         ctx.font =
-            `bold ${Math.max(6,this.size*.72)}px Arial`;
+            `bold ${Math.max(
+                6,
+                this.size * .72
+            )}px Arial`;
 
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+        ctx.textAlign =
+            "center";
 
-        ctx.fillText("$", 0, 0);
+        ctx.textBaseline =
+            "middle";
+
+        ctx.fillText(
+            "$",
+            0,
+            0
+        );
+
+        ctx.restore();
     }
 
+
+    /* =====================================================
+       CONFETTI
+       ===================================================== */
 
     drawConfetti(ctx) {
 
         ctx.fillStyle =
-            this.color || "#ffd43b";
+            this.color ||
+            "#ffd43b";
+
 
         ctx.fillRect(
             -this.size / 2,
@@ -696,28 +1015,66 @@ class Particle {
     }
 
 
+    /* =====================================================
+       SPARK
+       ===================================================== */
+
     drawSpark(ctx) {
 
-        const s = this.size;
+        const s =
+            this.size;
+
 
         ctx.fillStyle =
-            "rgba(255,245,165,.95)";
+            "rgba(255,247,170,.95)";
 
         ctx.shadowColor =
             "rgba(255,215,50,.95)";
 
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 9;
+
 
         ctx.beginPath();
 
-        ctx.moveTo(0, -s * 1.8);
-        ctx.lineTo(s * .35, -s * .35);
-        ctx.lineTo(s * 1.8, 0);
-        ctx.lineTo(s * .35, s * .35);
-        ctx.lineTo(0, s * 1.8);
-        ctx.lineTo(-s * .35, s * .35);
-        ctx.lineTo(-s * 1.8, 0);
-        ctx.lineTo(-s * .35, -s * .35);
+        ctx.moveTo(
+            0,
+            -s * 1.8
+        );
+
+        ctx.lineTo(
+            s * .35,
+            -s * .35
+        );
+
+        ctx.lineTo(
+            s * 1.8,
+            0
+        );
+
+        ctx.lineTo(
+            s * .35,
+            s * .35
+        );
+
+        ctx.lineTo(
+            0,
+            s * 1.8
+        );
+
+        ctx.lineTo(
+            -s * .35,
+            s * .35
+        );
+
+        ctx.lineTo(
+            -s * 1.8,
+            0
+        );
+
+        ctx.lineTo(
+            -s * .35,
+            -s * .35
+        );
 
         ctx.closePath();
 
@@ -727,30 +1084,44 @@ class Particle {
 
 
 /* =========================================================
-   CREATE EXPLOSION
+   EXPLOSION
    ========================================================= */
 
 function createExplosion() {
 
     /*
-     * Coins
+     * ===============================
+     * COINS
+     * ===============================
      */
-    for (let i = 0; i < 15; i++) {
+
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
 
         const p =
             new Particle(
                 "coin",
-                W / 2 + random(-5, 5),
-                34 + random(-3, 3)
+                EXPLOSION_X +
+                random(-7, 7),
+
+                EXPLOSION_Y +
+                random(-4, 4)
             );
+
 
         particles.push(p);
     }
 
 
     /*
-     * Confetti
+     * ===============================
+     * CONFETTI
+     * ===============================
      */
+
     const colors = [
         "#ff5264",
         "#ffd438",
@@ -760,74 +1131,133 @@ function createExplosion() {
         "#ffffff"
     ];
 
-    for (let i = 0; i < 16; i++) {
+
+    for (
+        let i = 0;
+        i < 22;
+        i++
+    ) {
 
         const p =
             new Particle(
                 "confetti",
-                W / 2 + random(-4, 4),
-                34 + random(-3, 3)
+                EXPLOSION_X +
+                random(-6, 6),
+
+                EXPLOSION_Y +
+                random(-4, 4)
             );
+
 
         p.color =
             colors[
                 Math.floor(
-                    Math.random() * colors.length
+                    Math.random() *
+                    colors.length
                 )
             ];
 
-        p.size = random(4, 7);
+
+        p.size =
+            random(4, 7);
+
 
         p.maxLife =
-            random(1.8, 2.7);
+            random(
+                2.1,
+                3.2
+            );
+
 
         particles.push(p);
     }
 
 
     /*
-     * Fast sparks.
+     * ===============================
+     * SPARKS
+     * ===============================
      */
-    for (let i = 0; i < 18; i++) {
+
+    for (
+        let i = 0;
+        i < 22;
+        i++
+    ) {
 
         const p =
             new Particle(
                 "spark",
-                W / 2 + random(-3, 3),
-                34
+                EXPLOSION_X +
+                random(-4, 4),
+
+                EXPLOSION_Y +
+                random(-3, 3)
             );
 
+
         p.maxLife =
-            random(.65, 1.2);
+            random(
+                .55,
+                1.25
+            );
+
 
         p.gravity =
-            random(100, 180);
+            random(
+                90,
+                170
+            );
 
-        p.vx *= random(.75, 1.3);
-        p.vy *= random(.75, 1.15);
+
+        p.vx *=
+            random(
+                .8,
+                1.35
+            );
+
+
+        p.vy *=
+            random(
+                .75,
+                1.15
+            );
+
 
         sparks.push(p);
     }
 
 
     /*
-     * Explosion rings.
+     * ===============================
+     * EXPLOSION RINGS
+     * ===============================
      */
-    rings.push({
-        x: W / 2,
-        y: 34,
-        radius: 4,
-        alpha: .8,
-        life: 0,
-        maxLife: .45
-    });
 
     rings.push({
-        x: W / 2,
-        y: 34,
+        x: EXPLOSION_X,
+        y: EXPLOSION_Y,
+
         radius: 3,
-        alpha: .45,
+
+        alpha: .9,
+
         life: 0,
+
+        maxLife: .42
+    });
+
+
+    rings.push({
+        x: EXPLOSION_X,
+        y: EXPLOSION_Y,
+
+        radius: 2,
+
+        alpha: .5,
+
+        life: 0,
+
         maxLife: .7
     });
 }
@@ -837,17 +1267,23 @@ function createExplosion() {
    RENDER
    ========================================================= */
 
-let previous = performance.now();
+let previous =
+    performance.now();
+
 
 function render(now) {
 
     const dt =
         Math.min(
-            (now - previous) / 1000,
+            (now - previous) /
+            1000,
+
             .033
         );
 
+
     previous = now;
+
 
     ctx.clearRect(
         0,
@@ -856,26 +1292,39 @@ function render(now) {
         canvas.height
     );
 
-    /*
-     * Canvas is 2x for sharp OBS rendering.
-     */
+
     ctx.save();
 
-    ctx.scale(DPR, DPR);
+    /*
+     * Render at 2x resolution
+     * for sharper OBS output.
+     */
+
+    ctx.scale(
+        DPR,
+        DPR
+    );
+
 
     /*
-     * Main particles.
+     * ===============================
+     * MAIN PARTICLES
+     * ===============================
      */
+
     particles =
         particles.filter(
-            p => {
+            particle => {
 
                 const alive =
-                    p.update(dt);
+                    particle.update(dt);
+
 
                 if (alive) {
-                    p.draw(ctx);
+
+                    particle.draw(ctx);
                 }
+
 
                 return alive;
             }
@@ -883,18 +1332,24 @@ function render(now) {
 
 
     /*
-     * Sparks.
+     * ===============================
+     * SPARKS
+     * ===============================
      */
+
     sparks =
         sparks.filter(
-            p => {
+            spark => {
 
                 const alive =
-                    p.update(dt);
+                    spark.update(dt);
+
 
                 if (alive) {
-                    p.draw(ctx);
+
+                    spark.draw(ctx);
                 }
+
 
                 return alive;
             }
@@ -902,27 +1357,38 @@ function render(now) {
 
 
     /*
-     * Explosion rings.
+     * ===============================
+     * EXPLOSION RINGS
+     * ===============================
      */
+
     rings =
         rings.filter(
             ring => {
 
                 ring.life += dt;
 
-                const t =
+
+                const progress =
                     ring.life /
                     ring.maxLife;
 
+
                 ring.radius +=
-                    150 * dt;
+                    165 * dt;
+
 
                 ring.alpha =
-                    .8 * (1 - t);
+                    .85 *
+                    (1 - progress);
 
-                if (ring.alpha > 0) {
+
+                if (
+                    ring.alpha > 0
+                ) {
 
                     ctx.beginPath();
+
 
                     ctx.arc(
                         ring.x,
@@ -932,34 +1398,55 @@ function render(now) {
                         Math.PI * 2
                     );
 
+
                     ctx.strokeStyle =
-                        `rgba(255,220,70,${ring.alpha})`;
+                        `rgba(
+                            255,
+                            220,
+                            70,
+                            ${ring.alpha}
+                        )`;
+
 
                     ctx.lineWidth =
-                        2.5 * (1 - t);
+                        2.5 *
+                        (1 - progress);
+
 
                     ctx.shadowColor =
                         "rgba(255,200,30,.8)";
 
+
                     ctx.shadowBlur = 10;
+
 
                     ctx.stroke();
                 }
 
-                return ring.life < ring.maxLife;
+
+                return (
+                    ring.life <
+                    ring.maxLife
+                );
             }
         );
 
+
     ctx.restore();
 
-    raf =
-        requestAnimationFrame(render);
+
+    requestAnimationFrame(
+        render
+    );
 }
 
 
 /* =========================================================
-   GIFT CYCLE
+   CELEBRATION CYCLE
    ========================================================= */
+
+let running = false;
+
 
 function resetGift() {
 
@@ -969,68 +1456,104 @@ function resetGift() {
         "explode"
     );
 
+
     /*
-     * Force animation reset.
+     * Force browser to reset
+     * CSS animation state.
      */
+
     void gift.offsetWidth;
 
-    gift.classList.add("show");
+
+    gift.classList.add(
+        "show"
+    );
 }
 
 
 function playCelebration() {
 
-    if (running) return;
+    if (running) {
+        return;
+    }
+
 
     running = true;
 
+
     /*
-     * Clean previous particles.
+     * Clean old particles.
      */
+
     particles.length = 0;
+
     sparks.length = 0;
+
     rings.length = 0;
+
+
+    /*
+     * Gift appears.
+     */
 
     resetGift();
 
 
     /*
-     * Gift stays visible.
+     * Small anticipation.
      */
-    setTimeout(() => {
 
-        gift.classList.add("shake");
+    setTimeout(
+        () => {
 
-    }, 2400);
+            gift.classList.add(
+                "shake"
+            );
+
+        },
+        2400
+    );
 
 
     /*
      * Explosion.
      */
-    setTimeout(() => {
 
-        gift.classList.remove("shake");
+    setTimeout(
+        () => {
 
-        gift.classList.add("explode");
+            gift.classList.remove(
+                "shake"
+            );
 
-        createExplosion();
 
-    }, 2920);
+            gift.classList.add(
+                "explode"
+            );
+
+
+            createExplosion();
+
+        },
+        2920
+    );
 
 
     /*
-     * Wait before next celebration.
-     *
-     * This prevents the animation
-     * from feeling repetitive.
+     * Long enough pause before
+     * the next Gift.
      */
-    setTimeout(() => {
 
-        running = false;
+    setTimeout(
+        () => {
 
-        playCelebration();
+            running = false;
 
-    }, 8200);
+            playCelebration();
+
+        },
+        8500
+    );
 }
 
 
@@ -1038,13 +1561,19 @@ function playCelebration() {
    START
    ========================================================= */
 
-requestAnimationFrame(render);
+requestAnimationFrame(
+    render
+);
 
-setTimeout(() => {
 
-    playCelebration();
+setTimeout(
+    () => {
 
-}, 700);
+        playCelebration();
+
+    },
+    700
+);
 
 </script>
 
