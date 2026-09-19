@@ -2,726 +2,625 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
 
 <style>
-html, body {
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
     width: 1920px;
     height: 1080px;
-    margin: 0;
-    padding: 0;
     overflow: hidden;
-    background: transparent !important;
+    background: transparent;
 }
 
-/* =====================================================
-   کل صحنه افکت
-   فقط برای Clip کردن افکت
-   هیچ ظاهر قابل مشاهده‌ای ندارد
-   ===================================================== */
+/* =========================================================
+   INVISIBLE EFFECT AREA
+   Covers only:
+   Area 1: x=40..470 / y=486..541
+   Area 2: x=40..470 / y=551..691
 
-.scene {
+   Nothing is drawn here except particles.
+   ========================================================= */
+
+.effect-scene {
     position: absolute;
-
     left: 40px;
     top: 480px;
-
     width: 430px;
-    height: 215px;
+    height: 211px;
 
     overflow: hidden;
 
-    pointer-events: none;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
 
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
+    pointer-events: none;
 }
 
-
-/* =====================================================
+/* =========================================================
    GIFT
-   ===================================================== */
+   ========================================================= */
 
 .gift {
     position: absolute;
 
     left: 50%;
-    top: 7px;
+    top: 4px;
 
-    width: 38px;
-    height: 31px;
+    width: 76px;
+    height: 64px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%)
+        scale(0);
 
-    z-index: 50;
+    opacity: 0;
 
-    animation: gift 12s infinite;
+    z-index: 20;
+
+    filter:
+        drop-shadow(0 0 7px rgba(255,255,255,.35))
+        drop-shadow(0 0 16px rgba(255,190,40,.25));
+
+    animation: giftCycle 12s infinite;
 }
 
+/* Gift box */
 
-/* بدنه */
 .gift-box {
     position: absolute;
 
-    left: 3px;
+    left: 7px;
     bottom: 0;
 
-    width: 32px;
-    height: 22px;
+    width: 62px;
+    height: 45px;
 
-    border-radius: 3px;
+    border-radius: 5px 5px 8px 8px;
 
     background:
         linear-gradient(
             90deg,
-            #e91445,
-            #ff4081 50%,
-            #e91445
+            #d81828 0%,
+            #ff3344 42%,
+            #c90e20 100%
         );
 
     box-shadow:
-        0 0 7px rgba(255,30,90,.9),
-        0 0 18px rgba(255,30,90,.45);
+        inset 0 3px 0 rgba(255,255,255,.18),
+        inset 0 -5px 0 rgba(0,0,0,.15);
 }
 
+/* Vertical ribbon */
 
-/* درب */
+.gift-box::before {
+    content: "";
+
+    position: absolute;
+
+    left: 25px;
+    top: 0;
+
+    width: 12px;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd83d,
+            #fff3a0,
+            #e7ae16
+        );
+
+    box-shadow:
+        0 0 5px rgba(255,220,70,.55);
+}
+
+/* Horizontal ribbon */
+
+.gift-box::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 11px;
+
+    width: 100%;
+    height: 9px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd83d,
+            #fff3a0,
+            #e7ae16
+        );
+}
+
+/* Lid */
+
 .gift-lid {
     position: absolute;
 
-    left: 1px;
-    top: 3px;
+    left: 2px;
+    top: 5px;
 
-    width: 36px;
-    height: 8px;
+    width: 72px;
+    height: 14px;
 
-    border-radius: 3px;
+    border-radius: 4px;
 
     background:
         linear-gradient(
             90deg,
-            #ff4081,
-            #ff8aae,
-            #ff4081
+            #e51b2b,
+            #ff4654,
+            #c90e20
         );
 
-    transform-origin: center bottom;
-
-    animation: lid 12s infinite;
-}
-
-
-/* روبان */
-.gift-ribbon-v {
-    position: absolute;
-
-    left: 16px;
-    top: 3px;
-
-    width: 5px;
-    height: 28px;
-
-    background: #ffd740;
-
     box-shadow:
-        0 0 7px #ffd740;
+        inset 0 2px 0 rgba(255,255,255,.2);
+
+    transform-origin: 8px 100%;
+
+    animation: lidOpen 12s infinite;
 }
 
-.gift-ribbon-h {
+/* Lid ribbon */
+
+.gift-lid::after {
+    content: "";
+
     position: absolute;
 
-    left: 4px;
-    top: 10px;
+    left: 29px;
+    top: 0;
+
+    width: 12px;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd83d,
+            #fff3a0,
+            #e7ae16
+        );
+}
+
+/* Bow */
+
+.bow {
+    position: absolute;
+
+    left: 50%;
+    top: -8px;
 
     width: 30px;
-    height: 4px;
+    height: 18px;
 
-    background: #ffd740;
+    transform: translateX(-50%);
+
+    z-index: 5;
 }
 
+.bow-left,
+.bow-right {
+    position: absolute;
 
-/* =====================================================
-   FLASH
-   ===================================================== */
+    top: 2px;
+
+    width: 17px;
+    height: 12px;
+
+    background: #ffd83d;
+
+    border-radius: 80% 20% 70% 30%;
+}
+
+.bow-left {
+    left: 0;
+    transform: rotate(25deg);
+}
+
+.bow-right {
+    right: 0;
+    transform: scaleX(-1) rotate(25deg);
+}
+
+.bow-center {
+    position: absolute;
+
+    left: 11px;
+    top: 5px;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #fff1a0;
+}
+
+/* =========================================================
+   EXPLOSION FLASH
+   ========================================================= */
 
 .flash {
     position: absolute;
 
     left: 50%;
-    top: 23px;
+    top: 29px;
 
-    width: 70px;
-    height: 70px;
+    width: 20px;
+    height: 20px;
 
     border-radius: 50%;
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.98) 0%,
-            rgba(255,239,150,.75) 15%,
-            rgba(255,193,7,.25) 42%,
-            transparent 72%
-        );
+    background: white;
 
     opacity: 0;
 
-    transform:
-        translate(-50%,-50%)
-        scale(.05);
+    transform: translate(-50%, -50%) scale(.1);
+
+    filter:
+        blur(1px)
+        drop-shadow(0 0 12px white)
+        drop-shadow(0 0 30px #ffd84a);
 
     animation: flash 12s infinite;
+
+    z-index: 18;
 }
 
-
-/* =====================================================
-   انفجار اولیه
-   ===================================================== */
+/* =========================================================
+   BURST RAYS
+   ========================================================= */
 
 .burst {
     position: absolute;
 
     left: 50%;
-    top: 23px;
+    top: 31px;
 
     width: 5px;
-    height: 5px;
+    height: 27px;
 
-    border-radius: 50%;
+    border-radius: 99px;
 
-    background: white;
-
-    box-shadow:
-        0 0 6px white,
-        0 0 13px #ffd740;
+    background: linear-gradient(
+        to bottom,
+        #fff7ad,
+        #ffd329,
+        rgba(255,120,0,0)
+    );
 
     opacity: 0;
+
+    transform-origin: 50% 100%;
+
+    z-index: 17;
 
     animation: burst 12s infinite;
 }
 
+.b1 { --angle: -85deg; --distance: 52px; }
+.b2 { --angle: -65deg; --distance: 62px; }
+.b3 { --angle: -43deg; --distance: 58px; }
+.b4 { --angle: -20deg; --distance: 52px; }
+.b5 { --angle: 0deg;   --distance: 48px; }
+.b6 { --angle: 20deg;  --distance: 52px; }
+.b7 { --angle: 43deg;  --distance: 58px; }
+.b8 { --angle: 65deg;  --distance: 62px; }
+.b9 { --angle: 85deg;  --distance: 52px; }
 
-/* =====================================================
-   ستاره‌های انفجار
-   ===================================================== */
+/* =========================================================
+   PARTICLES
+   ========================================================= */
 
-.star {
+.particle {
     position: absolute;
 
     left: 50%;
-    top: 23px;
-
-    width: 4px;
-    height: 4px;
-
-    background: white;
-
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 7px white,
-        0 0 15px #ffd740;
+    top: 31px;
 
     opacity: 0;
 
-    animation: star 12s infinite;
+    z-index: 15;
+
+    will-change: transform, opacity;
+
+    animation:
+        particleFlight 12s infinite;
 }
 
-
-/* =====================================================
-   CONFETTI / برگ‌های اصلی
-   ابتدا بالا می‌روند
-   سپس با مسیر منحنی پایین می‌آیند
-   ===================================================== */
-
-.confetti {
-    position: absolute;
-
-    left: 50%;
-    top: 23px;
-
-    width: 6px;
-    height: 12px;
-
-    border-radius: 2px 7px 2px 7px;
-
-    opacity: 0;
-
-    animation: confetti 12s infinite;
-}
-
-
-/* مسیر 1 */
-.confetti:nth-of-type(1) {
-    background: #ff4081;
-
-    --upX: -55px;
-    --upY: -65px;
-
-    --midX: -95px;
-    --midY: -25px;
-
-    --downX: -145px;
-    --downY: 165px;
-
-    --rot: 620deg;
-
-    animation-delay: .0s;
-}
-
-
-/* مسیر 2 */
-.confetti:nth-of-type(2) {
-    background: #ffd740;
-
-    --upX: -25px;
-    --upY: -88px;
-
-    --midX: -55px;
-    --midY: -35px;
-
-    --downX: -90px;
-    --downY: 170px;
-
-    --rot: -520deg;
-
-    animation-delay: .08s;
-}
-
-
-/* مسیر 3 */
-.confetti:nth-of-type(3) {
-    background: #40c4ff;
-
-    --upX: 35px;
-    --upY: -78px;
-
-    --midX: 70px;
-    --midY: -30px;
-
-    --downX: 120px;
-    --downY: 170px;
-
-    --rot: 580deg;
-
-    animation-delay: .15s;
-}
-
-
-/* مسیر 4 */
-.confetti:nth-of-type(4) {
-    background: #69f0ae;
-
-    --upX: 65px;
-    --upY: -60px;
-
-    --midX: 110px;
-    --midY: -20px;
-
-    --downX: 170px;
-    --downY: 165px;
-
-    --rot: -650deg;
-
-    animation-delay: .22s;
-}
-
-
-/* مسیر 5 */
-.confetti:nth-of-type(5) {
-    background: #ff5252;
-
-    --upX: -85px;
-    --upY: -48px;
-
-    --midX: -125px;
-    --midY: 0px;
-
-    --downX: -185px;
-    --downY: 155px;
-
-    --rot: 700deg;
-
-    animation-delay: .3s;
-}
-
-
-/* مسیر 6 */
-.confetti:nth-of-type(6) {
-    background: #7c4dff;
-
-    --upX: 90px;
-    --upY: -48px;
-
-    --midX: 125px;
-    --midY: 0px;
-
-    --downX: 185px;
-    --downY: 155px;
-
-    --rot: -680deg;
-
-    animation-delay: .38s;
-}
-
-
-/* =====================================================
-   برگ‌های کوچک‌تر
-   ===================================================== */
-
-.confetti.small {
-    width: 4px;
-    height: 8px;
-}
-
-.confetti:nth-of-type(7) {
-    background: #ffab40;
-
-    --upX: -45px;
-    --upY: -52px;
-
-    --midX: -85px;
-    --midY: -5px;
-
-    --downX: -125px;
-    --downY: 150px;
-
-    --rot: 470deg;
-
-    animation-delay: .45s;
-}
-
-.confetti:nth-of-type(8) {
-    background: #fff;
-
-    --upX: 45px;
-    --upY: -52px;
-
-    --midX: 85px;
-    --midY: -5px;
-
-    --downX: 125px;
-    --downY: 150px;
-
-    --rot: -450deg;
-
-    animation-delay: .52s;
-}
-
-
-/* =====================================================
-   COINS
-   ===================================================== */
+/* Coins */
 
 .coin {
-    position: absolute;
-
-    left: 50%;
-    top: 23px;
-
-    width: 11px;
-    height: 11px;
+    width: 13px;
+    height: 13px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
-            circle at 30% 25%,
-            #fffbd0,
-            #ffd740 43%,
-            #f57c00
+            circle at 35% 30%,
+            #fff5a1 0 10%,
+            #ffd52d 25%,
+            #f0a900 70%,
+            #b96b00 100%
         );
 
-    border: 1px solid rgba(255,255,255,.7);
+    border: 1px solid rgba(255,245,160,.9);
 
     box-shadow:
-        0 0 7px #ffd740,
-        0 0 15px rgba(255,193,7,.7);
-
-    opacity: 0;
-
-    animation: coin 12s infinite;
+        0 0 5px rgba(255,205,35,.9),
+        inset 0 0 2px white;
 }
 
 .coin::after {
     content: "$";
 
     position: absolute;
+
     inset: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 6px;
-    font-weight: bold;
+    font:
+        bold 8px Arial;
 
-    color: #8d5a00;
+    color: rgba(139,80,0,.75);
 }
 
+/* Small spark */
 
-/* مسیر متفاوت سکه‌ها */
+.spark {
+    width: 7px;
+    height: 7px;
 
-.coin:nth-of-type(9) {
-    --upX: -35px;
-    --upY: -75px;
+    background: #fff7a6;
 
-    --midX: -60px;
-    --midY: -30px;
-
-    --downX: -110px;
-    --downY: 168px;
-
-    --rot: 720deg;
-
-    animation-delay: .12s;
-}
-
-.coin:nth-of-type(10) {
-    --upX: -8px;
-    --upY: -95px;
-
-    --midX: -25px;
-    --midY: -42px;
-
-    --downX: -40px;
-    --downY: 170px;
-
-    --rot: -620deg;
-
-    animation-delay: .2s;
-}
-
-.coin:nth-of-type(11) {
-    --upX: 15px;
-    --upY: -90px;
-
-    --midX: 35px;
-    --midY: -38px;
-
-    --downX: 65px;
-    --downY: 172px;
-
-    --rot: 680deg;
-
-    animation-delay: .28s;
-}
-
-.coin:nth-of-type(12) {
-    --upX: 42px;
-    --upY: -65px;
-
-    --midX: 75px;
-    --midY: -25px;
-
-    --downX: 130px;
-    --downY: 165px;
-
-    --rot: -750deg;
-
-    animation-delay: .36s;
-}
-
-
-/* =====================================================
-   ذرات طلایی ریز
-   ===================================================== */
-
-.dust {
-    position: absolute;
-
-    left: 50%;
-    top: 23px;
-
-    width: 3px;
-    height: 3px;
-
-    border-radius: 50%;
-
-    background: #ffd740;
+    transform: rotate(45deg);
 
     box-shadow:
-        0 0 7px #ffd740;
-
-    opacity: 0;
-
-    animation: dust 12s infinite;
+        0 0 5px #fff,
+        0 0 12px #ffd72f;
 }
 
-.dust:nth-of-type(13) {
-    --x: -120px;
-    --y: 130px;
+/* Confetti */
+
+.confetti {
+    width: 7px;
+    height: 15px;
+
+    border-radius: 2px;
+
+    background: #ff4c62;
+
+    box-shadow:
+        0 0 5px rgba(255,255,255,.25);
 }
 
-.dust:nth-of-type(14) {
-    --x: -75px;
-    --y: 150px;
-}
+.c2 { background: #ffd52e; }
+.c3 { background: #4de4ff; }
+.c4 { background: #8cff72; }
+.c5 { background: #c67cff; }
 
-.dust:nth-of-type(15) {
-    --x: 80px;
-    --y: 145px;
-}
+/* =========================================================
+   INDIVIDUAL TRAJECTORIES
+   Each particle:
+   1. launches upward
+   2. slows down
+   3. hangs briefly
+   4. falls on a curved path
+   5. fades near the bottom
+   ========================================================= */
 
-.dust:nth-of-type(16) {
-    --x: 135px;
-    --y: 125px;
-}
+.p1 { --x1:-155px; --y1:-88px; --x2:-120px; --y2:18px; --x3:-100px; --y3:155px; --r:510deg; }
+.p2 { --x1:-115px; --y1:-118px; --x2:-82px;  --y2:8px;  --x3:-70px;  --y3:166px; --r:-430deg; }
+.p3 { --x1:-72px;  --y1:-135px; --x2:-45px;  --y2:4px;  --x3:-38px;  --y3:170px; --r:620deg; }
+.p4 { --x1:-25px;  --y1:-145px; --x2:-18px;  --y2:-5px; --x3:-22px;  --y3:174px; --r:-500deg; }
 
+.p5 { --x1:24px;   --y1:-148px; --x2:18px;   --y2:-2px; --x3:25px;   --y3:172px; --r:580deg; }
+.p6 { --x1:72px;   --y1:-136px; --x2:48px;   --y2:8px;  --x3:55px;   --y3:168px; --r:-470deg; }
+.p7 { --x1:115px;  --y1:-116px; --x2:86px;   --y2:15px; --x3:78px;   --y3:158px; --r:520deg; }
+.p8 { --x1:154px;  --y1:-82px;  --x2:120px;  --y2:22px; --x3:105px;  --y3:148px; --r:-610deg; }
 
-/* =====================================================
+/* Extra particles */
+
+.p9  { --x1:-175px; --y1:-45px; --x2:-135px; --y2:28px; --x3:-118px; --y3:151px; --r:390deg; }
+.p10 { --x1:175px;  --y1:-47px; --x2:140px;  --y2:32px; --x3:120px;  --y3:149px; --r:-420deg; }
+.p11 { --x1:-95px;  --y1:-155px; --x2:-62px;  --y2:-5px; --x3:-72px;  --y3:169px; --r:450deg; }
+.p12 { --x1:96px;   --y1:-153px; --x2:64px;   --y2:-1px; --x3:70px;   --y3:170px; --r:-480deg; }
+
+/* =========================================================
    GIFT ANIMATION
-   ===================================================== */
+   ========================================================= */
 
-@keyframes gift {
+@keyframes giftCycle {
 
-    0%,
-    7% {
+    /* hidden */
+    0% {
         opacity: 0;
         transform:
             translateX(-50%)
-            scale(.65);
+            translateY(8px)
+            scale(.2)
+            rotate(-4deg);
     }
 
-    9% {
+    /* appears */
+    7% {
         opacity: 1;
         transform:
             translateX(-50%)
-            scale(.85);
+            translateY(0)
+            scale(1)
+            rotate(0deg);
     }
 
-    /* چند ثانیه آرام */
+    /* stays */
     10%,
+    17% {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1)
+            rotate(0deg);
+    }
+
+    /* anticipation */
     18% {
         transform:
             translateX(-50%)
-            rotate(0deg)
-            scale(.88);
+            translateY(0)
+            scale(1.04)
+            rotate(-3deg);
     }
 
-    /* تکان */
     19% {
         transform:
             translateX(-50%)
-            rotate(-4deg)
-            scale(.9);
+            translateY(0)
+            scale(1.04)
+            rotate(3deg);
     }
 
     20% {
         transform:
             translateX(-50%)
-            rotate(4deg)
-            scale(.92);
+            translateY(0)
+            scale(1.03)
+            rotate(-3deg);
     }
 
     21% {
         transform:
             translateX(-50%)
-            rotate(-6deg)
-            scale(.94);
+            translateY(0)
+            scale(1.05)
+            rotate(2deg);
+    }
+
+    /* explosion */
+    22% {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            translateY(-2px)
+            scale(1.12);
+    }
+
+    24% {
+        opacity: 0;
+        transform:
+            translateX(-50%)
+            translateY(-10px)
+            scale(1.35);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translateX(-50%)
+            scale(.2);
+    }
+}
+
+/* =========================================================
+   LID OPEN
+   ========================================================= */
+
+@keyframes lidOpen {
+
+    0%,
+    17% {
+        transform:
+            rotate(0deg)
+            translateY(0);
+    }
+
+    18% {
+        transform:
+            rotate(-4deg)
+            translateY(-1px);
+    }
+
+    20% {
+        transform:
+            rotate(-18deg)
+            translateY(-4px);
+    }
+
+    21% {
+        transform:
+            rotate(-38deg)
+            translateY(-8px);
     }
 
     22% {
         transform:
-            translateX(-50%)
-            rotate(7deg)
-            scale(.97);
+            rotate(-52deg)
+            translateY(-13px);
     }
 
-    23% {
-        transform:
-            translateX(-50%)
-            rotate(-9deg)
-            scale(1);
-    }
-
-    /* انفجار */
-    24.5% {
-        opacity: 0;
-        transform:
-            translateX(-50%)
-            scale(1.3);
-    }
-
+    25%,
     100% {
-        opacity: 0;
+        transform:
+            rotate(-52deg)
+            translateY(-13px);
     }
 }
 
-
-/* =====================================================
-   LID
-   ===================================================== */
-
-@keyframes lid {
-
-    0%,
-    20% {
-        transform:
-            rotate(0deg)
-            translate(0,0);
-    }
-
-    21.5% {
-        transform:
-            rotate(-7deg)
-            translate(-1px,-1px);
-    }
-
-    23% {
-        transform:
-            rotate(-25deg)
-            translate(-4px,-4px);
-    }
-
-    25% {
-        transform:
-            rotate(-45deg)
-            translate(-7px,-8px);
-    }
-
-    35%,
-    100% {
-        transform:
-            rotate(-45deg)
-            translate(-7px,-8px);
-    }
-}
-
-
-/* =====================================================
+/* =========================================================
    FLASH
-   ===================================================== */
+   ========================================================= */
 
 @keyframes flash {
 
     0%,
-    22% {
+    20% {
         opacity: 0;
         transform:
-            translate(-50%,-50%)
-            scale(.05);
+            translate(-50%, -50%)
+            scale(.1);
     }
 
-    24% {
+    21.5% {
+        opacity: 0;
+    }
+
+    22% {
         opacity: 1;
         transform:
-            translate(-50%,-50%)
-            scale(.65);
+            translate(-50%, -50%)
+            scale(.8);
     }
 
-    26% {
-        opacity: .5;
+    23% {
+        opacity: .85;
         transform:
-            translate(-50%,-50%)
-            scale(1.15);
+            translate(-50%, -50%)
+            scale(2.7);
     }
 
-    30% {
+    24.5% {
         opacity: 0;
         transform:
-            translate(-50%,-50%)
-            scale(1.8);
+            translate(-50%, -50%)
+            scale(5);
     }
 
     100% {
@@ -729,46 +628,51 @@ html, body {
     }
 }
 
-
-/* =====================================================
-   انفجار اولیه
-   ===================================================== */
+/* =========================================================
+   BURST
+   ========================================================= */
 
 @keyframes burst {
 
     0%,
-    22% {
+    20% {
         opacity: 0;
+
         transform:
-            translate(-50%,-50%)
-            scale(.1);
+            rotate(var(--angle))
+            translateY(0)
+            scaleY(.1);
+    }
+
+    21.5% {
+        opacity: 0;
+    }
+
+    22% {
+        opacity: 1;
+
+        transform:
+            rotate(var(--angle))
+            translateY(0)
+            scaleY(.3);
     }
 
     24% {
         opacity: 1;
+
         transform:
-            translate(-50%,-50%)
-            scale(1.4);
+            rotate(var(--angle))
+            translateY(calc(var(--distance) * -1))
+            scaleY(1);
     }
 
-    29% {
-        opacity: 1;
-        transform:
-            translate(
-                calc(-50% + var(--bx, 35px)),
-                calc(-50% + var(--by, -35px))
-            )
-            scale(.8);
-    }
-
-    36% {
+    27% {
         opacity: 0;
+
         transform:
-            translate(
-                calc(-50% + var(--bx, 35px) * 1.5),
-                calc(-50% + var(--by, -35px) * 1.5)
-            )
-            scale(.15);
+            rotate(var(--angle))
+            translateY(calc(var(--distance) * -1.15))
+            scaleY(.4);
     }
 
     100% {
@@ -776,353 +680,382 @@ html, body {
     }
 }
 
+/* =========================================================
+   PARTICLE FLIGHT
+   ========================================================= */
 
-/* =====================================================
-   ستاره
-   ===================================================== */
+@keyframes particleFlight {
 
-@keyframes star {
+    /* Waiting */
 
-    0%,
-    23% {
-        opacity: 0;
-        transform:
-            translate(-50%,-50%)
-            scale(.1);
-    }
-
-    25% {
-        opacity: 1;
-    }
-
-    32% {
-        opacity: 1;
-        transform:
-            translate(
-                calc(-50% + var(--sx, 50px)),
-                calc(-50% + var(--sy, -40px))
-            )
-            scale(1.5);
-    }
-
-    42% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-
-/* =====================================================
-   CONFETTI
-   ⭐ حرکت طبیعی:
-   پرتاب بالا → مکث → سقوط منحنی → محو
-   ===================================================== */
-
-@keyframes confetti {
-
-    0%,
-    22% {
+    0% {
         opacity: 0;
 
         transform:
-            translate(-50%,-50%)
-            translate(
-                var(--upX),
-                var(--upY)
-            )
+            translate(-50%, -50%)
+            translate(0, 0)
             rotate(0deg)
-            scale(.25);
+            scale(.3);
     }
 
-    /* پرتاب سریع */
+    20% {
+        opacity: 0;
+    }
+
+    /* Explosion */
+
+    22% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            translate(0, 0)
+            rotate(0deg)
+            scale(.4);
+    }
+
+    /* Fast launch */
+
     27% {
         opacity: 1;
 
         transform:
-            translate(-50%,-50%)
-            translate(
-                var(--upX),
-                var(--upY)
-            )
-            rotate(calc(var(--rot) * .2))
+            translate(-50%, -50%)
+            translate(var(--x1), var(--y1))
+            rotate(calc(var(--r) * .25))
             scale(1);
     }
 
-    /* لحظه معلق */
-    34% {
+    /* Slowing down */
+
+    33% {
         opacity: 1;
 
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             translate(
-                var(--upX),
-                var(--upY)
+                calc(var(--x1) * .98),
+                calc(var(--y1) * .92)
             )
-            rotate(calc(var(--rot) * .4))
+            rotate(calc(var(--r) * .55))
+            scale(1.05);
+    }
+
+    /* Hover / almost weightless */
+
+    39% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            translate(var(--x1), var(--y1))
+            rotate(calc(var(--r) * .75))
             scale(1);
     }
 
-    /* شروع سقوط */
-    48% {
+    44% {
         opacity: 1;
 
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             translate(
-                var(--midX),
-                var(--midY)
+                calc(var(--x2) + 8px),
+                calc(var(--y2) - 5px)
             )
-            rotate(calc(var(--rot) * .6))
-            scale(.95);
+            rotate(var(--r))
+            scale(.98);
     }
 
-    /* سقوط اصلی */
-    72% {
-        opacity: .9;
+    /* Gravity starts */
 
-        transform:
-            translate(-50%,-50%)
-            translate(
-                calc(var(--midX) * .45 + var(--downX) * .55),
-                calc(var(--midY) * .45 + var(--downY) * .55)
-            )
-            rotate(calc(var(--rot) * .8))
-            scale(.82);
-    }
-
-    /* رسیدن پایین */
-    88% {
-        opacity: .65;
-
-        transform:
-            translate(-50%,-50%)
-            translate(
-                var(--downX),
-                var(--downY)
-            )
-            rotate(var(--rot))
-            scale(.7);
-    }
-
-    /* محو شدن */
-    100% {
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(
-                calc(var(--downX) * 1.03),
-                calc(var(--downY) * 1.02)
-            )
-            rotate(calc(var(--rot) + 160deg))
-            scale(.35);
-    }
-}
-
-
-/* =====================================================
-   COIN
-   ===================================================== */
-
-@keyframes coin {
-
-    0%,
-    22% {
-        opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(
-                var(--upX),
-                var(--upY)
-            )
-            rotate(0deg)
-            scale(.1);
-    }
-
-    /* پرتاب */
-    28% {
+    53% {
         opacity: 1;
 
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             translate(
-                var(--upX),
-                var(--upY)
+                calc(var(--x2) * .95),
+                calc(var(--y2) + 28px)
             )
-            rotate(220deg)
-            scale(1);
+            rotate(calc(var(--r) * 1.15))
+            scale(.96);
     }
 
-    /* معلق */
-    36% {
+    /* Curved descent */
+
+    67% {
         opacity: 1;
 
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             translate(
-                var(--upX),
-                var(--upY)
+                calc(var(--x3) * .72),
+                calc(var(--y3) * .45)
             )
-            rotate(420deg)
-            scale(1);
-    }
-
-    /* سقوط */
-    58% {
-        opacity: 1;
-
-        transform:
-            translate(-50%,-50%)
-            translate(
-                var(--midX),
-                var(--midY)
-            )
-            rotate(620deg)
+            rotate(calc(var(--r) * 1.5))
             scale(.9);
     }
 
-    /* نزدیک پایین */
-    83% {
-        opacity: .7;
+    80% {
+        opacity: .85;
 
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             translate(
-                var(--downX),
-                var(--downY)
+                calc(var(--x3) * .92),
+                calc(var(--y3) * .72)
             )
-            rotate(var(--rot))
+            rotate(calc(var(--r) * 1.8))
+            scale(.82);
+    }
+
+    /* Near bottom */
+
+    89% {
+        opacity: .5;
+
+        transform:
+            translate(-50%, -50%)
+            translate(
+                var(--x3),
+                calc(var(--y3) * .91)
+            )
+            rotate(calc(var(--r) * 2.05))
             scale(.7);
+    }
+
+    /* Fade */
+
+    96% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            translate(
+                calc(var(--x3) * 1.02),
+                var(--y3)
+            )
+            rotate(calc(var(--r) * 2.3))
+            scale(.55);
     }
 
     100% {
         opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            translate(
-                var(--downX),
-                calc(var(--downY) + 10px)
-            )
-            rotate(calc(var(--rot) + 180deg))
-            scale(.3);
     }
 }
 
+/* =========================================================
+   SLIGHT DIFFERENCES BETWEEN PARTICLES
+   ========================================================= */
 
-/* =====================================================
-   DUST
-   ===================================================== */
+.p2,
+.p6,
+.p10 {
+    animation-delay: -.03s;
+}
+
+.p3,
+.p7,
+.p11 {
+    animation-delay: -.06s;
+}
+
+.p4,
+.p8,
+.p12 {
+    animation-delay: -.09s;
+}
+
+/* =========================================================
+   SOFT DUST
+   ========================================================= */
+
+.dust {
+    position: absolute;
+
+    left: 50%;
+    top: 32px;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: rgba(255,239,152,.95);
+
+    opacity: 0;
+
+    box-shadow:
+        0 0 5px white,
+        0 0 10px #ffd52e;
+
+    animation: dust 12s infinite;
+}
+
+.d1 { --dx:-80px; --dy:-65px; }
+.d2 { --dx:-45px; --dy:-105px; }
+.d3 { --dx:50px; --dy:-90px; }
+.d4 { --dx:90px; --dy:-55px; }
+.d5 { --dx:-120px; --dy:-20px; }
+.d6 { --dx:125px; --dy:-15px; }
 
 @keyframes dust {
 
     0%,
-    23% {
+    20% {
         opacity: 0;
-
-        transform:
-            translate(-50%,-50%)
-            scale(.1);
+        transform: translate(-50%,-50%);
     }
 
-    27% {
+    22% {
         opacity: 1;
+    }
 
+    31% {
+        opacity: .8;
         transform:
             translate(-50%,-50%)
-            scale(1);
+            translate(var(--dx),var(--dy))
+            scale(1.2);
     }
 
-    42% {
-        opacity: .8;
-
-        transform:
-            translate(
-                calc(-50% + var(--x) * .35),
-                calc(-50% + var(--y) * .25)
-            )
-            scale(.8);
-    }
-
-    70% {
-        opacity: .45;
-
-        transform:
-            translate(
-                calc(-50% + var(--x) * .75),
-                calc(-50% + var(--y) * .75)
-            )
-            scale(.55);
-    }
-
-    90% {
+    40% {
         opacity: 0;
+        transform:
+            translate(-50%,-50%)
+            translate(
+                calc(var(--dx) * 1.3),
+                calc(var(--dy) * 1.2)
+            )
+            scale(.4);
     }
 
     100% {
         opacity: 0;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="scene">
+<div class="effect-scene">
 
-    <!-- Gift -->
+    <!-- =========================
+         GIFT
+         ========================= -->
+
     <div class="gift">
-        <div class="gift-box"></div>
+
         <div class="gift-lid"></div>
-        <div class="gift-ribbon-v"></div>
-        <div class="gift-ribbon-h"></div>
+
+        <div class="bow">
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-center"></div>
+        </div>
+
+        <div class="gift-box"></div>
+
     </div>
 
-    <!-- نور انفجار -->
+
+    <!-- =========================
+         FLASH
+         ========================= -->
+
     <div class="flash"></div>
 
-    <!-- انفجار -->
-    <div class="burst"></div>
-    <div class="burst"></div>
-    <div class="burst"></div>
-    <div class="burst"></div>
-    <div class="burst"></div>
-    <div class="burst"></div>
 
-    <!-- ستاره -->
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
+    <!-- =========================
+         EXPLOSION RAYS
+         ========================= -->
 
-    <!-- Confetti -->
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
-    <div class="confetti"></div>
+    <div class="burst b1"></div>
+    <div class="burst b2"></div>
+    <div class="burst b3"></div>
+    <div class="burst b4"></div>
+    <div class="burst b5"></div>
+    <div class="burst b6"></div>
+    <div class="burst b7"></div>
+    <div class="burst b8"></div>
+    <div class="burst b9"></div>
 
-    <div class="confetti small"></div>
-    <div class="confetti small"></div>
 
-    <!-- Coins -->
-    <div class="coin"></div>
-    <div class="coin"></div>
-    <div class="coin"></div>
-    <div class="coin"></div>
+    <!-- =========================
+         COINS
+         ========================= -->
 
-    <!-- Dust -->
-    <div class="dust"></div>
-    <div class="dust"></div>
-    <div class="dust"></div>
-    <div class="dust"></div>
+    <div class="particle coin p1"></div>
+    <div class="particle coin p2"></div>
+    <div class="particle coin p3"></div>
+    <div class="particle coin p4"></div>
+
+    <div class="particle coin p5"></div>
+    <div class="particle coin p6"></div>
+    <div class="particle coin p7"></div>
+    <div class="particle coin p8"></div>
+
+
+    <!-- =========================
+         CONFETTI
+         ========================= -->
+
+    <div class="particle confetti p9"></div>
+    <div class="particle confetti c2 p10"></div>
+    <div class="particle confetti c3 p11"></div>
+    <div class="particle confetti c4 p12"></div>
+
+
+    <!-- =========================
+         SPARKS
+         ========================= -->
+
+    <div class="particle spark p1"></div>
+    <div class="particle spark p3"></div>
+    <div class="particle spark p6"></div>
+    <div class="particle spark p8"></div>
+
+
+    <!-- =========================
+         DUST
+         ========================= -->
+
+    <div class="dust d1"></div>
+    <div class="dust d2"></div>
+    <div class="dust d3"></div>
+    <div class="dust d4"></div>
+    <div class="dust d5"></div>
+    <div class="dust d6"></div>
 
 </div>
+
+<script>
+
+/*
+=========================================================
+Gift Celebration
+Cycle: 12 seconds
+
+7%   Gift appears
+10-17% Gift waits
+18-21% Shake / anticipation
+22%  Explosion
+27%  Particles launch
+39%  Particles reach high point
+44%  Hover
+53%  Gravity starts
+67-89% Smooth descent
+96%  Fade
+100% Reset
+
+The entire animation is clipped to the invisible
+effect-scene, so nothing can enter the lower webcam area.
+=========================================================
+*/
+
+</script>
 
 </body>
 </html>
