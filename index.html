@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
 
 <style>
 * {
@@ -19,15 +18,15 @@ body {
 }
 
 /* =========================================================
-   INVISIBLE EFFECT AREA
-   Covers only:
-   Area 1: x=40..470 / y=486..541
-   Area 2: x=40..470 / y=551..691
+   ONLY EFFECT AREA
+   x = 40 → 470
+   y = 480 → 691
 
-   Nothing is drawn here except particles.
+   Completely invisible.
+   No border / background / shadow.
    ========================================================= */
 
-.effect-scene {
+#celebration {
     position: absolute;
     left: 40px;
     top: 480px;
@@ -36,10 +35,22 @@ body {
 
     overflow: hidden;
 
+    pointer-events: none;
     background: transparent;
-    border: 0;
-    outline: 0;
-    box-shadow: none;
+}
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+#fx {
+    position: absolute;
+    inset: 0;
+
+    width: 430px;
+    height: 211px;
+
+    display: block;
 
     pointer-events: none;
 }
@@ -48,100 +59,77 @@ body {
    GIFT
    ========================================================= */
 
-.gift {
+#gift {
     position: absolute;
 
     left: 50%;
-    top: 4px;
+    top: 7px;
 
-    width: 76px;
-    height: 64px;
+    width: 58px;
+    height: 51px;
 
     transform:
         translateX(-50%)
-        scale(0);
+        scale(.75);
 
     opacity: 0;
 
-    z-index: 20;
+    z-index: 10;
 
     filter:
-        drop-shadow(0 0 7px rgba(255,255,255,.35))
-        drop-shadow(0 0 16px rgba(255,190,40,.25));
+        drop-shadow(0 4px 8px rgba(0,0,0,.25))
+        drop-shadow(0 0 10px rgba(255,190,40,.25));
 
-    animation: giftCycle 12s infinite;
+    transform-origin: 50% 100%;
 }
 
-/* Gift box */
+/* Box */
 
-.gift-box {
+.gift-body {
     position: absolute;
 
-    left: 7px;
+    left: 5px;
     bottom: 0;
 
-    width: 62px;
-    height: 45px;
+    width: 48px;
+    height: 34px;
 
-    border-radius: 5px 5px 8px 8px;
+    border-radius: 3px 3px 6px 6px;
 
     background:
         linear-gradient(
             90deg,
-            #d81828 0%,
-            #ff3344 42%,
-            #c90e20 100%
+            #b70e20 0%,
+            #ed263b 35%,
+            #ff3c4d 52%,
+            #c50f22 100%
         );
 
     box-shadow:
-        inset 0 3px 0 rgba(255,255,255,.18),
-        inset 0 -5px 0 rgba(0,0,0,.15);
+        inset 0 2px rgba(255,255,255,.16),
+        inset 0 -4px rgba(0,0,0,.15);
 }
 
 /* Vertical ribbon */
 
-.gift-box::before {
+.gift-body::before {
     content: "";
 
     position: absolute;
 
-    left: 25px;
+    left: 19px;
     top: 0;
 
-    width: 12px;
+    width: 10px;
     height: 100%;
 
     background:
         linear-gradient(
             90deg,
-            #ffd83d,
-            #fff3a0,
-            #e7ae16
-        );
-
-    box-shadow:
-        0 0 5px rgba(255,220,70,.55);
-}
-
-/* Horizontal ribbon */
-
-.gift-box::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 11px;
-
-    width: 100%;
-    height: 9px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffd83d,
-            #fff3a0,
-            #e7ae16
+            #d99c0d,
+            #ffe15a,
+            #fff2a0,
+            #d99c0d
         );
 }
 
@@ -150,28 +138,23 @@ body {
 .gift-lid {
     position: absolute;
 
-    left: 2px;
-    top: 5px;
+    left: 1px;
+    top: 8px;
 
-    width: 72px;
-    height: 14px;
+    width: 56px;
+    height: 11px;
 
-    border-radius: 4px;
+    border-radius: 3px;
 
     background:
         linear-gradient(
             90deg,
-            #e51b2b,
-            #ff4654,
-            #c90e20
+            #c71124,
+            #ff4050,
+            #c71124
         );
 
-    box-shadow:
-        inset 0 2px 0 rgba(255,255,255,.2);
-
-    transform-origin: 8px 100%;
-
-    animation: lidOpen 12s infinite;
+    transform-origin: 7px 100%;
 }
 
 /* Lid ribbon */
@@ -181,18 +164,19 @@ body {
 
     position: absolute;
 
-    left: 29px;
+    left: 22px;
     top: 0;
 
-    width: 12px;
+    width: 10px;
     height: 100%;
 
     background:
         linear-gradient(
             90deg,
-            #ffd83d,
-            #fff3a0,
-            #e7ae16
+            #d99c0d,
+            #ffe15a,
+            #fff0a0,
+            #d99c0d
         );
 }
 
@@ -202,43 +186,46 @@ body {
     position: absolute;
 
     left: 50%;
-    top: -8px;
+    top: -2px;
 
     width: 30px;
-    height: 18px;
+    height: 17px;
 
     transform: translateX(-50%);
-
-    z-index: 5;
 }
 
-.bow-left,
-.bow-right {
+.bow span {
     position: absolute;
 
     top: 2px;
 
-    width: 17px;
-    height: 12px;
+    width: 16px;
+    height: 11px;
 
-    background: #ffd83d;
+    background:
+        linear-gradient(
+            135deg,
+            #fff18a,
+            #ffc928,
+            #d99b0b
+        );
 
     border-radius: 80% 20% 70% 30%;
 }
 
-.bow-left {
+.bow .left {
     left: 0;
-    transform: rotate(25deg);
+    transform: rotate(24deg);
 }
 
-.bow-right {
+.bow .right {
     right: 0;
-    transform: scaleX(-1) rotate(25deg);
+    transform:
+        scaleX(-1)
+        rotate(24deg);
 }
 
-.bow-center {
-    position: absolute;
-
+.bow .center {
     left: 11px;
     top: 5px;
 
@@ -247,813 +234,817 @@ body {
 
     border-radius: 50%;
 
-    background: #fff1a0;
-}
-
-/* =========================================================
-   EXPLOSION FLASH
-   ========================================================= */
-
-.flash {
-    position: absolute;
-
-    left: 50%;
-    top: 29px;
-
-    width: 20px;
-    height: 20px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    opacity: 0;
-
-    transform: translate(-50%, -50%) scale(.1);
-
-    filter:
-        blur(1px)
-        drop-shadow(0 0 12px white)
-        drop-shadow(0 0 30px #ffd84a);
-
-    animation: flash 12s infinite;
-
-    z-index: 18;
-}
-
-/* =========================================================
-   BURST RAYS
-   ========================================================= */
-
-.burst {
-    position: absolute;
-
-    left: 50%;
-    top: 31px;
-
-    width: 5px;
-    height: 27px;
-
-    border-radius: 99px;
-
-    background: linear-gradient(
-        to bottom,
-        #fff7ad,
-        #ffd329,
-        rgba(255,120,0,0)
-    );
-
-    opacity: 0;
-
-    transform-origin: 50% 100%;
-
-    z-index: 17;
-
-    animation: burst 12s infinite;
-}
-
-.b1 { --angle: -85deg; --distance: 52px; }
-.b2 { --angle: -65deg; --distance: 62px; }
-.b3 { --angle: -43deg; --distance: 58px; }
-.b4 { --angle: -20deg; --distance: 52px; }
-.b5 { --angle: 0deg;   --distance: 48px; }
-.b6 { --angle: 20deg;  --distance: 52px; }
-.b7 { --angle: 43deg;  --distance: 58px; }
-.b8 { --angle: 65deg;  --distance: 62px; }
-.b9 { --angle: 85deg;  --distance: 52px; }
-
-/* =========================================================
-   PARTICLES
-   ========================================================= */
-
-.particle {
-    position: absolute;
-
-    left: 50%;
-    top: 31px;
-
-    opacity: 0;
-
-    z-index: 15;
-
-    will-change: transform, opacity;
-
-    animation:
-        particleFlight 12s infinite;
-}
-
-/* Coins */
-
-.coin {
-    width: 13px;
-    height: 13px;
-
-    border-radius: 50%;
-
     background:
         radial-gradient(
             circle at 35% 30%,
-            #fff5a1 0 10%,
-            #ffd52d 25%,
-            #f0a900 70%,
-            #b96b00 100%
+            #fff9bc,
+            #ffd52f 55%,
+            #d89500
         );
-
-    border: 1px solid rgba(255,245,160,.9);
-
-    box-shadow:
-        0 0 5px rgba(255,205,35,.9),
-        inset 0 0 2px white;
 }
-
-.coin::after {
-    content: "$";
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font:
-        bold 8px Arial;
-
-    color: rgba(139,80,0,.75);
-}
-
-/* Small spark */
-
-.spark {
-    width: 7px;
-    height: 7px;
-
-    background: #fff7a6;
-
-    transform: rotate(45deg);
-
-    box-shadow:
-        0 0 5px #fff,
-        0 0 12px #ffd72f;
-}
-
-/* Confetti */
-
-.confetti {
-    width: 7px;
-    height: 15px;
-
-    border-radius: 2px;
-
-    background: #ff4c62;
-
-    box-shadow:
-        0 0 5px rgba(255,255,255,.25);
-}
-
-.c2 { background: #ffd52e; }
-.c3 { background: #4de4ff; }
-.c4 { background: #8cff72; }
-.c5 { background: #c67cff; }
 
 /* =========================================================
-   INDIVIDUAL TRAJECTORIES
-   Each particle:
-   1. launches upward
-   2. slows down
-   3. hangs briefly
-   4. falls on a curved path
-   5. fades near the bottom
+   GIFT ANIMATION STATES
+   Controlled by JS
    ========================================================= */
 
-.p1 { --x1:-155px; --y1:-88px; --x2:-120px; --y2:18px; --x3:-100px; --y3:155px; --r:510deg; }
-.p2 { --x1:-115px; --y1:-118px; --x2:-82px;  --y2:8px;  --x3:-70px;  --y3:166px; --r:-430deg; }
-.p3 { --x1:-72px;  --y1:-135px; --x2:-45px;  --y2:4px;  --x3:-38px;  --y3:170px; --r:620deg; }
-.p4 { --x1:-25px;  --y1:-145px; --x2:-18px;  --y2:-5px; --x3:-22px;  --y3:174px; --r:-500deg; }
+#gift.show {
+    animation: giftAppear .65s cubic-bezier(.18,.9,.25,1.25) forwards;
+}
 
-.p5 { --x1:24px;   --y1:-148px; --x2:18px;   --y2:-2px; --x3:25px;   --y3:172px; --r:580deg; }
-.p6 { --x1:72px;   --y1:-136px; --x2:48px;   --y2:8px;  --x3:55px;   --y3:168px; --r:-470deg; }
-.p7 { --x1:115px;  --y1:-116px; --x2:86px;   --y2:15px; --x3:78px;   --y3:158px; --r:520deg; }
-.p8 { --x1:154px;  --y1:-82px;  --x2:120px;  --y2:22px; --x3:105px;  --y3:148px; --r:-610deg; }
+#gift.shake {
+    animation: giftShake .5s ease-in-out;
+}
 
-/* Extra particles */
+#gift.explode {
+    animation: giftDisappear .32s ease-out forwards;
+}
 
-.p9  { --x1:-175px; --y1:-45px; --x2:-135px; --y2:28px; --x3:-118px; --y3:151px; --r:390deg; }
-.p10 { --x1:175px;  --y1:-47px; --x2:140px;  --y2:32px; --x3:120px;  --y3:149px; --r:-420deg; }
-.p11 { --x1:-95px;  --y1:-155px; --x2:-62px;  --y2:-5px; --x3:-72px;  --y3:169px; --r:450deg; }
-.p12 { --x1:96px;   --y1:-153px; --x2:64px;   --y2:-1px; --x3:70px;   --y3:170px; --r:-480deg; }
+#gift.explode .gift-lid {
+    animation: lidOpen .34s cubic-bezier(.2,.9,.25,1) forwards;
+}
 
-/* =========================================================
-   GIFT ANIMATION
-   ========================================================= */
+@keyframes giftAppear {
 
-@keyframes giftCycle {
-
-    /* hidden */
     0% {
         opacity: 0;
         transform:
             translateX(-50%)
-            translateY(8px)
-            scale(.2)
-            rotate(-4deg);
+            translateY(12px)
+            scale(.55)
+            rotate(-5deg);
     }
 
-    /* appears */
-    7% {
-        opacity: 1;
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1)
-            rotate(0deg);
-    }
-
-    /* stays */
-    10%,
-    17% {
-        opacity: 1;
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1)
-            rotate(0deg);
-    }
-
-    /* anticipation */
-    18% {
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1.04)
-            rotate(-3deg);
-    }
-
-    19% {
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1.04)
-            rotate(3deg);
-    }
-
-    20% {
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1.03)
-            rotate(-3deg);
-    }
-
-    21% {
-        transform:
-            translateX(-50%)
-            translateY(0)
-            scale(1.05)
-            rotate(2deg);
-    }
-
-    /* explosion */
-    22% {
+    65% {
         opacity: 1;
         transform:
             translateX(-50%)
             translateY(-2px)
-            scale(1.12);
+            scale(1.06)
+            rotate(1deg);
     }
 
-    24% {
-        opacity: 0;
+    100% {
+        opacity: 1;
         transform:
             translateX(-50%)
-            translateY(-10px)
-            scale(1.35);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translateX(-50%)
-            scale(.2);
-    }
-}
-
-/* =========================================================
-   LID OPEN
-   ========================================================= */
-
-@keyframes lidOpen {
-
-    0%,
-    17% {
-        transform:
-            rotate(0deg)
-            translateY(0);
-    }
-
-    18% {
-        transform:
-            rotate(-4deg)
-            translateY(-1px);
-    }
-
-    20% {
-        transform:
-            rotate(-18deg)
-            translateY(-4px);
-    }
-
-    21% {
-        transform:
-            rotate(-38deg)
-            translateY(-8px);
-    }
-
-    22% {
-        transform:
-            rotate(-52deg)
-            translateY(-13px);
-    }
-
-    25%,
-    100% {
-        transform:
-            rotate(-52deg)
-            translateY(-13px);
-    }
-}
-
-/* =========================================================
-   FLASH
-   ========================================================= */
-
-@keyframes flash {
-
-    0%,
-    20% {
-        opacity: 0;
-        transform:
-            translate(-50%, -50%)
-            scale(.1);
-    }
-
-    21.5% {
-        opacity: 0;
-    }
-
-    22% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(.8);
-    }
-
-    23% {
-        opacity: .85;
-        transform:
-            translate(-50%, -50%)
-            scale(2.7);
-    }
-
-    24.5% {
-        opacity: 0;
-        transform:
-            translate(-50%, -50%)
-            scale(5);
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-/* =========================================================
-   BURST
-   ========================================================= */
-
-@keyframes burst {
-
-    0%,
-    20% {
-        opacity: 0;
-
-        transform:
-            rotate(var(--angle))
             translateY(0)
-            scaleY(.1);
-    }
-
-    21.5% {
-        opacity: 0;
-    }
-
-    22% {
-        opacity: 1;
-
-        transform:
-            rotate(var(--angle))
-            translateY(0)
-            scaleY(.3);
-    }
-
-    24% {
-        opacity: 1;
-
-        transform:
-            rotate(var(--angle))
-            translateY(calc(var(--distance) * -1))
-            scaleY(1);
-    }
-
-    27% {
-        opacity: 0;
-
-        transform:
-            rotate(var(--angle))
-            translateY(calc(var(--distance) * -1.15))
-            scaleY(.4);
-    }
-
-    100% {
-        opacity: 0;
+            scale(1)
+            rotate(0);
     }
 }
 
-/* =========================================================
-   PARTICLE FLIGHT
-   ========================================================= */
-
-@keyframes particleFlight {
-
-    /* Waiting */
+@keyframes giftShake {
 
     0% {
-        opacity: 0;
-
         transform:
-            translate(-50%, -50%)
-            translate(0, 0)
-            rotate(0deg)
-            scale(.3);
+            translateX(-50%)
+            translateY(0)
+            scale(1)
+            rotate(0);
     }
 
     20% {
-        opacity: 0;
-    }
-
-    /* Explosion */
-
-    22% {
-        opacity: 1;
-
         transform:
-            translate(-50%, -50%)
-            translate(0, 0)
-            rotate(0deg)
-            scale(.4);
-    }
-
-    /* Fast launch */
-
-    27% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            translate(var(--x1), var(--y1))
-            rotate(calc(var(--r) * .25))
-            scale(1);
-    }
-
-    /* Slowing down */
-
-    33% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                calc(var(--x1) * .98),
-                calc(var(--y1) * .92)
-            )
-            rotate(calc(var(--r) * .55))
-            scale(1.05);
-    }
-
-    /* Hover / almost weightless */
-
-    39% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            translate(var(--x1), var(--y1))
-            rotate(calc(var(--r) * .75))
-            scale(1);
-    }
-
-    44% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                calc(var(--x2) + 8px),
-                calc(var(--y2) - 5px)
-            )
-            rotate(var(--r))
-            scale(.98);
-    }
-
-    /* Gravity starts */
-
-    53% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                calc(var(--x2) * .95),
-                calc(var(--y2) + 28px)
-            )
-            rotate(calc(var(--r) * 1.15))
-            scale(.96);
-    }
-
-    /* Curved descent */
-
-    67% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                calc(var(--x3) * .72),
-                calc(var(--y3) * .45)
-            )
-            rotate(calc(var(--r) * 1.5))
-            scale(.9);
-    }
-
-    80% {
-        opacity: .85;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                calc(var(--x3) * .92),
-                calc(var(--y3) * .72)
-            )
-            rotate(calc(var(--r) * 1.8))
-            scale(.82);
-    }
-
-    /* Near bottom */
-
-    89% {
-        opacity: .5;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                var(--x3),
-                calc(var(--y3) * .91)
-            )
-            rotate(calc(var(--r) * 2.05))
-            scale(.7);
-    }
-
-    /* Fade */
-
-    96% {
-        opacity: 0;
-
-        transform:
-            translate(-50%, -50%)
-            translate(
-                calc(var(--x3) * 1.02),
-                var(--y3)
-            )
-            rotate(calc(var(--r) * 2.3))
-            scale(.55);
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-/* =========================================================
-   SLIGHT DIFFERENCES BETWEEN PARTICLES
-   ========================================================= */
-
-.p2,
-.p6,
-.p10 {
-    animation-delay: -.03s;
-}
-
-.p3,
-.p7,
-.p11 {
-    animation-delay: -.06s;
-}
-
-.p4,
-.p8,
-.p12 {
-    animation-delay: -.09s;
-}
-
-/* =========================================================
-   SOFT DUST
-   ========================================================= */
-
-.dust {
-    position: absolute;
-
-    left: 50%;
-    top: 32px;
-
-    width: 4px;
-    height: 4px;
-
-    border-radius: 50%;
-
-    background: rgba(255,239,152,.95);
-
-    opacity: 0;
-
-    box-shadow:
-        0 0 5px white,
-        0 0 10px #ffd52e;
-
-    animation: dust 12s infinite;
-}
-
-.d1 { --dx:-80px; --dy:-65px; }
-.d2 { --dx:-45px; --dy:-105px; }
-.d3 { --dx:50px; --dy:-90px; }
-.d4 { --dx:90px; --dy:-55px; }
-.d5 { --dx:-120px; --dy:-20px; }
-.d6 { --dx:125px; --dy:-15px; }
-
-@keyframes dust {
-
-    0%,
-    20% {
-        opacity: 0;
-        transform: translate(-50%,-50%);
-    }
-
-    22% {
-        opacity: 1;
-    }
-
-    31% {
-        opacity: .8;
-        transform:
-            translate(-50%,-50%)
-            translate(var(--dx),var(--dy))
-            scale(1.2);
+            translateX(calc(-50% - 3px))
+            rotate(-4deg)
+            scale(1.02);
     }
 
     40% {
-        opacity: 0;
         transform:
-            translate(-50%,-50%)
-            translate(
-                calc(var(--dx) * 1.3),
-                calc(var(--dy) * 1.2)
-            )
-            scale(.4);
+            translateX(calc(-50% + 3px))
+            rotate(4deg)
+            scale(1.04);
+    }
+
+    60% {
+        transform:
+            translateX(calc(-50% - 2px))
+            rotate(-3deg)
+            scale(1.02);
+    }
+
+    80% {
+        transform:
+            translateX(calc(-50% + 2px))
+            rotate(2deg)
+            scale(1.03);
+    }
+
+    100% {
+        transform:
+            translateX(-50%)
+            rotate(0)
+            scale(1);
+    }
+}
+
+@keyframes lidOpen {
+
+    0% {
+        transform:
+            rotate(0)
+            translateY(0);
+    }
+
+    45% {
+        transform:
+            rotate(-18deg)
+            translateY(-3px);
+    }
+
+    100% {
+        transform:
+            rotate(-55deg)
+            translateY(-11px);
+    }
+}
+
+@keyframes giftDisappear {
+
+    0% {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            scale(1);
     }
 
     100% {
         opacity: 0;
+        transform:
+            translateX(-50%)
+            scale(1.18);
     }
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="effect-scene">
+<div id="celebration">
 
-    <!-- =========================
-         GIFT
-         ========================= -->
+    <canvas id="fx" width="860" height="422"></canvas>
 
-    <div class="gift">
+    <div id="gift">
 
         <div class="gift-lid"></div>
 
         <div class="bow">
-            <div class="bow-left"></div>
-            <div class="bow-right"></div>
-            <div class="bow-center"></div>
+            <span class="left"></span>
+            <span class="right"></span>
+            <span class="center"></span>
         </div>
 
-        <div class="gift-box"></div>
+        <div class="gift-body"></div>
 
     </div>
-
-
-    <!-- =========================
-         FLASH
-         ========================= -->
-
-    <div class="flash"></div>
-
-
-    <!-- =========================
-         EXPLOSION RAYS
-         ========================= -->
-
-    <div class="burst b1"></div>
-    <div class="burst b2"></div>
-    <div class="burst b3"></div>
-    <div class="burst b4"></div>
-    <div class="burst b5"></div>
-    <div class="burst b6"></div>
-    <div class="burst b7"></div>
-    <div class="burst b8"></div>
-    <div class="burst b9"></div>
-
-
-    <!-- =========================
-         COINS
-         ========================= -->
-
-    <div class="particle coin p1"></div>
-    <div class="particle coin p2"></div>
-    <div class="particle coin p3"></div>
-    <div class="particle coin p4"></div>
-
-    <div class="particle coin p5"></div>
-    <div class="particle coin p6"></div>
-    <div class="particle coin p7"></div>
-    <div class="particle coin p8"></div>
-
-
-    <!-- =========================
-         CONFETTI
-         ========================= -->
-
-    <div class="particle confetti p9"></div>
-    <div class="particle confetti c2 p10"></div>
-    <div class="particle confetti c3 p11"></div>
-    <div class="particle confetti c4 p12"></div>
-
-
-    <!-- =========================
-         SPARKS
-         ========================= -->
-
-    <div class="particle spark p1"></div>
-    <div class="particle spark p3"></div>
-    <div class="particle spark p6"></div>
-    <div class="particle spark p8"></div>
-
-
-    <!-- =========================
-         DUST
-         ========================= -->
-
-    <div class="dust d1"></div>
-    <div class="dust d2"></div>
-    <div class="dust d3"></div>
-    <div class="dust d4"></div>
-    <div class="dust d5"></div>
-    <div class="dust d6"></div>
 
 </div>
 
 <script>
+/* =========================================================
+   PROFESSIONAL GIFT CELEBRATION
+   ========================================================= */
 
-/*
-=========================================================
-Gift Celebration
-Cycle: 12 seconds
+const scene = document.getElementById("celebration");
+const canvas = document.getElementById("fx");
+const ctx = canvas.getContext("2d");
+const gift = document.getElementById("gift");
 
-7%   Gift appears
-10-17% Gift waits
-18-21% Shake / anticipation
-22%  Explosion
-27%  Particles launch
-39%  Particles reach high point
-44%  Hover
-53%  Gravity starts
-67-89% Smooth descent
-96%  Fade
-100% Reset
+const W = 430;
+const H = 211;
 
-The entire animation is clipped to the invisible
-effect-scene, so nothing can enter the lower webcam area.
-=========================================================
-*/
+const DPR = 2;
+
+let particles = [];
+let sparks = [];
+let rings = [];
+
+let running = false;
+let raf = null;
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+const random = (min, max) =>
+    Math.random() * (max - min) + min;
+
+const clamp = (v, min, max) =>
+    Math.max(min, Math.min(max, v));
+
+const easeOutCubic = t =>
+    1 - Math.pow(1 - t, 3);
+
+
+/* =========================================================
+   PARTICLE CLASS
+   ========================================================= */
+
+class Particle {
+
+    constructor(type, x, y) {
+
+        this.type = type;
+
+        this.x = x;
+        this.y = y;
+
+        /*
+         * Strong initial upward velocity.
+         *
+         * Each particle gets a different angle.
+         */
+        const angle = random(
+            Math.PI * 1.18,
+            Math.PI * 1.82
+        );
+
+        const speed =
+            type === "coin"
+                ? random(145, 220)
+                : random(115, 185);
+
+        this.vx =
+            Math.cos(angle) * speed;
+
+        this.vy =
+            Math.sin(angle) * speed;
+
+        /*
+         * Gravity.
+         */
+        this.gravity =
+            type === "coin"
+                ? random(260, 330)
+                : random(190, 260);
+
+        /*
+         * Air resistance.
+         */
+        this.drag =
+            type === "coin"
+                ? random(.992, .997)
+                : random(.988, .995);
+
+        this.size =
+            type === "coin"
+                ? random(7, 11)
+                : random(4, 8);
+
+        this.rotation =
+            random(0, Math.PI * 2);
+
+        this.rotationSpeed =
+            random(-12, 12);
+
+        this.life = 0;
+
+        this.maxLife =
+            type === "coin"
+                ? random(2.0, 2.7)
+                : random(1.7, 2.4);
+
+        /*
+         * Horizontal floating/wobble.
+         */
+        this.wave = random(0, Math.PI * 2);
+        this.waveSpeed = random(2.5, 5.5);
+        this.waveAmount = random(3, 12);
+
+        this.alpha = 1;
+    }
+
+
+    update(dt) {
+
+        this.life += dt;
+
+        /*
+         * First: explosive launch.
+         *
+         * Then gravity gradually dominates.
+         */
+        this.vy += this.gravity * dt;
+
+        this.vx *= Math.pow(this.drag, dt * 60);
+
+        this.vy *= Math.pow(this.drag, dt * 30);
+
+        this.x += this.vx * dt;
+
+        /*
+         * Natural side-to-side movement.
+         */
+        this.x +=
+            Math.sin(
+                this.life * this.waveSpeed +
+                this.wave
+            ) *
+            this.waveAmount *
+            dt;
+
+        this.y += this.vy * dt;
+
+        this.rotation +=
+            this.rotationSpeed * dt;
+
+        /*
+         * Fade only near the end.
+         */
+        if (this.life > this.maxLife - .45) {
+
+            this.alpha =
+                clamp(
+                    (this.maxLife - this.life) / .45,
+                    0,
+                    1
+                );
+        }
+
+        /*
+         * Hard safety boundary.
+         *
+         * Particles can NEVER enter
+         * the lower area.
+         */
+        if (this.y > H - 5) {
+
+            this.y = H - 5;
+            this.vy *= -.15;
+            this.alpha *= .75;
+        }
+
+        return this.life < this.maxLife;
+    }
+
+
+    draw(ctx) {
+
+        ctx.save();
+
+        ctx.globalAlpha = this.alpha;
+
+        ctx.translate(this.x, this.y);
+
+        ctx.rotate(this.rotation);
+
+        if (this.type === "coin") {
+
+            this.drawCoin(ctx);
+
+        } else if (this.type === "confetti") {
+
+            this.drawConfetti(ctx);
+
+        } else {
+
+            this.drawSpark(ctx);
+        }
+
+        ctx.restore();
+    }
+
+
+    drawCoin(ctx) {
+
+        /*
+         * Fake 3D coin:
+         * width changes during rotation.
+         */
+        const spin =
+            Math.abs(Math.cos(this.rotation * .7));
+
+        const width =
+            this.size * (.35 + spin * .65);
+
+        const height =
+            this.size * 1.15;
+
+        const gradient =
+            ctx.createRadialGradient(
+                -width * .25,
+                -height * .3,
+                1,
+                0,
+                0,
+                height
+            );
+
+        gradient.addColorStop(0, "#fff7a8");
+        gradient.addColorStop(.35, "#ffd83d");
+        gradient.addColorStop(.75, "#e9a817");
+        gradient.addColorStop(1, "#a96700");
+
+        ctx.fillStyle = gradient;
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            width,
+            height,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+        ctx.strokeStyle =
+            "rgba(255,245,160,.9)";
+
+        ctx.lineWidth = 1;
+
+        ctx.stroke();
+
+        /*
+         * Dollar mark.
+         */
+        ctx.scale(
+            Math.max(.25, spin),
+            1
+        );
+
+        ctx.fillStyle =
+            "rgba(125,75,0,.7)";
+
+        ctx.font =
+            `bold ${Math.max(6,this.size*.72)}px Arial`;
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText("$", 0, 0);
+    }
+
+
+    drawConfetti(ctx) {
+
+        ctx.fillStyle =
+            this.color || "#ffd43b";
+
+        ctx.fillRect(
+            -this.size / 2,
+            -this.size,
+            this.size,
+            this.size * 2.2
+        );
+    }
+
+
+    drawSpark(ctx) {
+
+        const s = this.size;
+
+        ctx.fillStyle =
+            "rgba(255,245,165,.95)";
+
+        ctx.shadowColor =
+            "rgba(255,215,50,.95)";
+
+        ctx.shadowBlur = 8;
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, -s * 1.8);
+        ctx.lineTo(s * .35, -s * .35);
+        ctx.lineTo(s * 1.8, 0);
+        ctx.lineTo(s * .35, s * .35);
+        ctx.lineTo(0, s * 1.8);
+        ctx.lineTo(-s * .35, s * .35);
+        ctx.lineTo(-s * 1.8, 0);
+        ctx.lineTo(-s * .35, -s * .35);
+
+        ctx.closePath();
+
+        ctx.fill();
+    }
+}
+
+
+/* =========================================================
+   CREATE EXPLOSION
+   ========================================================= */
+
+function createExplosion() {
+
+    /*
+     * Coins
+     */
+    for (let i = 0; i < 15; i++) {
+
+        const p =
+            new Particle(
+                "coin",
+                W / 2 + random(-5, 5),
+                34 + random(-3, 3)
+            );
+
+        particles.push(p);
+    }
+
+
+    /*
+     * Confetti
+     */
+    const colors = [
+        "#ff5264",
+        "#ffd438",
+        "#4ddfff",
+        "#77ef78",
+        "#c47cff",
+        "#ffffff"
+    ];
+
+    for (let i = 0; i < 16; i++) {
+
+        const p =
+            new Particle(
+                "confetti",
+                W / 2 + random(-4, 4),
+                34 + random(-3, 3)
+            );
+
+        p.color =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        p.size = random(4, 7);
+
+        p.maxLife =
+            random(1.8, 2.7);
+
+        particles.push(p);
+    }
+
+
+    /*
+     * Fast sparks.
+     */
+    for (let i = 0; i < 18; i++) {
+
+        const p =
+            new Particle(
+                "spark",
+                W / 2 + random(-3, 3),
+                34
+            );
+
+        p.maxLife =
+            random(.65, 1.2);
+
+        p.gravity =
+            random(100, 180);
+
+        p.vx *= random(.75, 1.3);
+        p.vy *= random(.75, 1.15);
+
+        sparks.push(p);
+    }
+
+
+    /*
+     * Explosion rings.
+     */
+    rings.push({
+        x: W / 2,
+        y: 34,
+        radius: 4,
+        alpha: .8,
+        life: 0,
+        maxLife: .45
+    });
+
+    rings.push({
+        x: W / 2,
+        y: 34,
+        radius: 3,
+        alpha: .45,
+        life: 0,
+        maxLife: .7
+    });
+}
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+let previous = performance.now();
+
+function render(now) {
+
+    const dt =
+        Math.min(
+            (now - previous) / 1000,
+            .033
+        );
+
+    previous = now;
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    /*
+     * Canvas is 2x for sharp OBS rendering.
+     */
+    ctx.save();
+
+    ctx.scale(DPR, DPR);
+
+    /*
+     * Main particles.
+     */
+    particles =
+        particles.filter(
+            p => {
+
+                const alive =
+                    p.update(dt);
+
+                if (alive) {
+                    p.draw(ctx);
+                }
+
+                return alive;
+            }
+        );
+
+
+    /*
+     * Sparks.
+     */
+    sparks =
+        sparks.filter(
+            p => {
+
+                const alive =
+                    p.update(dt);
+
+                if (alive) {
+                    p.draw(ctx);
+                }
+
+                return alive;
+            }
+        );
+
+
+    /*
+     * Explosion rings.
+     */
+    rings =
+        rings.filter(
+            ring => {
+
+                ring.life += dt;
+
+                const t =
+                    ring.life /
+                    ring.maxLife;
+
+                ring.radius +=
+                    150 * dt;
+
+                ring.alpha =
+                    .8 * (1 - t);
+
+                if (ring.alpha > 0) {
+
+                    ctx.beginPath();
+
+                    ctx.arc(
+                        ring.x,
+                        ring.y,
+                        ring.radius,
+                        0,
+                        Math.PI * 2
+                    );
+
+                    ctx.strokeStyle =
+                        `rgba(255,220,70,${ring.alpha})`;
+
+                    ctx.lineWidth =
+                        2.5 * (1 - t);
+
+                    ctx.shadowColor =
+                        "rgba(255,200,30,.8)";
+
+                    ctx.shadowBlur = 10;
+
+                    ctx.stroke();
+                }
+
+                return ring.life < ring.maxLife;
+            }
+        );
+
+    ctx.restore();
+
+    raf =
+        requestAnimationFrame(render);
+}
+
+
+/* =========================================================
+   GIFT CYCLE
+   ========================================================= */
+
+function resetGift() {
+
+    gift.classList.remove(
+        "show",
+        "shake",
+        "explode"
+    );
+
+    /*
+     * Force animation reset.
+     */
+    void gift.offsetWidth;
+
+    gift.classList.add("show");
+}
+
+
+function playCelebration() {
+
+    if (running) return;
+
+    running = true;
+
+    /*
+     * Clean previous particles.
+     */
+    particles.length = 0;
+    sparks.length = 0;
+    rings.length = 0;
+
+    resetGift();
+
+
+    /*
+     * Gift stays visible.
+     */
+    setTimeout(() => {
+
+        gift.classList.add("shake");
+
+    }, 2400);
+
+
+    /*
+     * Explosion.
+     */
+    setTimeout(() => {
+
+        gift.classList.remove("shake");
+
+        gift.classList.add("explode");
+
+        createExplosion();
+
+    }, 2920);
+
+
+    /*
+     * Wait before next celebration.
+     *
+     * This prevents the animation
+     * from feeling repetitive.
+     */
+    setTimeout(() => {
+
+        running = false;
+
+        playCelebration();
+
+    }, 8200);
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+requestAnimationFrame(render);
+
+setTimeout(() => {
+
+    playCelebration();
+
+}, 700);
 
 </script>
 
